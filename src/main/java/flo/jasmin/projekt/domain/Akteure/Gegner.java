@@ -1,6 +1,6 @@
-package main.java.flo.jasmin.projekt.domain.Akteure;
+package flo.jasmin.projekt.domain.Akteure;
 
-import main.java.flo.jasmin.projekt.domain.Visualisierung.AsciiVisualisierung;
+import flo.jasmin.projekt.domain.Visualisierung.AsciiVisualisierung;
 
 public class Gegner {
     private AsciiVisualisierung asciiVisualisierung;

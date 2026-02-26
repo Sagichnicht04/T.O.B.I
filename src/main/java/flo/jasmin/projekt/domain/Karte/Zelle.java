@@ -1,6 +1,6 @@
-package main.java.flo.jasmin.projekt.domain.Karte;
+package flo.jasmin.projekt.domain.Karte;
 
-import main.java.flo.jasmin.projekt.domain.Akteure.NPC;
+import flo.jasmin.projekt.domain.Akteure.NPC;
 
 public class Zelle {
     Zellentyp zellentyp;

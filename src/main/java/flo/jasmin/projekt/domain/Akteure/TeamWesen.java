@@ -1,4 +1,4 @@
-package main.java.flo.jasmin.projekt.domain.Akteure;
+package flo.jasmin.projekt.domain.Akteure;
 
 public class TeamWesen {
     private int ausstattungsplatzAngriff;

@@ -1,4 +1,4 @@
-package main.java.flo.jasmin.projekt.domain.Visualisierung;
+package flo.jasmin.projekt.domain.Visualisierung;
 
 public class TobiVisualisierung implements AsciiVisualisierung{
     @Override

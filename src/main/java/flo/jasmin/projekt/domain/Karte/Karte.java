@@ -1,4 +1,4 @@
-package main.java.flo.jasmin.projekt.domain.Karte;
+package flo.jasmin.projekt.domain.Karte;
 
 import java.util.Map;
 
@@ -25,18 +25,18 @@ public class Karte {
     public void setMomentanePosition(int momentanePosition) {
         this.momentanePosition = momentanePosition;
     }
-    public generiereKarte() {
-        for (int i = 0, i<90, i += 10) {
-            for (int j = 0, j<9, j ++){
-                int zellenNummer = i + j
-                System.print.out(zellenNummer, ": ", )
+    public void generiereKarte() {
+        for (int i = 0; i<90; i += 10) {
+            for (int j = 0; j<9; j ++){
+                int zellenNummer = i + j;
+                System.out.println(zellenNummer + ": " );
             }
         }
     }
 
 
     private int stufeDerGegnerFestlegung(int position) {
-        int hoizontale = position % 10;
+        int horizontale = position % 10;
         int vertikale = position / 10;
         if (vertikale <= 4){
             if(horizontale <=3){
@@ -54,7 +54,7 @@ public class Karte {
         }
     }
 
-    private Zellentyp gibZellenTyp(int pos) {
+    private void gibZellenTyp(int pos) {
         /*
         if (pos == 22) {
             return Festung
@@ -68,14 +68,15 @@ public class Karte {
         }
          */
 
+
     }
 
     private boolean sollWasserZelleSein(int pos){
-        int hoizontale = position % 10;
-        int vertikale = position / 10;
+        int horizontale = pos % 10;
+        int vertikale = pos / 10;
         if ((vertikale == 5 && horizontale <= 3)
             || (vertikale == 5 && horizontale >= 3)
-            || (horizontale == 7 && vertiakle >= 4)
+            || (horizontale == 7 && vertikale >= 4)
             || pos == 43
         ) {
             return true;

@@ -1,9 +1,9 @@
-package main.java.flo.jasmin.projekt.domain.Karte;
+package flo.jasmin.projekt.domain.Karte;
 
 import java.util.ArrayList;
 import java.util.Set;
-import main.java.flo.jasmin.projekt.Befehle;
-import main.java.flo.jasmin.projekt.domain.Akteure.Gegner;
+import flo.jasmin.projekt.domain.Befehle;
+import flo.jasmin.projekt.domain.Akteure.Gegner;
 
 public class Zellentyp {
 

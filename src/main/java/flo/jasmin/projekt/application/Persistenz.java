@@ -1,4 +1,4 @@
-package main.java.flo.jasmin.projekt.application;
+package flo.jasmin.projekt.application;
 
 public class Persistenz {
     String pfadZumSpeicherOrdner;

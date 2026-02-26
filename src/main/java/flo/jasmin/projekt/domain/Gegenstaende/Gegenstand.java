@@ -1,4 +1,4 @@
-package main.java.flo.jasmin.projekt.domain.Gegenstaende;
+package flo.jasmin.projekt.domain.Gegenstaende;
 public abstract class Gegenstand{
     
     private String name;
