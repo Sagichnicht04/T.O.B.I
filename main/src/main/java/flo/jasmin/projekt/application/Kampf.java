@@ -2,7 +2,7 @@ package main.java.flo.jasmin.projekt.application;
 
 import java.util.ArrayList;
 
-import flo.jasmin.projekt.domain.Akteure.Wesen;
+import main.java.flo.jasmin.projekt.domain.Akteure.Wesen;
 
 public class Kampf {
     private ArrayList<Wesen> alleWesen;

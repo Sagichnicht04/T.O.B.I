@@ -2,7 +2,7 @@ package main.java.flo.jasmin.projekt.application;
 
 import java.util.ArrayList;
 
-import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
+import main.java.flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 
 public class Inventar {
     private int erspartes;
