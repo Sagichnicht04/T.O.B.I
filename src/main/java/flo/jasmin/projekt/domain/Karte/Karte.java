@@ -2,64 +2,75 @@ package flo.jasmin.projekt.domain.Karte;
 
 import flo.jasmin.projekt.domain.Akteure.NPC;
 import flo.jasmin.projekt.domain.Befehl;
+import flo.jasmin.projekt.domain.Exceptions.LaufGegenBarriereException;
+import flo.jasmin.projekt.domain.Values.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Karte {
-    Map<Integer, Zelle> positionen;
-    int momentanePosition;
+    private final static int KARTEN_GRÖSSE = 10;
+    Position momentanePosition;
+    Map<Position, Zelle> positionen;
+    //Position im Format [horizontal, vertikal]
 
 
     public Karte() {
-        this.momentanePosition = 83;
+        this.momentanePosition = new Position(3, 8); //Entspricht Feld 83
         this.positionen = new HashMap<>();
         generiereKarte();
     }
 
 
-    public void gehe(Befehl befehl){
-        System.out.println(positionen.get(momentanePosition).zellentyp.beschreibung);
-    }
+    public void gehe(Befehl befehl) throws LaufGegenBarriereException {
+        int horizontale = momentanePosition.getHorizontal();
+        int vertikale = momentanePosition.getVertikal();
 
-    
-    public Map<Integer, Zelle> getPositionen() {
-        return positionen;
-    }
-    public void setPositionen(Map<Integer, Zelle> positionen) {
-        this.positionen = positionen;
-    }
-    public int getMomentanePosition() {
-        return momentanePosition;
-    }
-    public void setMomentanePosition(int momentanePosition) {
-        this.momentanePosition = momentanePosition;
-    }
-
-    public void generiereKarte() {
-        for (int i = 0; i<90; i += 10) {
-            for (int j = 0; j<9; j ++){
-                int zellenNummer = i + j;
-                System.out.println(zellenNummer);
-                positionen.put(zellenNummer, new Zelle(gibZellenTyp(zellenNummer), 0.75f, new NPC(), stufeDerGegnerFestlegung(zellenNummer)));
+        if(vertikale <= 0 && befehl == Befehl.HOCH
+                || vertikale >= KARTEN_GRÖSSE-1 && befehl == Befehl.RUNTER
+                || horizontale <= 0 && befehl == Befehl.LINKS
+                || horizontale >= KARTEN_GRÖSSE-1 && befehl == Befehl.RECHTS){
+            throw new LaufGegenBarriereException();
+        }
+        else {
+            if(befehl == Befehl.HOCH){
+                momentanePosition = momentanePosition.geheHoch();
+            }
+            else if(befehl == Befehl.RUNTER){
+                momentanePosition = momentanePosition.geheRunter();
+            }
+            else if(befehl == Befehl.RECHTS){
+                momentanePosition = momentanePosition.geheRechts();
+            }
+            else if(befehl == Befehl.LINKS){
+                momentanePosition = momentanePosition.geheLinks();
             }
         }
     }
 
+    //Generiert eine Karte im Pattern:
+    // 0  1  2  ...
+    // 10 11 12 ...
+    // ...
+    public void generiereKarte() {
+        for (int i = 0; i<KARTEN_GRÖSSE; i++) {
+            for (int j = 0; j<KARTEN_GRÖSSE; j ++){
+                positionen.put(new Position(i,j), new Zelle(gibZellenTyp(new Position(i,j)), 0.75f, new NPC(), stufeDerGegnerFestlegung(new Position(i,j))));
+            }
+        }
+    }
 
-    private int stufeDerGegnerFestlegung(int position) {
-        int horizontale = position % 10;
-        int vertikale = position / 10;
-        if (vertikale <= 4){
-            if(horizontale <=3){
+    private int stufeDerGegnerFestlegung(Position position) {
+        if (position.getVertikal() <= 4){
+            if(position.getHorizontal() <=3){
                 return 4;
             }
             else {
                 return 3;
             }
         } else {
-            if(horizontale <= 4){
+            if(position.getHorizontal() <= 4){
                 return 1;
             } else {
                 return 2;
@@ -67,7 +78,7 @@ public class Karte {
         }
     }
 
-    private Zellentyp gibZellenTyp(int pos) {
+    private Zellentyp gibZellenTyp(Position position) {
         /*
         if (pos == 22) {
             return Festung
@@ -80,22 +91,42 @@ public class Karte {
             return GrasZelle
         }
          */
+        if(sollWasserZelleSein(position)){
+            return new WasserZelle();
+        }
         return new GrasZelle();
 
     }
 
-    private boolean sollWasserZelleSein(int pos){
-        int horizontale = pos % 10;
-        int vertikale = pos / 10;
-        if ((vertikale == 5 && horizontale <= 3)
-            || (vertikale == 5 && horizontale >= 3)
-            || (horizontale == 7 && vertikale >= 4)
-            || pos == 43
+    private boolean sollWasserZelleSein(Position position){
+        if ((position.getVertikal() == 5 && position.getHorizontal() <= 3)
+            || (position.getVertikal() == 5 && position.getHorizontal() >= 3)
+            || (position.getHorizontal() == 7 && position.getVertikal() >= 4)
+            || position.equals(new Position(4,3))
         ) {
             return true;
         } else {
             return false;
         }
     }
-    
+
+    public Zelle gibMomentaneZelle(){
+        return positionen.get(momentanePosition);
+    }
+
+    public Position getMomentanePosition() {
+        return momentanePosition;
+    }
+
+    public void setMomentanePosition(Position momentanePosition) {
+        this.momentanePosition = momentanePosition;
+    }
+
+    public Map<Position, Zelle> getPositionen() {
+        return positionen;
+    }
+
+    public void setPositionen(Map<Position, Zelle> positionen) {
+        this.positionen = positionen;
+    }
 }

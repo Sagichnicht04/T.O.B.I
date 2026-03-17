@@ -39,6 +39,15 @@ public class Interaktionsschnittstelle {
         if(Objects.equals(eingabe, "w")){
             return Befehl.HOCH;
         }
+        else if(Objects.equals(eingabe, "a")){
+            return Befehl.LINKS;
+        }
+        else if(Objects.equals(eingabe, "s")){
+            return Befehl.RUNTER;
+        }
+        else if(Objects.equals(eingabe, "d")){
+            return Befehl.RECHTS;
+        }
         return Befehl.SPEICHERN;
     }
 

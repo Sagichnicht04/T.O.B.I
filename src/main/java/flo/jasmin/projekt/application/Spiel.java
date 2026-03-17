@@ -2,6 +2,7 @@ package flo.jasmin.projekt.application;
 
 import flo.jasmin.projekt.domain.Akteure.Team;
 import flo.jasmin.projekt.domain.Befehl;
+import flo.jasmin.projekt.domain.Exceptions.LaufGegenBarriereException;
 import flo.jasmin.projekt.domain.Karte.Karte;
 import flo.jasmin.projekt.domain.Status;
 
@@ -24,16 +25,21 @@ public class Spiel {
 
     //Holen wir vermutlich einfach nur aus dem Zellentypen
     public Set<Befehl> gibErlaubteBefehle(){
-        return karte.getPositionen().get(karte.getMomentanePosition()).getZellentyp().getErlaubteBefehle();
+        return karte.gibMomentaneZelle().getZellentyp().getErlaubteBefehle();
     }
 
     public void spieleBefehl(Befehl befehl, String[] parameter){
+        System.out.println("Du willst " + befehl.name());
         if(gibErlaubteBefehle().contains(befehl)){
-            if(befehl == Befehl.RUNTER){
-                karte.gehe(befehl);
+            if(befehl == Befehl.RUNTER || befehl == Befehl.HOCH || befehl == Befehl.LINKS || befehl == Befehl.RECHTS){
+                try {
+                    karte.gehe(befehl);
+                    System.out.println(karte.gibMomentaneZelle().getZellentyp().getBeschreibung());
+                } catch (LaufGegenBarriereException e) {
+                    System.out.println("How about we explore the area ahead of us later?");
+                }
             }
         }
-        System.out.println("Du willst " + befehl.name());
     }
 
     public Status getStatus() {

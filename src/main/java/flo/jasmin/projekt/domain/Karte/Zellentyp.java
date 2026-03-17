@@ -1,16 +1,14 @@
 package flo.jasmin.projekt.domain.Karte;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
 import flo.jasmin.projekt.domain.Befehl;
 import flo.jasmin.projekt.domain.Akteure.Gegner;
 
 public class Zellentyp {
 
     String beschreibung;
-    Set<Befehl> erlaubteBefehle = new HashSet<>(Arrays.asList(Befehl.LINKS, Befehl.HOCH, Befehl.RECHTS, Befehl.RUNTER, Befehl.HILFE));
+    Set<Befehl> erlaubteBefehle = new HashSet<>(List.of(Befehl.LINKS, Befehl.HOCH, Befehl.RECHTS, Befehl.RUNTER, Befehl.HILFE));
     ArrayList<Gegner> gegnerAuswahl;
 
 

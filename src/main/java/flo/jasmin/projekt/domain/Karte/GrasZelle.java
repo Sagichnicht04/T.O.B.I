@@ -9,7 +9,7 @@ public class GrasZelle extends Zellentyp{
     public GrasZelle(){
         super(
     "Schönes leckeres saftiges grünes Gras (kein Brokkoli)",
-                new HashSet<>(Arrays.asList(Befehl.CAMPEN)),
+                new HashSet<>(List.of(Befehl.CAMPEN)),
                 new ArrayList<>()
         );
     }
