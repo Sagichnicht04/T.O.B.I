@@ -38,6 +38,10 @@ public class Inventar {
         return kochtopfMultiplikator;
     }
 
+    public void entferneGegenstände(ArrayList<Gegenstand> gegenstände){
+        this.gegenstände.removeAll(gegenstände);
+    }
+
     public void setKochtopfMultiplikator(float kochtopfMultiplikator) {
         this.kochtopfMultiplikator = kochtopfMultiplikator;
     }

@@ -1,6 +1,6 @@
 package flo.jasmin.projekt.domain.Akteure;
 
-public class TeamWesen {
+public class TeamWesen extends Wesen{
     private int ausstattungsplatzAngriff;
     private int ausstattungsplatzVerteidigung;
 
@@ -10,6 +10,10 @@ public class TeamWesen {
 
     public void setAusstattungsplatzAngriff(int ausstattungsplatzAngriff) {
         this.ausstattungsplatzAngriff = ausstattungsplatzAngriff;
+    }
+
+    public void heile(int lebensPunkte){
+
     }
 
     public int getAusstattungsplatzVerteidigung() {

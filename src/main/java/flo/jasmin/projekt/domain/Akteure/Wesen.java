@@ -9,6 +9,15 @@ public class Wesen {
     private int stufe;
     private String name;
 
+    public boolean nehmeSchaden(int lebensPunkte){
+        gesundheit -= lebensPunkte;
+        return gesundheit >= 0;
+    }
+
+    public int getAngriffsStärke() {
+        return angriff*stufe;
+    }
+
 
     public int getGesundheit() {
         return gesundheit;

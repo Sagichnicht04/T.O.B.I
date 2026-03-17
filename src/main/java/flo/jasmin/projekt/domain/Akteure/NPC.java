@@ -9,6 +9,9 @@ public class NPC {
     private ArrayList<String> dialog;
     private AsciiVisualisierung visualisierung;
 
+    public NPC(){
+    }
+
     public String getName() {
         return name;
     }

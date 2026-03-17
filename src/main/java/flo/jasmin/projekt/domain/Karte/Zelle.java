@@ -7,7 +7,6 @@ public class Zelle {
     float gegnerWahrscheinlichkeit;
     NPC npc;
     int stufeDerGegner;
-    //Ablauf
 
     public Zelle(Zellentyp zellentyp, float gegnerWahrscheinlichkeit, NPC npc, int stufeDerGegner) {
         this.zellentyp = zellentyp;

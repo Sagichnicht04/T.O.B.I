@@ -7,7 +7,6 @@ import flo.jasmin.projekt.domain.Akteure.Wesen;
 public class Kampf {
     private ArrayList<Wesen> alleWesen;
     private int momentanesWesenIdex;
-    private int loot;
 
     public ArrayList<Wesen> getAlleWesen() {
         return alleWesen;
@@ -25,11 +24,8 @@ public class Kampf {
         this.momentanesWesenIdex = momentanesWesenIdex;
     }
 
-    public int getLoot() {
-        return loot;
-    }
-
-    public void setLoot(int loot) {
-        this.loot = loot;
+    //Kapmfschritt wird benötigt weil wir keine While Loop haben können
+    public void kampfSchritt(){
+        momentanesWesenIdex++;
     }
 }

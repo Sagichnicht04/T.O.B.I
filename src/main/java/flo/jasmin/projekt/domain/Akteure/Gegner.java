@@ -2,7 +2,7 @@ package flo.jasmin.projekt.domain.Akteure;
 
 import flo.jasmin.projekt.domain.Visualisierung.AsciiVisualisierung;
 
-public class Gegner {
+public class Gegner extends Wesen{
     private AsciiVisualisierung asciiVisualisierung;
 
     public AsciiVisualisierung getAsciiVisualisierung() {

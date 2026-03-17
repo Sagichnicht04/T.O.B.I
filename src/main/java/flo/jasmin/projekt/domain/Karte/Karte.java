@@ -1,5 +1,10 @@
 package flo.jasmin.projekt.domain.Karte;
 
+import flo.jasmin.projekt.domain.Akteure.NPC;
+import flo.jasmin.projekt.domain.Befehl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Karte {
@@ -7,9 +12,15 @@ public class Karte {
     int momentanePosition;
 
 
-    public Karte(Map<Integer, Zelle> positionen, int momentanePosition) {
-        this.positionen = positionen;
-        this.momentanePosition = momentanePosition;
+    public Karte() {
+        this.momentanePosition = 83;
+        this.positionen = new HashMap<>();
+        generiereKarte();
+    }
+
+
+    public void gehe(Befehl befehl){
+        System.out.println(positionen.get(momentanePosition).zellentyp.beschreibung);
     }
 
     
@@ -25,11 +36,13 @@ public class Karte {
     public void setMomentanePosition(int momentanePosition) {
         this.momentanePosition = momentanePosition;
     }
+
     public void generiereKarte() {
         for (int i = 0; i<90; i += 10) {
             for (int j = 0; j<9; j ++){
                 int zellenNummer = i + j;
-                System.out.println(zellenNummer + ": " );
+                System.out.println(zellenNummer);
+                positionen.put(zellenNummer, new Zelle(gibZellenTyp(zellenNummer), 0.75f, new NPC(), stufeDerGegnerFestlegung(zellenNummer)));
             }
         }
     }
@@ -54,7 +67,7 @@ public class Karte {
         }
     }
 
-    private void gibZellenTyp(int pos) {
+    private Zellentyp gibZellenTyp(int pos) {
         /*
         if (pos == 22) {
             return Festung
@@ -67,7 +80,7 @@ public class Karte {
             return GrasZelle
         }
          */
-
+        return new GrasZelle();
 
     }
 

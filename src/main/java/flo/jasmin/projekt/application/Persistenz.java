@@ -7,5 +7,12 @@ public class Persistenz {
         this.pfadZumSpeicherOrdner = pfadZumSpeicherOrdner;
     }
 
+    public void speichern(Spiel spiel){
+
+    }
+
+    public Spiel laden(){
+        return new Spiel();
+    }
     
 }

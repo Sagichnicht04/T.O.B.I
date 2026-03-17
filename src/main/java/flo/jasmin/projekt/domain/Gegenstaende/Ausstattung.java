@@ -32,7 +32,7 @@ public class Ausstattung extends Gegenstand{
 
 
 
-    enum BeinflussterWert{
+    public enum BeinflussterWert{
         ANGRIFF,
         VERTEIDIGUNG
     }
