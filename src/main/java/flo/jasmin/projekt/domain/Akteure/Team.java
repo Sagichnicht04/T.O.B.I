@@ -14,6 +14,6 @@ public class Team {
     }
 
     public void heile(int lebensPunkte){
-
+        System.out.println("Ihr habt jetz " + lebensPunkte + " mehr Leben!");
     }
 }

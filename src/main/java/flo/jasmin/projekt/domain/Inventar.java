@@ -1,14 +1,26 @@
-package flo.jasmin.projekt.application;
+package flo.jasmin.projekt.domain;
 
 import java.util.ArrayList;
 
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
 
 public class Inventar {
     private int erspartes;
     private ArrayList<Gegenstand> gegenstände;
     private int zeltkapazität;
     private float kochtopfMultiplikator;
+
+    public Inventar(){
+        erspartes = 0;
+        gegenstände = new ArrayList<>();
+        zeltkapazität = 1;
+        kochtopfMultiplikator = 1;
+        gegenstände.add(new Zutat("Karotte", 2, "Orange und Lang. Macht die Augen besser und wird von Hasen gegessen.", 3));
+        gegenstände.add(new Zutat("Tomate", 1, "Jeder weiß, dass Tomaten aus Ketchup gemacht werden.", 1));
+        gegenstände.add(new Zutat("Tomate", 1, "Jeder weiß, dass Tomaten aus Ketchup gemacht werden.", 1));
+        gegenstände.add(new Zutat("Tomate", 1, "Jeder weiß, dass Tomaten aus Ketchup gemacht werden.", 1));
+    }
 
     public int getErspartes() {
         return erspartes;

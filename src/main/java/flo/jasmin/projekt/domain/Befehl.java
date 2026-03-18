@@ -14,4 +14,5 @@ public enum Befehl {
     SPEICHERN,
     HILFE,
     KREATURAUSSTATTEN,
+    ZURÜCK
 }

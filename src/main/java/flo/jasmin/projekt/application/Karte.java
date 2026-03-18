@@ -1,11 +1,14 @@
-package flo.jasmin.projekt.domain.Karte;
+package flo.jasmin.projekt.application;
 
 import flo.jasmin.projekt.domain.Akteure.NPC;
 import flo.jasmin.projekt.domain.Befehl;
 import flo.jasmin.projekt.domain.Exceptions.LaufGegenBarriereException;
+import flo.jasmin.projekt.domain.Karte.GrasZelle;
+import flo.jasmin.projekt.domain.Karte.WasserZelle;
+import flo.jasmin.projekt.domain.Karte.Zelle;
+import flo.jasmin.projekt.domain.Karte.Zellentyp;
 import flo.jasmin.projekt.domain.Values.Position;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
