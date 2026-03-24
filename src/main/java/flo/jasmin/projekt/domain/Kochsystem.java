@@ -12,6 +12,7 @@ import java.util.Objects;
 public class Kochsystem{
 
 
+    //TODO: Heilwert zurückgeben
     public Map<String, Integer> errechneMöglicheZutaten(Inventar inventar){
         Map<String, Integer> ergebnis = new HashMap<>();
         for (Gegenstand gegenstand: inventar.getGegenstände()){

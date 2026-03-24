@@ -28,8 +28,9 @@ public class Interaktionsschnittstelle {
 
             if(spiel.getStatus() == Status.KOCHEN && befehl != Befehl.ZURÜCK){
                 spiel.spieleBefehl(Befehl.ZUTATEN, eingabe);
-            }
-            else{
+            } else if (spiel.getStatus() == Status.KAMPF) {
+                spiel.getKampf().spieleBefehl(befehl, "0");
+            } else{
                 spiel.spieleBefehl(befehl, "");
                 if(befehl == Befehl.SPEICHERN) {
                     break;
@@ -41,6 +42,7 @@ public class Interaktionsschnittstelle {
 
 
     public Befehl eingabeÜbersetzenInBefehl(String eingabe){
+        //Kognitive engagement
         if(Objects.equals(eingabe, "norden")){
             return Befehl.HOCH;
         }
@@ -64,6 +66,9 @@ public class Interaktionsschnittstelle {
         }
         else if(Objects.equals(eingabe, "speichern")){
             return Befehl.SPEICHERN;
+        }
+        else if(Objects.equals(eingabe, "angriff")){
+            return Befehl.ANGRIFF;
         }
         return Befehl.SPEICHERN;
     }

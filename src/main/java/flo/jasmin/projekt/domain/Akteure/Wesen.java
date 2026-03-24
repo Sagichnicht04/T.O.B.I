@@ -6,8 +6,19 @@ public class Wesen {
     private int angriff;
     private int initiative;
     private int erfahrung;
-    private int stufe;
+    private int stufe = 1;
     private String name;
+
+    public Wesen(int gesundheit, int verteidigung, int angriff, int initiative, int erfahrung, String name) {
+        this.gesundheit = gesundheit;
+        this.verteidigung = verteidigung;
+        this.angriff = angriff;
+        this.initiative = initiative;
+        this.erfahrung = erfahrung;
+        this.name = name;
+    }
+
+
 
     public boolean nehmeSchaden(int lebensPunkte){
         gesundheit -= lebensPunkte;
@@ -65,6 +76,10 @@ public class Wesen {
 
     public void setStufe(int stufe) {
         this.stufe = stufe;
+        gesundheit = gesundheit * stufe;
+        verteidigung = verteidigung * stufe;
+        angriff = angriff * stufe;
+        erfahrung = erfahrung * stufe;
     }
 
     public String getName() {

@@ -1,6 +1,8 @@
 package flo.jasmin.projekt.application;
 
 import flo.jasmin.projekt.domain.Akteure.Team;
+import flo.jasmin.projekt.domain.Akteure.TeamWesen;
+import flo.jasmin.projekt.domain.Akteure.Wesen;
 import flo.jasmin.projekt.domain.Befehl;
 import flo.jasmin.projekt.domain.Exceptions.FalscheZutatenEingabe;
 import flo.jasmin.projekt.domain.Exceptions.LaufGegenBarriereException;
@@ -19,6 +21,7 @@ public class Spiel {
     private Kochsystem kochsystem;
     private Status status;
     private Inventar inventar;
+    private Kampf kampf;
 
     public Spiel(){
         karte = new Karte();
@@ -47,6 +50,7 @@ public class Spiel {
                 if (befehl == Befehl.RUNTER || befehl == Befehl.HOCH || befehl == Befehl.LINKS || befehl == Befehl.RECHTS) {
                     try {
                         karte.gehe(befehl);
+                        potentiellerKampf();
                         System.out.println(karte.gibMomentaneZelle().getZellentyp().getBeschreibung());
                     } catch (LaufGegenBarriereException e) {
                         System.out.println("How about we explore the area ahead of us later?");
@@ -70,6 +74,7 @@ public class Spiel {
                     ArrayList<String> zutaten = new ArrayList<>();
                     ArrayList<Integer> anzahl = new ArrayList<>();
 
+                    //TODO: Zwischenschritt über ArrayList unnötig. Sofort Hashmap machen
                     while (matcher.find()) {
                         zutaten.add(matcher.group(1));
                         anzahl.add(Integer.parseInt(matcher.group(2)));
@@ -102,6 +107,26 @@ public class Spiel {
                 }
             }
         }
+    }
+
+    public void potentiellerKampf(){
+        Random random = new Random();
+        if(karte.gibMomentaneZelle().getGegnerWahrscheinlichkeit() > random.nextFloat()){
+            ArrayList<Wesen> alleWesen = new ArrayList<>();
+            alleWesen.addAll(team.getWesenInTeam());
+            alleWesen.addAll(karte.gibMomentaneZelle().getZellentyp().getGegnerAuswahl());
+            kampf = new Kampf(alleWesen);
+            status = Status.KAMPF;
+            kampf.gegnerGreiftAn();
+        }
+    }
+
+    public Kampf getKampf() {
+        return kampf;
+    }
+
+    public void setKampf(Kampf kampf) {
+        this.kampf = kampf;
     }
 
     public Status getStatus() {

@@ -4,6 +4,10 @@ public class TeamWesen extends Wesen{
     private int ausstattungsplatzAngriff;
     private int ausstattungsplatzVerteidigung;
 
+    public TeamWesen(int gesundheit, int verteidigung, int angriff, int initiative, int erfahrung, String name) {
+        super(gesundheit, verteidigung, angriff, initiative, erfahrung, name);
+    }
+
     public int getAusstattungsplatzAngriff() {
         return ausstattungsplatzAngriff;
     }

@@ -31,7 +31,7 @@ public class Position {
     @Override
     public boolean equals(Object object) {
         if (!(object instanceof Position position)) return false;
-        return vertikal == position.vertikal && horizontal == position.getHorizontal();
+        return vertikal == position.vertikal && horizontal == position.horizontal;
     }
 
     @Override
