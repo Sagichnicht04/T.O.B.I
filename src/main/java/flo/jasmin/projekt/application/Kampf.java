@@ -119,10 +119,19 @@ public class Kampf {
         for (Wesen w: alleWesen){
             antwort.add(w.getName() +" : " + alleWesen.indexOf(w));
         }
-        antwort.add("Dein Wesen: 'Wesen'\nDie Gegner: '[alle Gegner]'");
+        antwort.add("Dein Wesen: 'Wesen'");
+        antwort.addAll(holeAlleGegner());
         return antwort;
     }
 
+    private ArrayList<String> holeAlleGegner(){
+        ArrayList<String> antwort = new ArrayList<String>();
+        antwort.add("Gegnerauswahl: ");
+        for (Wesen g : alleWesen.stream().filter(w -> w.getClass().getSuperclass() == Gegner.class).toList()){
+            antwort.add(g.getName() + " : " + alleWesen.indexOf(g) + "\n");
+        }
+        return antwort;
+    }
 
   /*   public void spieleBefehl(Befehl befehl, String parameter) {
         Wesen ziel = alleWesen.get(Integer.parseInt(parameter));
