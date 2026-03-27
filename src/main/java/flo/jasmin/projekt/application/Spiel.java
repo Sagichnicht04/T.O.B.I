@@ -6,6 +6,7 @@ import flo.jasmin.projekt.domain.Akteure.Wesen;
 import flo.jasmin.projekt.domain.Befehl;
 import flo.jasmin.projekt.domain.Exceptions.FalscheZutatenEingabe;
 import flo.jasmin.projekt.domain.Exceptions.LaufGegenBarriereException;
+import flo.jasmin.projekt.domain.Exceptions.ZielIstSpielerWesen;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 import flo.jasmin.projekt.domain.Inventar;
 import flo.jasmin.projekt.domain.Kochsystem;
@@ -80,12 +81,17 @@ public class Spiel {
             }
             else if(status == Status.KAMPF){
                 //wird an den kampf dann weiterdeligiert:
-                antwort.addAll(kampf.überMittelZiel(Integer.valueOf(parameter)));
-                if (!kampf.isKampfImGange()) {
-                    status = Status.EXISTIEREN;
-                    antwort.add("Endlich kannst du dich umschauen.\n"+karte.gibMomentaneZelle().getZellentyp().getBeschreibung());
-                } 
-                
+                try{
+                    antwort.addAll(kampf.überMittelZiel(Integer.valueOf(parameter)));
+                    if (!kampf.isKampfImGange()) {
+                        status = Status.EXISTIEREN;
+                        antwort.add("Endlich kannst du dich umschauen.\n"+karte.gibMomentaneZelle().getZellentyp().getBeschreibung());
+                    } 
+                } catch (IndexOutOfBoundsException e){
+                    antwort.add("DIESER GEGNER EXISTIERT NICHT! \nBitte gib den Index eines Gegners an!");
+                } catch (ZielIstSpielerWesen f) {
+                    antwort.add(f.getMessage());
+                }
             }
         }
         return antwort;

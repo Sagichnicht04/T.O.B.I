@@ -6,6 +6,7 @@ import java.util.Comparator;
 import flo.jasmin.projekt.domain.Akteure.Gegner;
 import flo.jasmin.projekt.domain.Akteure.TeamWesen;
 import flo.jasmin.projekt.domain.Akteure.Wesen;
+import flo.jasmin.projekt.domain.Exceptions.ZielIstSpielerWesen;
 import flo.jasmin.projekt.domain.Befehl;
 
 public class Kampf {
@@ -46,14 +47,14 @@ public class Kampf {
     }
 
     //Kapmfschritt wird benötigt weil wir keine While Loop haben können
-    public void kampfSchritt(){
+   /*  public void kampfSchritt(){
         if (getMomentanesWesen().getClass() == Gegner.class){
             gegnerGreiftAn();
             kampfSchritt();
         } else{
             //spieler darf angreifen
         }
-    }
+    } */
 
     public void erhöheMomentanesWesenIndex(){
         momentanesWesenIndex = (momentanesWesenIndex + 1) % alleWesen.size();
@@ -63,7 +64,10 @@ public class Kampf {
         return alleWesen.get(momentanesWesenIndex);
     }
 
-    public ArrayList<String> teamGreiftAn(Wesen ziel){
+    public ArrayList<String> teamGreiftAn(Wesen ziel) throws ZielIstSpielerWesen{
+        if(ziel.getClass() == TeamWesen.class){
+            throw new ZielIstSpielerWesen();
+        }
         if(!ziel.nehmeSchaden(getMomentanesWesen().getAngriff())){
             System.out.println("Gegner entfertnt!");
             entferneWesenAusListe(ziel);
@@ -92,7 +96,7 @@ public class Kampf {
 
 
     //müsste Fehler schmeißen, wenn es kein passendens Wesen gibt
-    public ArrayList<String> überMittelZiel(int ziel){
+    public ArrayList<String> überMittelZiel(int ziel) throws IndexOutOfBoundsException, ZielIstSpielerWesen{
         return teamGreiftAn(alleWesen.get(ziel));
     }
 
@@ -120,9 +124,9 @@ public class Kampf {
     }
 
 
-    public void spieleBefehl(Befehl befehl, String parameter) {
+  /*   public void spieleBefehl(Befehl befehl, String parameter) {
         Wesen ziel = alleWesen.get(Integer.parseInt(parameter));
         teamGreiftAn(ziel);
         gegnerGreiftAn();
-    }
+    } */
 }
