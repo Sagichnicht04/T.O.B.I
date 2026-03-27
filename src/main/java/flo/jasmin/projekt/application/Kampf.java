@@ -53,22 +53,41 @@ public class Kampf {
         return alleWesen.get(momentanesWesenIndex);
     }
 
-    public void teamGreiftAn(Wesen ziel){
+    public ArrayList<String> teamGreiftAn(Wesen ziel){
         ziel.nehmeSchaden(getMomentanesWesen().getAngriff());
+        ArrayList<String> antwort = new ArrayList<String>();
+        antwort.add(ziel.getName() + " nimmt " + getMomentanesWesen().getAngriff() + " Schaden. HP übrig: "+ziel.getGesundheit());
         erhöheMomentanesWesenIndex();
-        System.out.println(ziel.getName() + " nimmt " + getMomentanesWesen().getAngriff() + " Schaden");
+        antwort.addAll(gegnerGreiftAn());
+        return antwort;
     }
 
-    public void gegnerGreiftAn(){
-        System.out.println(getMomentanesWesen().getClass());
+    //müsste Fehler schmeißen, wenn es kein passendens Wesen gibt
+    public ArrayList<String> überMittelZiel(int ziel){
+        return teamGreiftAn(alleWesen.get(ziel));
+    }
+
+    public ArrayList<String> gegnerGreiftAn(){
+        //System.out.println(getMomentanesWesen().getClass());
+        ArrayList<String> antwort = new ArrayList<String>();
         while(getMomentanesWesen().getClass().getSuperclass() == Gegner.class) {
             Gegner angreifer = (Gegner) getMomentanesWesen();
-
             Wesen ziel = angreifer.ausgewähltesZiel(new ArrayList<>(alleWesen.stream().filter(wesen -> wesen.getClass() == TeamWesen.class).toList()));
             ziel.nehmeSchaden(angreifer.getAngriff());
-            System.out.println(ziel.getName() + " nimmt " + angreifer.getAngriff() + " Schaden");
+            antwort.add(ziel.getName() + " nimmt " + angreifer.getAngriff() + " Schaden. HP überig: "+ziel.getGesundheit());
             erhöheMomentanesWesenIndex();
         }
+        antwort.addAll(gibSpielerInfoÜberKampf());
+        return antwort;
+    }
+
+    public ArrayList<String> gibSpielerInfoÜberKampf(){
+        ArrayList<String> antwort = new ArrayList<String>();
+        for (Wesen w: alleWesen){
+            antwort.add(w.getName() +" : " + alleWesen.indexOf(w));
+        }
+        antwort.add("Dein Wesen: 'Wesen'\nDie Gegner: '[alle Gegner]'");
+        return antwort;
     }
 
 

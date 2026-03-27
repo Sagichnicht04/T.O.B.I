@@ -23,22 +23,44 @@ public class Interaktionsschnittstelle {
             anzeigen(spiel);
 
             String eingabe = scanner.nextLine();  // Read user input
+            String befehlTeil;
+            String paramTeil = "";
+            if (eingabe.contains("|")){
+                befehlTeil = eingabe.split("\\|")[0].toLowerCase();
+                paramTeil = eingabe.split("\\|")[1].toLowerCase();
+            } else {
+                befehlTeil = eingabe.toLowerCase();
+            }
 
-            Befehl befehl = eingabeÜbersetzenInBefehl(eingabe.toLowerCase());
+            Befehl befehl = eingabeÜbersetzenInBefehl(befehlTeil);
 
-            if(spiel.getStatus() == Status.KOCHEN && befehl != Befehl.ZURÜCK){
+            gebAlleInfosAus(spiel.spieleBefehl(befehl, paramTeil));
+/*             if(spiel.getStatus() == Status.KOCHEN && befehl != Befehl.ZURÜCK){
                 spiel.spieleBefehl(Befehl.ZUTATEN, eingabe);
             } else if (spiel.getStatus() == Status.KAMPF) {
-                spiel.getKampf().spieleBefehl(befehl, "0");
+                //spiel.getKampf(); //.spieleBefehl(befehl, "0");
+                spiel.spieleBefehl(befehl, paramTeil);
             } else{
-                spiel.spieleBefehl(befehl, "");
+                gebAlleInfosAus(spiel.spieleBefehl(befehl, ""));
                 if(befehl == Befehl.SPEICHERN) {
                     break;
                 }
-            }
+            } */
         }
     }
 
+
+    public void gebAlleInfosAus(ArrayList<String> antwort){
+        for (String i :antwort){
+            System.out.println(i);
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
 
 
     public Befehl eingabeÜbersetzenInBefehl(String eingabe){
