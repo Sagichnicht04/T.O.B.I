@@ -81,6 +81,11 @@ public class Spiel {
             else if(status == Status.KAMPF){
                 //wird an den kampf dann weiterdeligiert:
                 antwort.addAll(kampf.überMittelZiel(Integer.valueOf(parameter)));
+                if (!kampf.isKampfImGange()) {
+                    status = Status.EXISTIEREN;
+                    antwort.add("Endlich kannst du dich umschauen.\n"+karte.gibMomentaneZelle().getZellentyp().getBeschreibung());
+                } 
+                
             }
         }
         return antwort;

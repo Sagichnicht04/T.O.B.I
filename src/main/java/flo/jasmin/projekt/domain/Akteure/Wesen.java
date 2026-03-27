@@ -22,7 +22,7 @@ public class Wesen {
 
     public boolean nehmeSchaden(int lebensPunkte){
         gesundheit -= lebensPunkte;
-        return gesundheit >= 0;
+        return gesundheit > 0;
     }
 
     public int getAngriffsStärke() {

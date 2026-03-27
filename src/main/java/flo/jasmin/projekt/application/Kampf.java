@@ -11,11 +11,21 @@ import flo.jasmin.projekt.domain.Befehl;
 public class Kampf {
     private ArrayList<Wesen> alleWesen;
     private int momentanesWesenIndex;
+    private boolean kampfImGange;
+
+    public boolean isKampfImGange() {
+        return kampfImGange;
+    }
+
+    public void setKampfImGange(boolean kampfImGange) {
+        this.kampfImGange = kampfImGange;
+    }
 
     public Kampf(ArrayList<Wesen> alleWesen){
         this.alleWesen = alleWesen;
         alleWesen.sort(Comparator.comparingInt(Wesen::getInitiative).reversed());
         momentanesWesenIndex = 0;
+        kampfImGange = true;
         System.out.println("DEBUG:" + alleWesen.get(momentanesWesenIndex).getName());
     }
 
@@ -54,13 +64,32 @@ public class Kampf {
     }
 
     public ArrayList<String> teamGreiftAn(Wesen ziel){
-        ziel.nehmeSchaden(getMomentanesWesen().getAngriff());
+        if(!ziel.nehmeSchaden(getMomentanesWesen().getAngriff())){
+            System.out.println("Gegner entfertnt!");
+            entferneWesenAusListe(ziel);
+        };
         ArrayList<String> antwort = new ArrayList<String>();
         antwort.add(ziel.getName() + " nimmt " + getMomentanesWesen().getAngriff() + " Schaden. HP übrig: "+ziel.getGesundheit());
         erhöheMomentanesWesenIndex();
-        antwort.addAll(gegnerGreiftAn());
+        if(!alleWesen.stream().filter(wesen -> wesen.getClass().getSuperclass() == Gegner.class).toList().isEmpty()){
+            
+            antwort.addAll(gegnerGreiftAn());
+        }else {
+            kampfImGange = false;
+            antwort.add("Du hast gewonnen. Alle Gegner wurden besiegt!");
+        }
         return antwort;
     }
+
+
+    public void entferneWesenAusListe(Wesen ziel){
+        if(momentanesWesenIndex>= alleWesen.indexOf(ziel)){
+            momentanesWesenIndex -= 1;
+            alleWesen.remove(ziel);
+        }
+    }
+//check ob irgendein gegener noch drinnen ist
+
 
     //müsste Fehler schmeißen, wenn es kein passendens Wesen gibt
     public ArrayList<String> überMittelZiel(int ziel){
