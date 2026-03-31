@@ -71,7 +71,11 @@ public class Spiel {
             else if(status == Status.CAMPEN){
                 if(befehl == Befehl.KOCHEN){
                     status = Status.KOCHEN;
-                } else if (befehl == Befehl.ZURÜCK) {
+                }
+                else if(befehl == Befehl.KREATURAUSSTATTEN){
+
+                }
+                else if (befehl == Befehl.ZURÜCK) {
                     status = Status.EXISTIEREN;
                 }
             }
