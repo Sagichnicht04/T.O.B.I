@@ -8,6 +8,7 @@ import flo.jasmin.projekt.domain.Exceptions.FalscheZutatenEingabe;
 import flo.jasmin.projekt.domain.Exceptions.LaufGegenBarriereException;
 import flo.jasmin.projekt.domain.Exceptions.ZielIstSpielerWesen;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
 import flo.jasmin.projekt.domain.Inventar;
 import flo.jasmin.projekt.domain.Kochsystem;
 import flo.jasmin.projekt.domain.Status;
@@ -67,17 +68,19 @@ public class Spiel {
                     }
                 } else if (befehl == Befehl.CAMPEN) {
                     status = Status.CAMPEN;
+                    antwort.add("Gemeinsam schlagt ihr euer Zelt auf. Klein aber fein\nWährend dem Campen könnt ihr KOCHEN um euch zu heilen");
                 }
             }
             else if(status == Status.CAMPEN){
                 if(befehl == Befehl.KOCHEN){
                     status = Status.KOCHEN;
+                    antwort.add(kochsystem.stringRepräsentationVonZutaten(inventar));
                 } else if (befehl == Befehl.ZURÜCK) {
                     status = Status.EXISTIEREN;
                 }
             }
             else if(status == Status.KOCHEN){
-                zutatenZeug(befehl, parameter);
+                antwort.add(zutatenZeug(befehl, parameter));
             }
             else if(status == Status.KAMPF){
                 //wird an den kampf dann weiterdeligiert:
@@ -97,22 +100,34 @@ public class Spiel {
         return antwort;
     }
 
-    private void zutatenZeug(Befehl befehl, String parameter) {
+    private String zutatenZeug(Befehl befehl, String parameter) {
         if(befehl == Befehl.ZUTATEN){
             Pattern pattern = Pattern.compile("(\\w+)\\s+(\\d+)");
             Matcher matcher = pattern.matcher(parameter);
 
-            ArrayList<String> zutaten = new ArrayList<>();
-            ArrayList<Integer> anzahl = new ArrayList<>();
-
-            //TODO: Zwischenschritt über ArrayList unnötig. Sofort Hashmap machen
-            while (matcher.find()) {
-                zutaten.add(matcher.group(1));
-                anzahl.add(Integer.parseInt(matcher.group(2)));
-            }
             Map<String, Integer> eingabe = new HashMap<>();
 
-            if(zutaten.size() == anzahl.size() && !zutaten.isEmpty()){
+            while (matcher.find()) {
+                eingabe.put(matcher.group(1),Integer.parseInt(matcher.group(2)));
+
+            }
+           
+            if (!eingabe.isEmpty()){
+                try { 
+                    Map<Zutat, Integer> übersetzteEingabe = kochsystem.übersetzteZutatenNameZuZutatObjekt(eingabe, inventar);
+                    int heilung = 0;
+                    heilung = kochsystem.errechneGesundheit(übersetzteEingabe, inventar);
+                    return team.heile(heilung);
+                    //die heilung kann dann dem Team gutgeschrieben werden
+                    //da kein Fehler aufgetretten ist, wurden auch nicht mehr Items verwendet als 
+                } catch (FalscheZutatenEingabe e) {
+                    return("Bitte gib Valide Zutaten ein!");
+                }
+               
+            }
+
+
+/*             if(zutaten.size() == anzahl.size() && !zutaten.isEmpty()){
                 for (int i=0; i<zutaten.size(); i++){
                     eingabe.put(zutaten.get(i), anzahl.get(i));
                 }
@@ -132,10 +147,11 @@ public class Spiel {
             }
             else{
                 System.out.println("Bitte richtige Eingabe, danke");
-            }
+            } */
         } else if (befehl == Befehl.ZURÜCK) {
             status = Status.CAMPEN;
-        }
+        } 
+        return "nothing to state here";
     }
 
     public ArrayList<String> potentiellerKampf(){

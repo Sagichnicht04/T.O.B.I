@@ -18,11 +18,11 @@ public class Team {
         this.wesenInTeam = wesenInTeam;
     }
 
-    public void heile(int lebensPunkte){
+    public String heile(int lebensPunkte){
         for (TeamWesen teamWesen: wesenInTeam){
             //TODO: Lebenspunkteverlust wegen Floor
             teamWesen.heile(lebensPunkte / wesenInTeam.size());
         }
-        System.out.println("Ihr habt jetz " + lebensPunkte + " mehr Leben!");
+        return "Ihr habt jetz " + lebensPunkte + " mehr Leben!";
     }
 }

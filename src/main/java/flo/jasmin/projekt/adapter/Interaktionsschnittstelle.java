@@ -92,6 +92,9 @@ public class Interaktionsschnittstelle {
         else if(Objects.equals(eingabe, "angriff")){
             return Befehl.ANGRIFF;
         }
+        else if(Objects.equals(eingabe, "zutaten")){
+            return Befehl.ZUTATEN;
+        }
         return Befehl.SPEICHERN;
     }
 
@@ -100,7 +103,7 @@ public class Interaktionsschnittstelle {
         if(status == Status.EXISTIEREN){
             System.out.println("Wir existieren");
         }
-        else if (status == Status.CAMPEN){
+/*         else if (status == Status.CAMPEN){
             System.out.println("Ihr sitzt am Lagerfeuer und singt das Lagerfeuerlied.");
         } else if (status == Status.KOCHEN) {
             System.out.println("Jetzt wird gekocht");
@@ -108,6 +111,6 @@ public class Interaktionsschnittstelle {
             for(Gegenstand gegenstand : spiel.getInventar().getGegenstände()){
                 System.out.println(gegenstand.getName());
             }
-        }
+        } */
     }
 }
