@@ -8,11 +8,13 @@ import flo.jasmin.projekt.domain.Akteure.TeamWesen;
 import flo.jasmin.projekt.domain.Akteure.Wesen;
 import flo.jasmin.projekt.domain.Exceptions.ZielIstSpielerWesen;
 import flo.jasmin.projekt.domain.Befehl;
+import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 
 public class Kampf {
     private ArrayList<Wesen> alleWesen;
     private int momentanesWesenIndex;
     private boolean kampfImGange;
+    private ArrayList<Gegenstand> verloreneGegenstände;
 
     public boolean isKampfImGange() {
         return kampfImGange;
@@ -27,7 +29,22 @@ public class Kampf {
         alleWesen.sort(Comparator.comparingInt(Wesen::getInitiative).reversed());
         momentanesWesenIndex = 0;
         kampfImGange = true;
-        System.out.println("DEBUG:" + alleWesen.get(momentanesWesenIndex).getName());
+        verloreneGegenstände = new ArrayList<>();
+    }
+
+    public ArrayList<Gegenstand> getVerloreneGegenstände() {
+        return verloreneGegenstände;
+    }
+
+    public void setVerloreneGegenstände(ArrayList<Gegenstand> verloreneGegenstände) {
+        this.verloreneGegenstände = verloreneGegenstände;
+    }
+
+    private void fügeVerlorenenGegenstandHinzu(Gegenstand gegenstand){
+        this.verloreneGegenstände.add(gegenstand);
+    }
+    private void fügeVerlorenenGegenständeHinzu(ArrayList<Gegenstand> gegenstände){
+        this.verloreneGegenstände.addAll(gegenstände);
     }
 
     public ArrayList<Wesen> getAlleWesen() {
@@ -68,12 +85,24 @@ public class Kampf {
         if(ziel.getClass() == TeamWesen.class){
             throw new ZielIstSpielerWesen();
         }
-        if(!ziel.nehmeSchaden(getMomentanesWesen().getAngriff())){
-            System.out.println("Gegner entfertnt!");
-            entferneWesenAusListe(ziel);
-        };
+        ziel.nehmeSchaden(getMomentanesWesen().getAngriff());
+
         ArrayList<String> antwort = new ArrayList<String>();
         antwort.add(ziel.getName() + " nimmt " + getMomentanesWesen().getAngriff() + " Schaden. HP übrig: "+ziel.getGesundheit());
+
+        if(!ziel.kampfFähig()){
+            antwort.add(ziel.getName() + " fällt zu Boden.");
+            // Es fühlt sich so an, als hätte ich diesen Cast schon oft gemacht. Refactoren?
+            if(ziel.getClass().getSuperclass() == Gegner.class){
+                ArrayList<Gegenstand> gegenstände = ((Gegner) ziel).getInventar().getGegenstände();
+                for(Gegenstand gegenstand: gegenstände){
+                    antwort.add(ziel.getName() + " lässt " + gegenstand.getName() + " fallen.");
+                    fügeVerlorenenGegenstandHinzu(gegenstand);
+                }
+            }
+            entferneWesenAusListe(ziel);
+        }
+
         erhöheMomentanesWesenIndex();
         if(!alleWesen.stream().filter(wesen -> wesen.getClass().getSuperclass() == Gegner.class).toList().isEmpty()){
             
@@ -87,12 +116,10 @@ public class Kampf {
 
 
     public void entferneWesenAusListe(Wesen ziel){
-        if(momentanesWesenIndex>= alleWesen.indexOf(ziel)){
-            momentanesWesenIndex -= 1;
-            alleWesen.remove(ziel);
-        }
+        System.out.println("Removing " + ziel.getName());
+        momentanesWesenIndex -= 1;
+        alleWesen.remove(ziel);
     }
-//check ob irgendein gegener noch drinnen ist
 
 
     //müsste Fehler schmeißen, wenn es kein passendens Wesen gibt
@@ -101,13 +128,13 @@ public class Kampf {
     }
 
     public ArrayList<String> gegnerGreiftAn(){
-        //System.out.println(getMomentanesWesen().getClass());
         ArrayList<String> antwort = new ArrayList<String>();
         while(getMomentanesWesen().getClass().getSuperclass() == Gegner.class) {
             Gegner angreifer = (Gegner) getMomentanesWesen();
             Wesen ziel = angreifer.ausgewähltesZiel(new ArrayList<>(alleWesen.stream().filter(wesen -> wesen.getClass() == TeamWesen.class).toList()));
             ziel.nehmeSchaden(angreifer.getAngriff());
-            antwort.add(ziel.getName() + " nimmt " + angreifer.getAngriff() + " Schaden. HP überig: "+ziel.getGesundheit());
+            antwort.add(getMomentanesWesen().getName() + " greift an.");
+            antwort.add(ziel.getName() + " nimmt " + angreifer.getAngriff() + " Schaden. HP übrig: "+ziel.getGesundheit());
             erhöheMomentanesWesenIndex();
         }
         antwort.addAll(gibSpielerInfoÜberKampf());
@@ -115,17 +142,18 @@ public class Kampf {
     }
 
     public ArrayList<String> gibSpielerInfoÜberKampf(){
-        ArrayList<String> antwort = new ArrayList<String>();
+        ArrayList<String> antwort = new ArrayList<>();
         for (Wesen w: alleWesen){
             antwort.add(w.getName() +" : " + alleWesen.indexOf(w));
         }
-        antwort.add("Dein Wesen: 'Wesen'");
+        //ersetzt antwort.add("Dein Wesen: 'Wesen'");
+        antwort.add(getMomentanesWesen().getName() + " ist an der Reihe");
         antwort.addAll(holeAlleGegner());
         return antwort;
     }
 
     private ArrayList<String> holeAlleGegner(){
-        ArrayList<String> antwort = new ArrayList<String>();
+        ArrayList<String> antwort = new ArrayList<>();
         antwort.add("Gegnerauswahl: ");
         for (Wesen g : alleWesen.stream().filter(w -> w.getClass().getSuperclass() == Gegner.class).toList()){
             antwort.add(g.getName() + " : " + alleWesen.indexOf(g) + "\n");

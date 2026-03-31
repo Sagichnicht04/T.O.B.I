@@ -3,6 +3,7 @@ package flo.jasmin.projekt.adapter;
 import flo.jasmin.projekt.application.Persistenz;
 import flo.jasmin.projekt.application.Spiel;
 import flo.jasmin.projekt.domain.Befehl;
+import flo.jasmin.projekt.domain.Exceptions.FalscheBefehlEingabe;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 import flo.jasmin.projekt.domain.Status;
 
@@ -32,9 +33,13 @@ public class Interaktionsschnittstelle {
                 befehlTeil = eingabe.toLowerCase();
             }
 
-            Befehl befehl = eingabeÜbersetzenInBefehl(befehlTeil);
+            try {
+                Befehl befehl = eingabeÜbersetzenInBefehl(befehlTeil);
+                gebAlleInfosAus(spiel.spieleBefehl(befehl, paramTeil));
+            } catch (FalscheBefehlEingabe e) {
+                System.out.println("Hä?");;
+            }
 
-            gebAlleInfosAus(spiel.spieleBefehl(befehl, paramTeil));
 /*             if(spiel.getStatus() == Status.KOCHEN && befehl != Befehl.ZURÜCK){
                 spiel.spieleBefehl(Befehl.ZUTATEN, eingabe);
             } else if (spiel.getStatus() == Status.KAMPF) {
@@ -63,7 +68,7 @@ public class Interaktionsschnittstelle {
     }
 
 
-    public Befehl eingabeÜbersetzenInBefehl(String eingabe){
+    public Befehl eingabeÜbersetzenInBefehl(String eingabe) throws FalscheBefehlEingabe {
         //Kognitive engagement
         if(Objects.equals(eingabe, "norden")){
             return Befehl.HOCH;
@@ -92,7 +97,7 @@ public class Interaktionsschnittstelle {
         else if(Objects.equals(eingabe, "angriff")){
             return Befehl.ANGRIFF;
         }
-        return Befehl.SPEICHERN;
+        throw new FalscheBefehlEingabe();
     }
 
     public void anzeigen(Spiel spiel){
@@ -105,7 +110,7 @@ public class Interaktionsschnittstelle {
         } else if (status == Status.KOCHEN) {
             System.out.println("Jetzt wird gekocht");
             System.out.println("Inventar:");
-            for(Gegenstand gegenstand : spiel.getInventar().getGegenstände()){
+            for(Gegenstand gegenstand : spiel.getTeam().getInventar().getGegenstände()){
                 System.out.println(gegenstand.getName());
             }
         }

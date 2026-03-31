@@ -19,10 +19,17 @@ public class Wesen {
     }
 
 
+    public boolean kampfFähig(){
+        return gesundheit>0;
+    }
 
-    public boolean nehmeSchaden(int lebensPunkte){
-        gesundheit -= lebensPunkte;
-        return gesundheit > 0;
+    public void nehmeSchaden(int lebensPunkte){
+        if(gesundheit-lebensPunkte>0){
+            gesundheit -= lebensPunkte;
+        }
+        else{
+            gesundheit = 0;
+        }
     }
 
     public int getAngriffsStärke() {

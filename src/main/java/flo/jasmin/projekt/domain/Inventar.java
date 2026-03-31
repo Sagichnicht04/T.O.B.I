@@ -16,10 +16,6 @@ public class Inventar {
         gegenstände = new ArrayList<>();
         zeltkapazität = 1;
         kochtopfMultiplikator = 1;
-        gegenstände.add(new Zutat("Karotte", 2, "Orange und Lang. Macht die Augen besser und wird von Hasen gegessen.", 3));
-        gegenstände.add(new Zutat("Tomate", 1, "Jeder weiß, dass Tomaten aus Ketchup gemacht werden.", 1));
-        gegenstände.add(new Zutat("Tomate", 1, "Jeder weiß, dass Tomaten aus Ketchup gemacht werden.", 1));
-        gegenstände.add(new Zutat("Tomate", 1, "Jeder weiß, dass Tomaten aus Ketchup gemacht werden.", 1));
     }
 
     public int getErspartes() {
@@ -56,5 +52,11 @@ public class Inventar {
 
     public void setKochtopfMultiplikator(float kochtopfMultiplikator) {
         this.kochtopfMultiplikator = kochtopfMultiplikator;
+    }
+    public void fügeGegenstandHinzu(Gegenstand gegenstand){
+        gegenstände.add(gegenstand);
+    }
+    public void fügeGegenständeHinzu(ArrayList<Gegenstand> gegenstände){
+        this.gegenstände.addAll(gegenstände);
     }
 }
