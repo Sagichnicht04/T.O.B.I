@@ -1,5 +1,6 @@
 package flo.jasmin.projekt.application;
 
+import flo.jasmin.projekt.domain.Akteure.Gegner;
 import flo.jasmin.projekt.domain.Akteure.Team;
 import flo.jasmin.projekt.domain.Akteure.TeamWesen;
 import flo.jasmin.projekt.domain.Akteure.Wesen;
@@ -22,14 +23,12 @@ public class Spiel {
     private Karte karte;
     private Kochsystem kochsystem;
     private Status status;
-    private Inventar inventar;
     private Kampf kampf;
 
     public Spiel(){
         karte = new Karte();
         team = new Team();
         status = Status.EXISTIEREN;
-        inventar = new Inventar();
         kochsystem = new Kochsystem();
     }
 
@@ -74,8 +73,12 @@ public class Spiel {
             else if(status == Status.CAMPEN){
                 if(befehl == Befehl.KOCHEN){
                     status = Status.KOCHEN;
-                    antwort.add(kochsystem.stringRepräsentationVonZutaten(inventar));
-                } else if (befehl == Befehl.ZURÜCK) {
+                    antwort.add(kochsystem.stringRepräsentationVonZutaten(team.getInventar()));
+                }
+                else if(befehl == Befehl.KREATURAUSSTATTEN){
+
+                }
+                else if (befehl == Befehl.ZURÜCK) {
                     status = Status.EXISTIEREN;
                 }
             }
@@ -87,9 +90,10 @@ public class Spiel {
                 try{
                     antwort.addAll(kampf.überMittelZiel(Integer.valueOf(parameter)));
                     if (!kampf.isKampfImGange()) {
+                        team.getInventar().fügeGegenständeHinzu(kampf.getVerloreneGegenstände());
                         status = Status.EXISTIEREN;
                         antwort.add("Endlich kannst du dich umschauen.\n"+karte.gibMomentaneZelle().getZellentyp().getBeschreibung());
-                    } 
+                    }
                 } catch (IndexOutOfBoundsException e){
                     antwort.add("DIESER GEGNER EXISTIERT NICHT! \nBitte gib den Index eines Gegners an!");
                 } catch (ZielIstSpielerWesen f) {
@@ -114,9 +118,9 @@ public class Spiel {
            
             if (!eingabe.isEmpty()){
                 try { 
-                    Map<Zutat, Integer> übersetzteEingabe = kochsystem.übersetzteZutatenNameZuZutatObjekt(eingabe, inventar);
+                    Map<Zutat, Integer> übersetzteEingabe = kochsystem.übersetzteZutatenNameZuZutatObjekt(eingabe, team.getInventar());
                     int heilung = 0;
-                    heilung = kochsystem.errechneGesundheit(übersetzteEingabe, inventar);
+                    heilung = kochsystem.errechneGesundheit(übersetzteEingabe, team.getInventar());
                     return team.heile(heilung);
                     //da kein Fehler aufgetretten ist, wurden auch nicht mehr Items verwendet als 
                 } catch (FalscheZutatenEingabe e) {
@@ -136,8 +140,17 @@ public class Spiel {
         ArrayList<String> antwort = new ArrayList<String>();
         if(karte.gibMomentaneZelle().getGegnerWahrscheinlichkeit() > random.nextFloat()){
             ArrayList<Wesen> alleWesen = new ArrayList<>();
+            ArrayList<Gegner> alleGegner = karte.gibMomentaneZelle().getZellentyp().getGegnerAuswahl();
+
+            antwort.add("Herrje!");
+            for (Gegner gegner: alleGegner){
+                antwort.add(gegner.getName() + " erscheint");
+            }
+
+
             alleWesen.addAll(team.getWesenInTeam());
-            alleWesen.addAll(karte.gibMomentaneZelle().getZellentyp().getGegnerAuswahl());
+            alleWesen.addAll(alleGegner);
+
             kampf = new Kampf(alleWesen);
             status = Status.KAMPF;
             antwort.addAll(kampf.gegnerGreiftAn());
@@ -184,14 +197,4 @@ public class Spiel {
     public void setKochsystem(Kochsystem kochsystem) {
         this.kochsystem = kochsystem;
     }
-
-    public Inventar getInventar() {
-        return inventar;
-    }
-
-    public void setInventar(Inventar inventar) {
-        this.inventar = inventar;
-    }
-
-
 }

@@ -2,7 +2,9 @@ package flo.jasmin.projekt.adapter;
 
 import flo.jasmin.projekt.application.Persistenz;
 import flo.jasmin.projekt.application.Spiel;
+import flo.jasmin.projekt.domain.Akteure.Wesen;
 import flo.jasmin.projekt.domain.Befehl;
+import flo.jasmin.projekt.domain.Exceptions.FalscheBefehlEingabe;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 import flo.jasmin.projekt.domain.Status;
 
@@ -32,9 +34,13 @@ public class Interaktionsschnittstelle {
                 befehlTeil = eingabe.toLowerCase();
             }
 
-            Befehl befehl = eingabeÜbersetzenInBefehl(befehlTeil);
+            try {
+                Befehl befehl = eingabeÜbersetzenInBefehl(befehlTeil);
+                gebAlleInfosAus(spiel.spieleBefehl(befehl, paramTeil));
+            } catch (FalscheBefehlEingabe e) {
+                System.out.println("Hä?");;
+            }
 
-            gebAlleInfosAus(spiel.spieleBefehl(befehl, paramTeil));
 /*             if(spiel.getStatus() == Status.KOCHEN && befehl != Befehl.ZURÜCK){
                 spiel.spieleBefehl(Befehl.ZUTATEN, eingabe);
             } else if (spiel.getStatus() == Status.KAMPF) {
@@ -63,7 +69,7 @@ public class Interaktionsschnittstelle {
     }
 
 
-    public Befehl eingabeÜbersetzenInBefehl(String eingabe){
+    public Befehl eingabeÜbersetzenInBefehl(String eingabe) throws FalscheBefehlEingabe {
         //Kognitive engagement
         if(Objects.equals(eingabe, "norden")){
             return Befehl.HOCH;
@@ -83,7 +89,7 @@ public class Interaktionsschnittstelle {
         else if(Objects.equals(eingabe, "kochen")){
             return Befehl.KOCHEN;
         }
-        else if(Objects.equals(eingabe, "zurück")){
+        else if(Objects.equals(eingabe, "zurueck")){
             return Befehl.ZURÜCK;
         }
         else if(Objects.equals(eingabe, "speichern")){
@@ -95,7 +101,10 @@ public class Interaktionsschnittstelle {
         else if(Objects.equals(eingabe, "zutaten")){
             return Befehl.ZUTATEN;
         }
-        return Befehl.SPEICHERN;
+        else if(Objects.equals(eingabe, "ausstatten")){
+            return Befehl.KREATURAUSSTATTEN;
+        }
+        throw new FalscheBefehlEingabe();
     }
 
     public void anzeigen(Spiel spiel){
@@ -105,10 +114,19 @@ public class Interaktionsschnittstelle {
         }
 /*         else if (status == Status.CAMPEN){
             System.out.println("Ihr sitzt am Lagerfeuer und singt das Lagerfeuerlied.");
+            System.out.println("Inventar:");
+            for(Gegenstand gegenstand : spiel.getTeam().getInventar().getGegenstände()){
+                System.out.println(gegenstand.getName());
+            }
+            System.out.println();
+            System.out.println("Team:");
+            for(Wesen wesen : spiel.getTeam().getWesenInTeam()){
+                System.out.println(wesen.getName());
+            }
         } else if (status == Status.KOCHEN) {
             System.out.println("Jetzt wird gekocht");
             System.out.println("Inventar:");
-            for(Gegenstand gegenstand : spiel.getInventar().getGegenstände()){
+            for(Gegenstand gegenstand : spiel.getTeam().getInventar().getGegenstände()){
                 System.out.println(gegenstand.getName());
             }
         } */
