@@ -17,7 +17,7 @@ public class Kochsystem{
     public Map<Zutat, Integer> errechneMöglicheZutaten(Inventar inventar){
         Map<Zutat, Integer> ergebnis = new HashMap<>();
         for (Gegenstand gegenstand: inventar.getGegenstände()){
-            if(gegenstand.getClass() == Zutat.class){
+            if(gegenstand.getClass().getSuperclass() == Zutat.class){
                 if(ergebnis.containsKey(gegenstand)){
                     ergebnis.put((Zutat)gegenstand, ergebnis.get(gegenstand) + 1);
                 }

@@ -58,7 +58,7 @@ public class Spiel {
                         karte.gehe(befehl);
                         ArrayList<String> antwortAusPotenziellerKampf = potentiellerKampf();
                         if(antwortAusPotenziellerKampf.isEmpty()){
-                            antwort.add(karte.gibMomentaneZelle().getZellentyp().getBeschreibung());
+                            antwort.add(karte.gibMomentaneZelle().getBeschreibung());
                         } else{
                             antwort.addAll(antwortAusPotenziellerKampf);
                         }
@@ -83,7 +83,7 @@ public class Spiel {
                 }
             }
             else if(status == Status.KOCHEN){
-                antwort.add(zutatenZeug(befehl, parameter));
+                antwort.add(zutatenZeug(befehl, parameterAufteilen(parameter)));
             }
             else if(status == Status.KAMPF){
                 //wird an den kampf dann weiterdeligiert:
@@ -104,21 +104,24 @@ public class Spiel {
         return antwort;
     }
 
-    private String zutatenZeug(Befehl befehl, String parameter) {
+    private Map<String, Integer> parameterAufteilen(String parameter){
+        Pattern pattern = Pattern.compile("(\\w+)\\s+(\\d+)");
+        Matcher matcher = pattern.matcher(parameter);
+        Map<String, Integer> eingabe = new HashMap<>();
+        while (matcher.find()) {
+            eingabe.put(matcher.group(1),Integer.parseInt(matcher.group(2)));
+
+        }
+        return eingabe;
+    }
+
+    //das wird wahrscheinlcih entkoppelt: Das selbe prinzip wird auch zum Kaufen verwendet. Dann wird das nur gegen andere Sachen gematched. 
+    private String zutatenZeug(Befehl befehl, Map<String, Integer> aufgeteilteParameter) {
         if(befehl == Befehl.ZUTATEN){
-            Pattern pattern = Pattern.compile("(\\w+)\\s+(\\d+)");
-            Matcher matcher = pattern.matcher(parameter);
-
-            Map<String, Integer> eingabe = new HashMap<>();
-
-            while (matcher.find()) {
-                eingabe.put(matcher.group(1),Integer.parseInt(matcher.group(2)));
-
-            }
            
-            if (!eingabe.isEmpty()){
+            if (!aufgeteilteParameter.isEmpty()){
                 try { 
-                    Map<Zutat, Integer> übersetzteEingabe = kochsystem.übersetzteZutatenNameZuZutatObjekt(eingabe, team.getInventar());
+                    Map<Zutat, Integer> übersetzteEingabe = kochsystem.übersetzteZutatenNameZuZutatObjekt(aufgeteilteParameter, team.getInventar());
                     int heilung = 0;
                     heilung = kochsystem.errechneGesundheit(übersetzteEingabe, team.getInventar());
                     return team.heile(heilung);

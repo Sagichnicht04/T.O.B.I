@@ -19,7 +19,6 @@ public class Zellentyp {
     }
 
 
-
     public String getBeschreibung() {
         return beschreibung;
     }
