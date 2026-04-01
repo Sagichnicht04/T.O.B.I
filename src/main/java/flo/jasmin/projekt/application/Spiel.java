@@ -118,7 +118,6 @@ public class Spiel {
                     int heilung = 0;
                     heilung = kochsystem.errechneGesundheit(übersetzteEingabe, inventar);
                     return team.heile(heilung);
-                    //die heilung kann dann dem Team gutgeschrieben werden
                     //da kein Fehler aufgetretten ist, wurden auch nicht mehr Items verwendet als 
                 } catch (FalscheZutatenEingabe e) {
                     return("Bitte gib Valide Zutaten ein!");
@@ -126,28 +125,6 @@ public class Spiel {
                
             }
 
-
-/*             if(zutaten.size() == anzahl.size() && !zutaten.isEmpty()){
-                for (int i=0; i<zutaten.size(); i++){
-                    eingabe.put(zutaten.get(i), anzahl.get(i));
-                }
-                try {
-                    team.heile(kochsystem.errechneGesundheit(eingabe, inventar));
-                    for(Gegenstand gegenstand: (ArrayList<Gegenstand>) inventar.getGegenstände().clone()){
-                        for(String zutat: eingabe.keySet()){
-                            if(Objects.equals(gegenstand.getName(), zutat) && eingabe.get(zutat) > 0){
-                                eingabe.put(zutat, eingabe.get(zutat)-1);
-                                inventar.entferneGegenstände(new ArrayList<>(List.of(gegenstand)));
-                            }
-                        }
-                    }
-                } catch (FalscheZutatenEingabe e) {
-                    System.out.println("Bitte richtige Eingabe, danke");
-                }
-            }
-            else{
-                System.out.println("Bitte richtige Eingabe, danke");
-            } */
         } else if (befehl == Befehl.ZURÜCK) {
             status = Status.CAMPEN;
         } 
