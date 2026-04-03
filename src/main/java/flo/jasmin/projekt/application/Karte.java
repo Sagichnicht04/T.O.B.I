@@ -105,18 +105,6 @@ public class Karte {
     }
 
     private Zellentyp gibZellenTyp(Position position) {
-        /*
-        if (pos == 22) {
-            return Festung
-        }
-        elif(pos in [16, 63, 88]){
-            return DorfZellenTyp
-        } else if ( sollWasserZelleSein(pos) ){
-            return WasserZelle
-        } else {
-            return GrasZelle
-        }
-         */
         if(sollWasserZelleSein(position)){
             return new WasserZelle();
         }

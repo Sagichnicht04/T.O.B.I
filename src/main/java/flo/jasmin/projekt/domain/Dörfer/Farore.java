@@ -12,7 +12,8 @@ import flo.jasmin.projekt.domain.Gegenstaende.konkreteZutaten.Tomate;
 public class Farore extends Dorf{
 
     public Farore() {
-        super("Farore, ein wunderschönes kleines Dorf. Alles was man braucht... außer vllt ", Set.of(new Karotte(), new Tomate(), new Holzschwert()));
+        super("Farore, ein wunderschönes kleines Dorf. Alles was man braucht... außer vllt ",
+         Set.of(new Karotte(), new Tomate(), new Holzschwert()));
     }
     
 }

@@ -6,6 +6,7 @@ public enum Status {
     INVENTAR,
     EXISTIEREN,
     DORF,
+    EINKAUF,
     DIALOG,
     CAMPEN
 }

@@ -5,11 +5,13 @@ import flo.jasmin.projekt.domain.Akteure.Team;
 import flo.jasmin.projekt.domain.Akteure.TeamWesen;
 import flo.jasmin.projekt.domain.Akteure.Wesen;
 import flo.jasmin.projekt.domain.Befehl;
+import flo.jasmin.projekt.domain.Dorf;
 import flo.jasmin.projekt.domain.Exceptions.FalscheZutatenEingabe;
 import flo.jasmin.projekt.domain.Exceptions.LaufGegenBarriereException;
 import flo.jasmin.projekt.domain.Exceptions.ZielIstSpielerWesen;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
+import flo.jasmin.projekt.domain.Values.Einkauf;
 import flo.jasmin.projekt.domain.Inventar;
 import flo.jasmin.projekt.domain.Kochsystem;
 import flo.jasmin.projekt.domain.Status;
@@ -24,6 +26,7 @@ public class Spiel {
     private Kochsystem kochsystem;
     private Status status;
     private Kampf kampf;
+    private Einkauf einkauf;
 
     public Spiel(){
         karte = new Karte();
@@ -34,7 +37,7 @@ public class Spiel {
 
     //Holen wir vermutlich einfach nur aus dem Zellentypen
     public Set<Befehl> gibErlaubteBefehle(){
-        if(status == Status.EXISTIEREN) {
+        if(status == Status.EXISTIEREN || status == Status.DORF) {
             return karte.gibMomentaneZelle().getZellentyp().getErlaubteBefehle();
         } else if (status == Status.CAMPEN) {
             return Set.of(Befehl.ZURÜCK, Befehl.KOCHEN);
@@ -42,6 +45,8 @@ public class Spiel {
             return Set.of(Befehl.ZURÜCK, Befehl.ZUTATEN);
         } else if (status == Status.KAMPF) {
             return Set.of(Befehl.ANGRIFF);
+        } else if (status == Status.EINKAUF){
+            return Set.of(Befehl.JA, Befehl.ZURÜCK);
         }
         return new HashSet<>();
     }
@@ -68,6 +73,9 @@ public class Spiel {
                 } else if (befehl == Befehl.CAMPEN) {
                     status = Status.CAMPEN;
                     antwort.add("Gemeinsam schlagt ihr euer Zelt auf. Klein aber fein\nWährend dem Campen könnt ihr KOCHEN um euch zu heilen");
+                } else if(befehl == Befehl.KAUFEN) {
+                    status = Status.DORF;
+                    antwort.add(karte.gibMomentaneZelle().getDorf().sortimentAnzeigen());
                 }
             }
             else if(status == Status.CAMPEN){
@@ -99,6 +107,23 @@ public class Spiel {
                 } catch (ZielIstSpielerWesen f) {
                     antwort.add(f.getMessage());
                 }
+            } 
+            else if (status == Status.DORF){
+                if(befehl == Befehl.KAUFEN){
+                    Map<Gegenstand, Integer> auswahl = karte.gibMomentaneZelle().getDorf().übersetzeNameZuGegenstand(parameterAufteilen(parameter));
+                    int preis = Dorf.gesamtpreisBerechnen(auswahl);
+                    einkauf = new Einkauf(auswahl, preis);
+                    antwort.add(Dorf.preisVisualisierung(preis));
+                    status = Status.EINKAUF;
+                }
+            }
+            else if (status == Status.EINKAUF){
+                if(befehl == Befehl.JA){
+                    //die ganze abwicklung
+                    antwort.add("DEBUG: Erfolgreicher Einkauf!");
+                }
+                einkauf = null;
+                status = Status.EXISTIEREN;
             }
         }
         return antwort;
@@ -114,6 +139,7 @@ public class Spiel {
         }
         return eingabe;
     }
+
 
     //das wird wahrscheinlcih entkoppelt: Das selbe prinzip wird auch zum Kaufen verwendet. Dann wird das nur gegen andere Sachen gematched. 
     private String zutatenZeug(Befehl befehl, Map<String, Integer> aufgeteilteParameter) {

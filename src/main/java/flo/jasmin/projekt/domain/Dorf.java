@@ -1,8 +1,16 @@
 package flo.jasmin.projekt.domain;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
+import flo.jasmin.projekt.domain.Gegenstaende.Ausstattung;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
 
 public class Dorf {
 
@@ -15,8 +23,38 @@ public class Dorf {
     }
   // ausgabe des Sortiments mit Preis. 
 
+    public String sortimentAnzeigen(){
+        String sortimentAnzeige = "Hier das Sortiment: \nZutaten:\n-------------------------\n";
+        for( Gegenstand g : sortiment.stream().filter(g -> g instanceof Zutat).toList()){
+            sortimentAnzeige += g.getName() + " Preis: " + g.getPreis() + "\n";
+        }
+        sortimentAnzeige += "Ausstattung:----------------\n";
+        for( Gegenstand g : sortiment.stream().filter(g -> g instanceof Ausstattung).toList()){
+            sortimentAnzeige += g.getName() + " Preis: " + g.getPreis() + "\n";
+        }
+        return sortimentAnzeige;
+    }
 
+    public Map<Gegenstand, Integer> übersetzeNameZuGegenstand(Map<String, Integer> eingabe){
+        Map<Gegenstand, Integer> ergebniss = new HashMap<Gegenstand,Integer>();
+        for(String s : eingabe.keySet()){
+            Gegenstand gegenstand = sortiment.stream().filter(g -> Objects.equals(g.getName().toLowerCase(), s.toLowerCase())).toList().get(0);
+            ergebniss.put(gegenstand, eingabe.get(s));
+        }
+        return ergebniss;
+    }
 
+    public static int gesamtpreisBerechnen(Map<Gegenstand, Integer> einkauf) {
+        int preis = 0;
+        for (Gegenstand g : einkauf.keySet()){
+            preis += g.getPreis() * einkauf.get(g);
+        }
+        return preis;
+    }
+
+    public static String preisVisualisierung(int preis){
+        return "Der Gesamtpreis für deinen Einkauf beträgt: " + preis + "\nBestätige deinen Einkauf mit JA oder breche ab mit NEIN";
+    }
 
   
     public String getBeschreibung() {

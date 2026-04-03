@@ -26,6 +26,15 @@ public class Zelle {
         }
     }
 
+    
+
+    public Dorf getDorf() {
+        return dorf;
+    }
+
+    public void setDorf(Dorf dorf) {
+        this.dorf = dorf;
+    }
 
     public Zellentyp getZellentyp() {
         return zellentyp;

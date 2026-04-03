@@ -104,6 +104,12 @@ public class Interaktionsschnittstelle {
         else if(Objects.equals(eingabe, "ausstatten")){
             return Befehl.KREATURAUSSTATTEN;
         }
+        else if(Objects.equals(eingabe, "kaufen")){
+            return Befehl.KAUFEN;
+        }
+        else if(Objects.equals(eingabe, "ja")){
+            return Befehl.JA;
+        }
         throw new FalscheBefehlEingabe();
     }
 
