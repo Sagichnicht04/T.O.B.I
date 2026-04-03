@@ -10,3 +10,15 @@ public enum Status {
     DIALOG,
     CAMPEN
 }
+
+// status für generell:
+/* 
+existieren
+    ->kampf
+    ->Campen
+        ->Kochen
+    ->Dorf
+        -> Einkauf
+        
+
+*/

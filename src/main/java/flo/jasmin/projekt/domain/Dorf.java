@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import flo.jasmin.projekt.domain.Exceptions.FalscheZutatenEingabe;
 import flo.jasmin.projekt.domain.Gegenstaende.Ausstattung;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
@@ -35,13 +36,18 @@ public class Dorf {
         return sortimentAnzeige;
     }
 
-    public Map<Gegenstand, Integer> übersetzeNameZuGegenstand(Map<String, Integer> eingabe){
-        Map<Gegenstand, Integer> ergebniss = new HashMap<Gegenstand,Integer>();
+    public Map<Gegenstand, Integer> übersetzeNameZuGegenstand(Map<String, Integer> eingabe) throws FalscheZutatenEingabe{
+        try {
+                   Map<Gegenstand, Integer> ergebniss = new HashMap<Gegenstand,Integer>();
         for(String s : eingabe.keySet()){
             Gegenstand gegenstand = sortiment.stream().filter(g -> Objects.equals(g.getName().toLowerCase(), s.toLowerCase())).toList().get(0);
             ergebniss.put(gegenstand, eingabe.get(s));
         }
         return ergebniss;
+        } catch (IndexOutOfBoundsException e) {
+            throw new FalscheZutatenEingabe();
+        }
+ 
     }
 
     public static int gesamtpreisBerechnen(Map<Gegenstand, Integer> einkauf) {

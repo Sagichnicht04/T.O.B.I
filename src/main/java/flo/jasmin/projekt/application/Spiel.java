@@ -110,11 +110,17 @@ public class Spiel {
             } 
             else if (status == Status.DORF){
                 if(befehl == Befehl.KAUFEN){
-                    Map<Gegenstand, Integer> auswahl = karte.gibMomentaneZelle().getDorf().übersetzeNameZuGegenstand(parameterAufteilen(parameter));
-                    int preis = Dorf.gesamtpreisBerechnen(auswahl);
-                    einkauf = new Einkauf(auswahl, preis);
-                    antwort.add(Dorf.preisVisualisierung(preis));
-                    status = Status.EINKAUF;
+                    Map<Gegenstand, Integer> auswahl;
+                    try {
+                        auswahl = karte.gibMomentaneZelle().getDorf().übersetzeNameZuGegenstand(parameterAufteilen(parameter));
+                        int preis = Dorf.gesamtpreisBerechnen(auswahl);
+                        einkauf = new Einkauf(auswahl, preis);
+                        antwort.add(Dorf.preisVisualisierung(preis));
+                        status = Status.EINKAUF;
+                    } catch (FalscheZutatenEingabe e) {
+                        antwort.add(e.getMessage());
+                    }
+                    
                 }
             }
             else if (status == Status.EINKAUF){
