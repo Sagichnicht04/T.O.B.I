@@ -32,10 +32,4 @@ public class Zutat extends Gegenstand{
         }
         return false;
     }
-
-    @Override
-    public int hashCode(){
-        return Objects.hash(getName());
-    }
-    
 }
