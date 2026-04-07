@@ -36,4 +36,16 @@ public class Gegner extends Wesen{
     public Wesen ausgewähltesZiel(ArrayList<Wesen> wesen){
         return wesen.get(0);
     }
+    
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if(o instanceof Gegner){
+            Gegner other = (Gegner) o;
+            if (this.getName().equals(other.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

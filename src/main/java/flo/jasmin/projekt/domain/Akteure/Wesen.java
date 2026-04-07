@@ -1,5 +1,9 @@
 package flo.jasmin.projekt.domain.Akteure;
 
+import java.util.Objects;
+
+import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
+
 public class Wesen {
     private int gesundheit;
     private int verteidigung;
@@ -95,5 +99,29 @@ public class Wesen {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        //dadurch kann man sich das Prüfen in den Subklassen sparren
+        if(o.getClass() == this.getClass()){
+            Wesen other = (Wesen) o;
+            if (this.getName().equals(other.getName())
+                && this.getInitiative() == other.getInitiative()
+                && this.getAngriff() == other.getAngriff()
+                && this.getVerteidigung() == other.getVerteidigung()
+                && this.getStufe() == other.getStufe()
+                && this.getGesundheit() == other.getGesundheit()
+            ){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(getName(), getVerteidigung(), getAngriff(), getInitiative(), getGesundheit());
     }
 }

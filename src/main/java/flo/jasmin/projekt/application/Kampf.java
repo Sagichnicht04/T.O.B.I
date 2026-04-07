@@ -129,9 +129,9 @@ public class Kampf {
 
     public ArrayList<String> gegnerGreiftAn(){
         ArrayList<String> antwort = new ArrayList<String>();
-        while(getMomentanesWesen().getClass().getSuperclass() == Gegner.class) {
+        while(getMomentanesWesen() instanceof Gegner) {
             Gegner angreifer = (Gegner) getMomentanesWesen();
-            Wesen ziel = angreifer.ausgewähltesZiel(new ArrayList<>(alleWesen.stream().filter(wesen -> wesen.getClass() == TeamWesen.class).toList()));
+            Wesen ziel = angreifer.ausgewähltesZiel(new ArrayList<>(alleWesen.stream().filter(wesen -> wesen instanceof TeamWesen).toList()));
             ziel.nehmeSchaden(angreifer.getAngriff());
             antwort.add(getMomentanesWesen().getName() + " greift an.");
             antwort.add(ziel.getName() + " nimmt " + angreifer.getAngriff() + " Schaden. HP übrig: "+ziel.getGesundheit());
@@ -161,9 +161,4 @@ public class Kampf {
         return antwort;
     }
 
-  /*   public void spieleBefehl(Befehl befehl, String parameter) {
-        Wesen ziel = alleWesen.get(Integer.parseInt(parameter));
-        teamGreiftAn(ziel);
-        gegnerGreiftAn();
-    } */
 }
