@@ -1,26 +1,28 @@
 package flo.jasmin.projekt.domain.Akteure;
 
 import flo.jasmin.projekt.domain.Inventar;
+import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 import flo.jasmin.projekt.domain.Visualisierung.AsciiVisualisierung;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Gegner extends Wesen{
     private AsciiVisualisierung asciiVisualisierung;
-    private Inventar inventar;
+    private ArrayList<Gegenstand> inventar;
 
     public Gegner(int gesundheit, int verteidigung, int angriff, int initiative, int erfahrung, String name, AsciiVisualisierung asciiVisualisierung){
         super(gesundheit, verteidigung, angriff, initiative, erfahrung, name);
         setAsciiVisualisierung(asciiVisualisierung);
-        inventar = new Inventar();
+        inventar = new ArrayList<>();
     }
 
 
-    public Inventar getInventar() {
+    public ArrayList<Gegenstand> getInventar() {
         return inventar;
     }
 
-    public void setInventar(Inventar inventar) {
+    public void setInventar(ArrayList<Gegenstand> inventar) {
         this.inventar = inventar;
     }
 

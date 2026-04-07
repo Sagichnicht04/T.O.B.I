@@ -37,21 +37,10 @@ public class Interaktionsschnittstelle {
             try {
                 Befehl befehl = eingabeÜbersetzenInBefehl(befehlTeil);
                 gebAlleInfosAus(spiel.spieleBefehl(befehl, paramTeil));
+                
             } catch (FalscheBefehlEingabe e) {
                 System.out.println("Hä?");;
             }
-
-/*             if(spiel.getStatus() == Status.KOCHEN && befehl != Befehl.ZURÜCK){
-                spiel.spieleBefehl(Befehl.ZUTATEN, eingabe);
-            } else if (spiel.getStatus() == Status.KAMPF) {
-                //spiel.getKampf(); //.spieleBefehl(befehl, "0");
-                spiel.spieleBefehl(befehl, paramTeil);
-            } else{
-                gebAlleInfosAus(spiel.spieleBefehl(befehl, ""));
-                if(befehl == Befehl.SPEICHERN) {
-                    break;
-                }
-            } */
         }
     }
 
@@ -115,9 +104,7 @@ public class Interaktionsschnittstelle {
 
     public void anzeigen(Spiel spiel){
         Status status = spiel.getStatus();
-        if(status == Status.EXISTIEREN){
-            System.out.println("Wir existieren");
-        }
+        System.out.println("Momentaner Status: " + status);
 /*         else if (status == Status.CAMPEN){
             System.out.println("Ihr sitzt am Lagerfeuer und singt das Lagerfeuerlied.");
             System.out.println("Inventar:");

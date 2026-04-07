@@ -10,7 +10,7 @@ import java.util.Comparator;
 public class Goblin extends Gegner {
     public Goblin(){
         super(10, 5, 5, 3, 2, "Goblin", new GoblinVisualisierung());
-        super.getInventar().fügeGegenstandHinzu(new Banane());
+        super.getInventar().add(new Banane());
     }
 
     //Goblin greift standardmäßig schwächstes Wesen an

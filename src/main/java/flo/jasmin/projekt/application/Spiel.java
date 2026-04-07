@@ -65,7 +65,7 @@ public class Spiel {
                 if (befehl == Befehl.RUNTER || befehl == Befehl.HOCH || befehl == Befehl.LINKS || befehl == Befehl.RECHTS) {
                     try {
                         karte.gehe(befehl);
-                        ArrayList<String> antwortAusPotenziellerKampf = potentiellerKampf();
+                        ArrayList<String> antwortAusPotenziellerKampf = potentiellerKampf(new Random());
                         if(antwortAusPotenziellerKampf.isEmpty()){
                             antwort.add(karte.gibMomentaneZelle().getBeschreibung());
                         } else{
@@ -184,8 +184,8 @@ public class Spiel {
         return "nothing to state here";
     }
 
-    public ArrayList<String> potentiellerKampf(){
-        Random random = new Random();
+    //heir müssen wir evtl mit dependency injection arbeiten. Wieso? Weil wir diesen Code auch testen sollten und das Random dann gezielt im test überschreiben
+    public ArrayList<String> potentiellerKampf(Random random){
         ArrayList<String> antwort = new ArrayList<String>();
         if(karte.gibMomentaneZelle().getGegnerWahrscheinlichkeit() > random.nextFloat()){
             ArrayList<Wesen> alleWesen = new ArrayList<>();
@@ -195,7 +195,6 @@ public class Spiel {
             for (Gegner gegner: alleGegner){
                 antwort.add(gegner.getName() + " erscheint");
             }
-
 
             alleWesen.addAll(team.holeKampffähigeWesen());
             alleWesen.addAll(alleGegner);

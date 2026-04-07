@@ -93,8 +93,8 @@ public class Kampf {
         if(!ziel.kampfFähig()){
             antwort.add(ziel.getName() + " fällt zu Boden.");
             // Es fühlt sich so an, als hätte ich diesen Cast schon oft gemacht. Refactoren?
-            if(ziel.getClass().getSuperclass() == Gegner.class){
-                ArrayList<Gegenstand> gegenstände = ((Gegner) ziel).getInventar().getGegenstände();
+            if(ziel instanceof Gegner){
+                ArrayList<Gegenstand> gegenstände = ((Gegner) ziel).getInventar();
                 for(Gegenstand gegenstand: gegenstände){
                     antwort.add(ziel.getName() + " lässt " + gegenstand.getName() + " fallen.");
                     fügeVerlorenenGegenstandHinzu(gegenstand);
@@ -104,8 +104,7 @@ public class Kampf {
         }
 
         erhöheMomentanesWesenIndex();
-        if(!alleWesen.stream().filter(wesen -> wesen.getClass().getSuperclass() == Gegner.class).toList().isEmpty()){
-            
+        if(!alleWesen.stream().filter(wesen -> wesen instanceof Gegner).toList().isEmpty()){
             antwort.addAll(gegnerGreiftAn());
         }else {
             kampfImGange = false;
@@ -116,13 +115,9 @@ public class Kampf {
 
 
     public void entferneWesenAusListe(Wesen ziel){
-        System.out.println("Removing " + ziel.getName());
         if(alleWesen.indexOf(ziel) < momentanesWesenIndex){
             momentanesWesenIndex -= 1;
         }
-/*         if (alleWesen.size()>=momentanesWesenIndex){
-
-        } */
         alleWesen.remove(ziel);
     }
 
