@@ -1,8 +1,10 @@
 package flo.jasmin.projekt.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
+import flo.jasmin.projekt.domain.Exceptions.NichtGenugErsparrtes;
 import flo.jasmin.projekt.domain.Exceptions.NichtGenugZutatenImInventar;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
@@ -15,8 +17,9 @@ public class Inventar {
     private float kochtopfMultiplikator;
 
     public Inventar(){
-        erspartes = 0;
+        erspartes = 5;
         gegenstände = new ArrayList<>();
+        zutaten = new HashMap<>();
         zeltkapazität = 1;
         kochtopfMultiplikator = 1;
     }
@@ -97,6 +100,34 @@ public class Inventar {
                 throw new NichtGenugZutatenImInventar();
             }
         }
+    }
+
+    public void genugErsparrtes(int betrag) throws NichtGenugErsparrtes{
+        if (betrag > erspartes){
+            throw new NichtGenugErsparrtes();
+        }
+    }
+
+    public void geldEntfernen(int betrag) throws NichtGenugErsparrtes{
+        genugErsparrtes(betrag);
+        erspartes -= betrag;
+    }
+
+    public void fügeGemischteGegenständeHinzu(Map<Gegenstand, Integer> einkauf){
+        Map<Zutat, Integer> zutaten = new HashMap<>();
+        ArrayList<Gegenstand> anderes = new ArrayList<>();
+
+        for (Gegenstand g : einkauf.keySet()){
+            if (g instanceof Zutat){
+                zutaten.put((Zutat) g, einkauf.get(g));
+            }else {
+                for (int i = 0; i< einkauf.get(g); i++){
+                    anderes.add(g);
+                }
+            }
+        }
+        fügeZutatenHinzu(zutaten);
+        fügeGegenständeHinzu(anderes);
     }
 
 }

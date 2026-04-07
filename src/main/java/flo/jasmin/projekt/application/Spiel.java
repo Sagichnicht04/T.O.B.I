@@ -8,6 +8,7 @@ import flo.jasmin.projekt.domain.Befehl;
 import flo.jasmin.projekt.domain.Dorf;
 import flo.jasmin.projekt.domain.Exceptions.FalscheZutatenEingabe;
 import flo.jasmin.projekt.domain.Exceptions.LaufGegenBarriereException;
+import flo.jasmin.projekt.domain.Exceptions.NichtGenugErsparrtes;
 import flo.jasmin.projekt.domain.Exceptions.ZielIstSpielerWesen;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
@@ -27,6 +28,8 @@ public class Spiel {
     private Status status;
     private Kampf kampf;
     private Einkauf einkauf;
+
+
 
     public Spiel(){
         karte = new Karte();
@@ -75,7 +78,8 @@ public class Spiel {
                     antwort.add("Gemeinsam schlagt ihr euer Zelt auf. Klein aber fein\nWährend dem Campen könnt ihr KOCHEN um euch zu heilen");
                 } else if(befehl == Befehl.KAUFEN) {
                     status = Status.DORF;
-                    antwort.add(karte.gibMomentaneZelle().getDorf().sortimentAnzeigen());
+                    antwort.add("\nDeine Ersparrnisse: " + team.getInventar().getErspartes());
+                    antwort.add("\n"+karte.gibMomentaneZelle().getDorf().sortimentAnzeigen());
                 }
             }
             else if(status == Status.CAMPEN){
@@ -125,8 +129,13 @@ public class Spiel {
             }
             else if (status == Status.EINKAUF){
                 if(befehl == Befehl.JA){
-                    //die ganze abwicklung
-                    antwort.add("DEBUG: Erfolgreicher Einkauf!");
+                    try {
+                        team.getInventar().geldEntfernen(einkauf.getGesamtpreis());
+                        team.getInventar().fügeGemischteGegenständeHinzu(einkauf.getAuswahl());
+                        antwort.add("Vielen Dank für deinen Einkauf! Die Gegenstände wurden in deinem Inventar hinzugefügt.");
+                    } catch (NichtGenugErsparrtes e) {
+                        antwort.add(e.getMessage() +  "\nDein Einkauf wurde zurückgelegt. Mit dem Befehl KAUFEN kannst du erneut einkaufen");
+                    }
                 }
                 einkauf = null;
                 status = Status.EXISTIEREN;
@@ -231,5 +240,13 @@ public class Spiel {
 
     public void setKochsystem(Kochsystem kochsystem) {
         this.kochsystem = kochsystem;
+    }
+    
+    public Einkauf getEinkauf() {
+        return einkauf;
+    }
+
+    public void setEinkauf(Einkauf einkauf) {
+        this.einkauf = einkauf;
     }
 }

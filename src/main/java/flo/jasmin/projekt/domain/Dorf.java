@@ -29,7 +29,7 @@ public class Dorf {
         for( Gegenstand g : sortiment.stream().filter(g -> g instanceof Zutat).toList()){
             sortimentAnzeige += g.getName() + " Preis: " + g.getPreis() + "\n";
         }
-        sortimentAnzeige += "Ausstattung:----------------\n";
+        sortimentAnzeige += "Ausstattung:\n----------------\n";
         for( Gegenstand g : sortiment.stream().filter(g -> g instanceof Ausstattung).toList()){
             sortimentAnzeige += g.getName() + " Preis: " + g.getPreis() + "\n";
         }

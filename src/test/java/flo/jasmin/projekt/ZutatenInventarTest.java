@@ -82,7 +82,7 @@ public class ZutatenInventarTest {
         try{
             testInventar.entferneZutaten(auswahl);
         } catch (NichtGenugZutatenImInventar n){
-            //ist so vorgesehen
+            //ist so vorgesehen. Wir wollen Fehler um sicherzugegen, dass bei dem fehler keine Zutaten hinzugefügt wurden
         }
 
         assertEquals(zutaten, testInventar.getZutaten());
