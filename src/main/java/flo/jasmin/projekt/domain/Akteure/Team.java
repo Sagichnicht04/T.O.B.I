@@ -18,10 +18,6 @@ public class Team {
                         new TeamWesen(10, 0, 10, 2, 0, "Johann"))
         );
         inventar = new Inventar();
-        inventar.fügeGegenstandHinzu(new Karotte());
-        inventar.fügeGegenstandHinzu(new Tomate());
-        inventar.fügeGegenstandHinzu(new Tomate());
-        inventar.fügeGegenstandHinzu(new Tomate());
 
     }
 
@@ -31,6 +27,10 @@ public class Team {
 
     public void setWesenInTeam(ArrayList<TeamWesen> wesenInTeam) {
         this.wesenInTeam = wesenInTeam;
+    }
+
+    public List<TeamWesen> holeKampffähigeWesen(){
+        return wesenInTeam.stream().filter(wesen -> wesen.kampfFähig()).toList();
     }
 
     public String heile(int lebensPunkte){

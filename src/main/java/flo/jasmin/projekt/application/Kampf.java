@@ -117,7 +117,12 @@ public class Kampf {
 
     public void entferneWesenAusListe(Wesen ziel){
         System.out.println("Removing " + ziel.getName());
-        momentanesWesenIndex -= 1;
+        if(alleWesen.indexOf(ziel) < momentanesWesenIndex){
+            momentanesWesenIndex -= 1;
+        }
+/*         if (alleWesen.size()>=momentanesWesenIndex){
+
+        } */
         alleWesen.remove(ziel);
     }
 
@@ -129,15 +134,23 @@ public class Kampf {
 
     public ArrayList<String> gegnerGreiftAn(){
         ArrayList<String> antwort = new ArrayList<String>();
-        while(getMomentanesWesen() instanceof Gegner) {
+        while(getMomentanesWesen() instanceof Gegner && !alleWesen.stream().filter(wesen -> wesen instanceof TeamWesen).toList().isEmpty()) {
             Gegner angreifer = (Gegner) getMomentanesWesen();
             Wesen ziel = angreifer.ausgewähltesZiel(new ArrayList<>(alleWesen.stream().filter(wesen -> wesen instanceof TeamWesen).toList()));
             ziel.nehmeSchaden(angreifer.getAngriff());
             antwort.add(getMomentanesWesen().getName() + " greift an.");
             antwort.add(ziel.getName() + " nimmt " + angreifer.getAngriff() + " Schaden. HP übrig: "+ziel.getGesundheit());
+            if(!ziel.kampfFähig()){
+                entferneWesenAusListe(ziel);
+            }
             erhöheMomentanesWesenIndex();
         }
-        antwort.addAll(gibSpielerInfoÜberKampf());
+        if (alleWesen.stream().filter(wesen -> wesen instanceof TeamWesen).toList().isEmpty()){
+            antwort.add("Dein gesamtes Team wurde besiegt!");
+            kampfImGange = false;
+        } else {
+            antwort.addAll(gibSpielerInfoÜberKampf());
+        }
         return antwort;
     }
 

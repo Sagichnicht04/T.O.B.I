@@ -130,4 +130,23 @@ public class Inventar {
         fügeGegenständeHinzu(anderes);
     }
 
+
+    public void fügeGemischteGegenständeHinzu(ArrayList<Gegenstand> belohnung){
+        Map<Zutat, Integer> zutaten = new HashMap<>();
+        ArrayList<Gegenstand> anderes = new ArrayList<>();
+
+        for (Gegenstand g : belohnung){
+            if (g instanceof Zutat){
+                if(zutaten.containsKey(g)){
+                    zutaten.put((Zutat) g, zutaten.get(g)+1);
+                }else {
+                    zutaten.put((Zutat)g, 1);
+                }
+            }else {
+                anderes.add((Gegenstand)g);
+            }
+        }
+        fügeZutatenHinzu(zutaten);
+        fügeGegenständeHinzu(anderes);
+    }
 }

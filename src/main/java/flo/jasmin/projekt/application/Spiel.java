@@ -9,6 +9,7 @@ import flo.jasmin.projekt.domain.Dorf;
 import flo.jasmin.projekt.domain.Exceptions.FalscheZutatenEingabe;
 import flo.jasmin.projekt.domain.Exceptions.LaufGegenBarriereException;
 import flo.jasmin.projekt.domain.Exceptions.NichtGenugErsparrtes;
+import flo.jasmin.projekt.domain.Exceptions.NichtGenugZutatenImInventar;
 import flo.jasmin.projekt.domain.Exceptions.ZielIstSpielerWesen;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
@@ -85,7 +86,7 @@ public class Spiel {
             else if(status == Status.CAMPEN){
                 if(befehl == Befehl.KOCHEN){
                     status = Status.KOCHEN;
-                    antwort.add(kochsystem.stringRepräsentationVonZutaten(team.getInventar()));
+                    antwort.add(kochsystem.stringRepräsentationVonZutaten(team.getInventar().getZutaten()));
                 }
                 else if(befehl == Befehl.KREATURAUSSTATTEN){
 
@@ -102,7 +103,7 @@ public class Spiel {
                 try{
                     antwort.addAll(kampf.überMittelZiel(Integer.valueOf(parameter)));
                     if (!kampf.isKampfImGange()) {
-                        team.getInventar().fügeGegenständeHinzu(kampf.getVerloreneGegenstände());
+                        team.getInventar().fügeGemischteGegenständeHinzu(((kampf.getVerloreneGegenstände())));
                         status = Status.EXISTIEREN;
                         antwort.add("Endlich kannst du dich umschauen.\n"+karte.gibMomentaneZelle().getZellentyp().getBeschreibung());
                     }
@@ -161,16 +162,20 @@ public class Spiel {
         if(befehl == Befehl.ZUTATEN){
            
             if (!aufgeteilteParameter.isEmpty()){
+                status = Status.CAMPEN;
                 try { 
                     Map<Zutat, Integer> übersetzteEingabe = kochsystem.übersetzteZutatenNameZuZutatObjekt(aufgeteilteParameter, team.getInventar());
                     int heilung = 0;
-                    heilung = kochsystem.errechneGesundheit(übersetzteEingabe, team.getInventar());
+                    team.getInventar().checkGenugZutatenImImventar(übersetzteEingabe);
+                    team.getInventar().entferneZutaten(übersetzteEingabe);
+                    heilung = kochsystem.errechneGesundheit(übersetzteEingabe);
                     return team.heile(heilung);
-                    //da kein Fehler aufgetretten ist, wurden auch nicht mehr Items verwendet als 
                 } catch (FalscheZutatenEingabe e) {
                     return("Bitte gib Valide Zutaten ein!");
+                } catch (NichtGenugZutatenImInventar e){
+                    return e.getMessage();
                 }
-               
+                
             }
 
         } else if (befehl == Befehl.ZURÜCK) {
@@ -192,7 +197,7 @@ public class Spiel {
             }
 
 
-            alleWesen.addAll(team.getWesenInTeam());
+            alleWesen.addAll(team.holeKampffähigeWesen());
             alleWesen.addAll(alleGegner);
 
             kampf = new Kampf(alleWesen);
