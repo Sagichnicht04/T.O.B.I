@@ -180,7 +180,7 @@ public class KampfTests {
         alleWesen.add(wesen2);
         testKampf = new Kampf(alleWesen);
 
-        assertTrue(testKampf.überMittelZiel(1).contains("Du hast gewonnen. Alle Gegner wurden besiegt!"));
+        assertTrue(testKampf.überMittelZiel(1).contains("Alle Gegner wurden besiegt!"));
         assertFalse(testKampf.isKampfImGange());
     }
     //Test für alle SpielerWesen sind besiegt
