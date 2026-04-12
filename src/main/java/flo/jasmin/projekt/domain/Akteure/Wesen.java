@@ -2,8 +2,6 @@ package flo.jasmin.projekt.domain.Akteure;
 
 import java.util.Objects;
 
-import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
-
 public class Wesen {
     private int gesundheit;
     private int verteidigung;
@@ -40,6 +38,9 @@ public class Wesen {
         return angriff*stufe;
     }
 
+    public void heile(int gesundheit){
+        this.gesundheit += gesundheit;
+    }
 
     public int getGesundheit() {
         return gesundheit;

@@ -60,6 +60,10 @@ public class Spiel {
     public ArrayList<String> spieleBefehl(Befehl befehl, String parameter){
         ArrayList<String> antwort = new ArrayList<String>();
         antwort.add("Du willst " + befehl.name());
+        for(Wesen wesen: team.getWesenInTeam()){
+            System.out.println(wesen);
+        }
+        System.out.println();
         if(gibErlaubteBefehle().contains(befehl)){
             if(status == Status.EXISTIEREN) {
                 if (befehl == Befehl.RUNTER || befehl == Befehl.HOCH || befehl == Befehl.LINKS || befehl == Befehl.RECHTS) {
@@ -107,7 +111,7 @@ public class Spiel {
                         status = Status.EXISTIEREN;
                         antwort.add("Endlich kannst du dich umschauen.\n"+karte.gibMomentaneZelle().getZellentyp().getBeschreibung());
                     }
-                } catch (IndexOutOfBoundsException e){
+                } catch (IndexOutOfBoundsException | NumberFormatException e){
                     antwort.add("DIESER GEGNER EXISTIERT NICHT! \nBitte gib den Index eines Gegners an!");
                 } catch (ZielIstSpielerWesen f) {
                     antwort.add(f.getMessage());
@@ -191,17 +195,24 @@ public class Spiel {
             ArrayList<Wesen> alleWesen = new ArrayList<>();
             ArrayList<Gegner> alleGegner = karte.gibMomentaneZelle().getZellentyp().getGegnerAuswahl();
 
-            antwort.add("Herrje!");
-            for (Gegner gegner: alleGegner){
-                antwort.add(gegner.getName() + " erscheint");
-            }
 
             alleWesen.addAll(team.holeKampffähigeWesen());
-            alleWesen.addAll(alleGegner);
+            alleWesen.addAll(alleGegner.stream().filter(Wesen::kampfFähig).toList());
 
             kampf = new Kampf(alleWesen);
-            status = Status.KAMPF;
-            antwort.addAll(kampf.gegnerGreiftAn());
+            String grund = kampf.rechneKampfImGange();
+            if(!kampf.isKampfImGange()){
+                antwort.add(grund);
+            }
+            else {
+                antwort.add("Herrje!");
+                for (Gegner gegner: alleGegner){
+                    antwort.add(gegner.getName() + " erscheint");
+                }
+
+                status = Status.KAMPF;
+                antwort.addAll(kampf.gegnerGreiftAn());
+            }
         }
         return antwort;
     }
