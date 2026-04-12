@@ -6,6 +6,19 @@ public enum Status {
     INVENTAR,
     EXISTIEREN,
     DORF,
+    EINKAUF,
     DIALOG,
     CAMPEN
 }
+
+// status für generell:
+/* 
+existieren
+    ->kampf
+    ->Campen
+        ->Kochen
+    ->Dorf
+        -> Einkauf
+        
+
+*/

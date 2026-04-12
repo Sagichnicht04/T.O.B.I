@@ -1,5 +1,7 @@
 package flo.jasmin.projekt.domain.Gegenstaende;
 
+import java.util.Objects;
+
 public class Ausstattung extends Gegenstand{
     int wert;
     BeinflussterWert beinflussterWert;
@@ -35,6 +37,18 @@ public class Ausstattung extends Gegenstand{
     public enum BeinflussterWert{
         ANGRIFF,
         VERTEIDIGUNG
+    }
+
+        @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if(o instanceof Ausstattung){
+            Ausstattung other = (Ausstattung) o;
+            if (this.getName().equals(other.getName())){
+                return true;
+            }
+        }
+        return false;
     }
 }
 

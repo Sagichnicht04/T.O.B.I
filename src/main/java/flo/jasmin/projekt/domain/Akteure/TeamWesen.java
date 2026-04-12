@@ -21,11 +21,6 @@ public class TeamWesen extends Wesen{
         this.ausstattungsplatzAngriff = ausstattungsplatzAngriff;
     }
 
-
-    public void heile(int lebensPunkte){
-
-    }
-
     public int getAusstattungsplatzVerteidigung() {
         return ausstattungsplatzVerteidigung;
     }

@@ -1,5 +1,6 @@
 package flo.jasmin.projekt.domain.Karte;
 
+import flo.jasmin.projekt.domain.Dorf;
 import flo.jasmin.projekt.domain.Akteure.NPC;
 
 public class Zelle {
@@ -7,15 +8,33 @@ public class Zelle {
     float gegnerWahrscheinlichkeit;
     NPC npc;
     int stufeDerGegner;
+    Dorf dorf;
 
-    public Zelle(Zellentyp zellentyp, float gegnerWahrscheinlichkeit, NPC npc, int stufeDerGegner) {
+    public Zelle(Zellentyp zellentyp, float gegnerWahrscheinlichkeit, NPC npc, int stufeDerGegner, Dorf dorf) {
         this.zellentyp = zellentyp;
         this.gegnerWahrscheinlichkeit = gegnerWahrscheinlichkeit;
         this.npc = npc;
         this.stufeDerGegner = stufeDerGegner;
+        this.dorf = dorf;
     }
 
+    public String getBeschreibung(){
+        if (dorf == null){
+            return zellentyp.getBeschreibung();
+        } else {
+            return dorf.getBeschreibung();
+        }
+    }
 
+    
+
+    public Dorf getDorf() {
+        return dorf;
+    }
+
+    public void setDorf(Dorf dorf) {
+        this.dorf = dorf;
+    }
 
     public Zellentyp getZellentyp() {
         return zellentyp;

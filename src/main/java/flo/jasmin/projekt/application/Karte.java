@@ -1,12 +1,15 @@
 package flo.jasmin.projekt.application;
 
 import flo.jasmin.projekt.domain.Akteure.NPC;
+import flo.jasmin.projekt.domain.Dörfer.Farore;
 import flo.jasmin.projekt.domain.Befehl;
+import flo.jasmin.projekt.domain.Dorf;
 import flo.jasmin.projekt.domain.Exceptions.LaufGegenBarriereException;
-import flo.jasmin.projekt.domain.Karte.GrasZelle;
-import flo.jasmin.projekt.domain.Karte.WasserZelle;
 import flo.jasmin.projekt.domain.Karte.Zelle;
 import flo.jasmin.projekt.domain.Karte.Zellentyp;
+import flo.jasmin.projekt.domain.Karte.ZellenTypen.DorfZelle;
+import flo.jasmin.projekt.domain.Karte.ZellenTypen.GrasZelle;
+import flo.jasmin.projekt.domain.Karte.ZellenTypen.WasserZelle;
 import flo.jasmin.projekt.domain.Values.Position;
 
 import java.util.HashMap;
@@ -59,9 +62,29 @@ public class Karte {
     public void generiereKarte() {
         for (int i = 0; i<KARTEN_GRÖSSE; i++) {
             for (int j = 0; j<KARTEN_GRÖSSE; j ++){
-                positionen.put(new Position(i,j), new Zelle(gibZellenTyp(new Position(i,j)), 0.75f, new NPC(), stufeDerGegnerFestlegung(new Position(i,j))));
+                positionen.put(new Position(i,j), erstelleNeueZelle(i, j));
             }
         }
+    }
+
+    private Zelle erstelleNeueZelle(int horizontale, int vertikale){
+        Dorf dorf = holeDorf(horizontale, vertikale);
+        Zellentyp zellentyp = gibZellenTyp(new Position(horizontale, vertikale));
+        float gegenerWahrscheinlichkeit = 0.75f;
+        int gegnerStufe = stufeDerGegnerFestlegung(new Position(horizontale, vertikale));
+        if (dorf != null){
+            zellentyp = new DorfZelle();
+            gegenerWahrscheinlichkeit = 0;
+        }
+        return new Zelle(zellentyp, gegenerWahrscheinlichkeit, null, gegnerStufe, dorf);
+    }
+
+    private Dorf holeDorf(int horizontale, int vertikale){
+        if (horizontale == 3 && vertikale == 7){
+            return new Farore();
+        }
+        return null;
+
     }
 
     private int stufeDerGegnerFestlegung(Position position) {
@@ -82,18 +105,6 @@ public class Karte {
     }
 
     private Zellentyp gibZellenTyp(Position position) {
-        /*
-        if (pos == 22) {
-            return Festung
-        }
-        elif(pos in [16, 63, 88]){
-            return DorfZellenTyp
-        } else if ( sollWasserZelleSein(pos) ){
-            return WasserZelle
-        } else {
-            return GrasZelle
-        }
-         */
         if(sollWasserZelleSein(position)){
             return new WasserZelle();
         }

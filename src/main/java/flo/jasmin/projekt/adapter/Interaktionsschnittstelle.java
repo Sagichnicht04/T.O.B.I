@@ -37,21 +37,10 @@ public class Interaktionsschnittstelle {
             try {
                 Befehl befehl = eingabeÜbersetzenInBefehl(befehlTeil);
                 gebAlleInfosAus(spiel.spieleBefehl(befehl, paramTeil));
+                
             } catch (FalscheBefehlEingabe e) {
                 System.out.println("Hä?");;
             }
-
-/*             if(spiel.getStatus() == Status.KOCHEN && befehl != Befehl.ZURÜCK){
-                spiel.spieleBefehl(Befehl.ZUTATEN, eingabe);
-            } else if (spiel.getStatus() == Status.KAMPF) {
-                //spiel.getKampf(); //.spieleBefehl(befehl, "0");
-                spiel.spieleBefehl(befehl, paramTeil);
-            } else{
-                gebAlleInfosAus(spiel.spieleBefehl(befehl, ""));
-                if(befehl == Befehl.SPEICHERN) {
-                    break;
-                }
-            } */
         }
     }
 
@@ -89,7 +78,7 @@ public class Interaktionsschnittstelle {
         else if(Objects.equals(eingabe, "kochen")){
             return Befehl.KOCHEN;
         }
-        else if(Objects.equals(eingabe, "zurück")){
+        else if(Objects.equals(eingabe, "zurueck")){
             return Befehl.ZURÜCK;
         }
         else if(Objects.equals(eingabe, "speichern")){
@@ -98,18 +87,25 @@ public class Interaktionsschnittstelle {
         else if(Objects.equals(eingabe, "angriff")){
             return Befehl.ANGRIFF;
         }
+        else if(Objects.equals(eingabe, "zutaten")){
+            return Befehl.ZUTATEN;
+        }
         else if(Objects.equals(eingabe, "ausstatten")){
             return Befehl.KREATURAUSSTATTEN;
+        }
+        else if(Objects.equals(eingabe, "kaufen")){
+            return Befehl.KAUFEN;
+        }
+        else if(Objects.equals(eingabe, "ja")){
+            return Befehl.JA;
         }
         throw new FalscheBefehlEingabe();
     }
 
     public void anzeigen(Spiel spiel){
         Status status = spiel.getStatus();
-        if(status == Status.EXISTIEREN){
-            System.out.println("Wir existieren");
-        }
-        else if (status == Status.CAMPEN){
+        System.out.println("Momentaner Status: " + status);
+/*         else if (status == Status.CAMPEN){
             System.out.println("Ihr sitzt am Lagerfeuer und singt das Lagerfeuerlied.");
             System.out.println("Inventar:");
             for(Gegenstand gegenstand : spiel.getTeam().getInventar().getGegenstände()){
@@ -126,6 +122,6 @@ public class Interaktionsschnittstelle {
             for(Gegenstand gegenstand : spiel.getTeam().getInventar().getGegenstände()){
                 System.out.println(gegenstand.getName());
             }
-        }
+        } */
     }
 }

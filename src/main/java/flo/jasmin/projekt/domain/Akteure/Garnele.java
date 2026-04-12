@@ -2,6 +2,7 @@ package flo.jasmin.projekt.domain.Akteure;
 
 import flo.jasmin.projekt.domain.Gegenstaende.Ausstattung;
 import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
+import flo.jasmin.projekt.domain.Gegenstaende.konkreteAusstattung.Schale;
 import flo.jasmin.projekt.domain.Visualisierung.GarneleVisualisierung;
 import flo.jasmin.projekt.domain.Visualisierung.GoblinVisualisierung;
 
@@ -11,7 +12,7 @@ import java.util.Comparator;
 public class Garnele extends Gegner {
     public Garnele(){
         super(10, 10, 50, 1, 50, "Garnele", new GarneleVisualisierung());
-        super.getInventar().fügeGegenstandHinzu(new Ausstattung("Schale", 100, "Es gibt nichts härteres als die Schale einer Garnele.", 50, Ausstattung.BeinflussterWert.VERTEIDIGUNG));
+        super.getInventar().add(new Schale());
     }
 
     //Goblin greift standardmäßig schwächstes Wesen an

@@ -8,44 +8,63 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class Kochsystem{
 
 
     //TODO: Heilwert zurückgeben
-    public Map<String, Integer> errechneMöglicheZutaten(Inventar inventar){
-        Map<String, Integer> ergebnis = new HashMap<>();
+/*     public Map<Zutat, Integer> errechneMöglicheZutaten(Inventar inventar){
+        Map<Zutat, Integer> ergebnis = new HashMap<>();
         for (Gegenstand gegenstand: inventar.getGegenstände()){
-            if(gegenstand.getClass() == Zutat.class){
-                String name = gegenstand.getName();
-                if(ergebnis.containsKey(name)){
-                    ergebnis.put(name, ergebnis.get(name) + 1);
+            if(gegenstand.getClass().getSuperclass() == Zutat.class){
+                if(ergebnis.containsKey(gegenstand)){
+                    ergebnis.put((Zutat)gegenstand, ergebnis.get(gegenstand) + 1);
                 }
                 else {
-                    ergebnis.put(name, 1);
+                    ergebnis.put((Zutat)gegenstand, 1);
                 }
             }
+        }
+        return ergebnis;
+    } */
+
+    public String stringRepräsentationVonZutaten(Map<Zutat, Integer> möglicheZutaten){
+        Map<Zutat, Integer> zutaten = möglicheZutaten;
+        String rückgabeWert = "";
+        for(Map.Entry<Zutat, Integer> paar : zutaten.entrySet()){
+            rückgabeWert += "\n" + paar.getKey().getName() + " : " +paar.getValue();
+        }
+        if (möglicheZutaten.isEmpty()){
+            return "Du hast noch keine Zutaten! Besgiege Gegner oder kaufe welche in Dörfern!";
+        }
+        return rückgabeWert;
+    }
+
+
+//warum in mehrere Methoden unterteilt? Kochsystem sollte nicht die Items aus dem Inventar entfernen können
+    public int errechneGesundheit(Map<Zutat, Integer> zutaten) throws FalscheZutatenEingabe {
+        int ergebnis = 0;
+        for (Zutat z : zutaten.keySet()){
+            ergebnis += z.getHeilwert() * zutaten.get(z);
         }
         return ergebnis;
     }
-    public int errechneGesundheit(Map<String, Integer> zutaten, Inventar inventar) throws FalscheZutatenEingabe {
-        int ergebnis = 0;
-        Map<String, Integer> möglicheZutaten = errechneMöglicheZutaten(inventar);
-        for(String zutat : zutaten.keySet()){
-            if (möglicheZutaten.containsKey(zutat) && möglicheZutaten.get(zutat) >= zutaten.get(zutat)) {
-                int heilwert = 0;
-                for(Gegenstand gegenstand : inventar.getGegenstände()){
-                    if(gegenstand.getClass() == Zutat.class && Objects.equals(gegenstand.getName(), zutat)) {
-                        heilwert = ((Zutat) gegenstand).getHeilwert();
-                    }
-                }
-                ergebnis += heilwert * zutaten.get(zutat);
-            }
-            else{
-                throw new FalscheZutatenEingabe();
-            }
 
+    public Map<Zutat, Integer> übersetzteZutatenNameZuZutatObjekt(Map<String, Integer> zutaten, Inventar inventar) throws FalscheZutatenEingabe{
+        Map<Zutat, Integer> übersetzung = new HashMap<Zutat, Integer>();
+        for(String z : zutaten.keySet()){
+            übersetzung.put(gibZutat(z, inventar.getZutaten().keySet()), zutaten.get(z));
         }
-        return ergebnis;
+        return übersetzung;
+    }
+
+    private Zutat gibZutat(String zutatName, Set<Zutat> möglicheZutaten) throws FalscheZutatenEingabe{
+        for (Zutat z : möglicheZutaten){
+            if (z.getName().toLowerCase().equals(zutatName.toLowerCase())){
+                return z;
+            }
+        }
+        throw new FalscheZutatenEingabe();
     }
 }

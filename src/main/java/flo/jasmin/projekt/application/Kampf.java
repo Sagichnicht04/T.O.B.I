@@ -93,8 +93,8 @@ public class Kampf {
         if(!ziel.kampfFähig()){
             antwort.add(ziel.getName() + " fällt zu Boden.");
             // Es fühlt sich so an, als hätte ich diesen Cast schon oft gemacht. Refactoren?
-            if(ziel.getClass().getSuperclass() == Gegner.class){
-                ArrayList<Gegenstand> gegenstände = ((Gegner) ziel).getInventar().getGegenstände();
+            if(ziel instanceof Gegner){
+                ArrayList<Gegenstand> gegenstände = ((Gegner) ziel).getInventar();
                 for(Gegenstand gegenstand: gegenstände){
                     antwort.add(ziel.getName() + " lässt " + gegenstand.getName() + " fallen.");
                     fügeVerlorenenGegenstandHinzu(gegenstand);
@@ -104,20 +104,20 @@ public class Kampf {
         }
 
         erhöheMomentanesWesenIndex();
-        if(!alleWesen.stream().filter(wesen -> wesen.getClass().getSuperclass() == Gegner.class).toList().isEmpty()){
-            
+        String kampfImGangeAntwort = rechneKampfImGange();
+        if(kampfImGangeAntwort == null){
             antwort.addAll(gegnerGreiftAn());
         }else {
-            kampfImGange = false;
-            antwort.add("Du hast gewonnen. Alle Gegner wurden besiegt!");
+            antwort.add(kampfImGangeAntwort);
         }
         return antwort;
     }
 
 
     public void entferneWesenAusListe(Wesen ziel){
-        System.out.println("Removing " + ziel.getName());
-        momentanesWesenIndex -= 1;
+        if(alleWesen.indexOf(ziel) < momentanesWesenIndex){
+            momentanesWesenIndex -= 1;
+        }
         alleWesen.remove(ziel);
     }
 
@@ -129,16 +129,40 @@ public class Kampf {
 
     public ArrayList<String> gegnerGreiftAn(){
         ArrayList<String> antwort = new ArrayList<String>();
-        while(getMomentanesWesen().getClass().getSuperclass() == Gegner.class) {
+        while(getMomentanesWesen() instanceof Gegner && !alleWesen.stream().filter(wesen -> wesen instanceof TeamWesen).toList().isEmpty()) {
             Gegner angreifer = (Gegner) getMomentanesWesen();
-            Wesen ziel = angreifer.ausgewähltesZiel(new ArrayList<>(alleWesen.stream().filter(wesen -> wesen.getClass() == TeamWesen.class).toList()));
+            Wesen ziel = angreifer.ausgewähltesZiel(new ArrayList<>(alleWesen.stream().filter(wesen -> wesen instanceof TeamWesen).toList()));
             ziel.nehmeSchaden(angreifer.getAngriff());
             antwort.add(getMomentanesWesen().getName() + " greift an.");
             antwort.add(ziel.getName() + " nimmt " + angreifer.getAngriff() + " Schaden. HP übrig: "+ziel.getGesundheit());
+            if(!ziel.kampfFähig()){
+                entferneWesenAusListe(ziel);
+            }
             erhöheMomentanesWesenIndex();
         }
-        antwort.addAll(gibSpielerInfoÜberKampf());
+
+        String kampfImGangeAntwort = rechneKampfImGange();
+        if(kampfImGangeAntwort == null){
+            antwort.addAll(gibSpielerInfoÜberKampf());
+        }
+        else{
+            antwort.add(kampfImGangeAntwort);
+        }
+
+
         return antwort;
+    }
+
+    public String rechneKampfImGange(){
+        String grund = null;
+        if (alleWesen.stream().filter(wesen -> wesen instanceof TeamWesen).toList().isEmpty()){
+            grund = "Dein gesamtes Team wurde besiegt!";
+            kampfImGange = false;
+        } else if (alleWesen.stream().filter(wesen -> wesen instanceof Gegner).toList().isEmpty()){
+            grund = "Alle Gegner wurden besiegt!";
+            kampfImGange = false;
+        }
+        return grund;
     }
 
     public ArrayList<String> gibSpielerInfoÜberKampf(){
@@ -161,9 +185,4 @@ public class Kampf {
         return antwort;
     }
 
-  /*   public void spieleBefehl(Befehl befehl, String parameter) {
-        Wesen ziel = alleWesen.get(Integer.parseInt(parameter));
-        teamGreiftAn(ziel);
-        gegnerGreiftAn();
-    } */
 }

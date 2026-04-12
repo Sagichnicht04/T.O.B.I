@@ -1,5 +1,7 @@
 package flo.jasmin.projekt.domain.Gegenstaende;
 
+import java.util.Objects;
+
 public class Zutat extends Gegenstand{
     
     private int heilwert;
@@ -17,6 +19,17 @@ public class Zutat extends Gegenstand{
         this.heilwert = heilwert;
     }
 
-    
-    
+
+// werden gebraucht, damit sie im Kochsystem gestacked werden
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if(o instanceof Zutat){
+            Zutat other = (Zutat) o;
+            if (this.getName().equals(other.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

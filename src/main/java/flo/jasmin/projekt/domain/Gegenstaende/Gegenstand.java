@@ -1,4 +1,7 @@
 package flo.jasmin.projekt.domain.Gegenstaende;
+
+import java.util.Objects;
+
 public abstract class Gegenstand{
     
     private String name;
@@ -34,5 +37,20 @@ public abstract class Gegenstand{
     }
 
 
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if(o instanceof Gegenstand){
+            Gegenstand other = (Gegenstand) o;
+            if (this.getName().equals(other.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
 
+    @Override
+    public int hashCode(){
+        return Objects.hash(getName());
+    }
 }
