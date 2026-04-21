@@ -44,13 +44,15 @@ public class Spiel {
         if(status == Status.EXISTIEREN || status == Status.DORF) {
             return karte.gibMomentaneZelle().getZellentyp().getErlaubteBefehle();
         } else if (status == Status.CAMPEN) {
-            return Set.of(Befehl.ZURÜCK, Befehl.KOCHEN);
+            return Set.of(Befehl.ZURÜCK, Befehl.KOCHEN, Befehl.KREATURAUSSTATTEN);
         } else if (status == Status.KOCHEN) {
             return Set.of(Befehl.ZURÜCK, Befehl.ZUTATEN);
         } else if (status == Status.KAMPF) {
             return Set.of(Befehl.ANGRIFF);
         } else if (status == Status.EINKAUF){
-            return Set.of(Befehl.JA, Befehl.ZURÜCK);
+            return Set.of(Befehl.JA, Befehl.NEIN);
+        } else if (status == Status.AUSRÜSTEN){
+            return Set.of(Befehl.AUSRÜSTEN, Befehl.ZURÜCK);
         }
         return new HashSet<>();
     }
@@ -60,10 +62,12 @@ public class Spiel {
     public ArrayList<String> spieleBefehl(Befehl befehl, String parameter){
         ArrayList<String> antwort = new ArrayList<String>();
         antwort.add("Du willst " + befehl.name());
-        for(Wesen wesen: team.getWesenInTeam()){
-            System.out.println(wesen);
+
+        if(team.istBesiegt()){
+            antwort.addAll(respawnImDorf());
+            return antwort;
         }
-        System.out.println();
+        
         if(gibErlaubteBefehle().contains(befehl)){
             if(status == Status.EXISTIEREN) {
                 if (befehl == Befehl.RUNTER || befehl == Befehl.HOCH || befehl == Befehl.LINKS || befehl == Befehl.RECHTS) {
@@ -93,10 +97,19 @@ public class Spiel {
                     antwort.add(kochsystem.stringRepräsentationVonZutaten(team.getInventar().getZutaten()));
                 }
                 else if(befehl == Befehl.KREATURAUSSTATTEN){
-
+                    status = Status.AUSRÜSTEN;
+                    antwort.addAll(zeigeAusrüstungsmenü());
                 }
                 else if (befehl == Befehl.ZURÜCK) {
                     status = Status.EXISTIEREN;
+                }
+            }
+            else if(status == Status.AUSRÜSTEN){
+                if(befehl == Befehl.AUSRÜSTEN){
+                    antwort.addAll(ausrüstungsbefehl(parameter));
+                }
+                else if(befehl == Befehl.ZURÜCK){
+                    status = Status.CAMPEN;
                 }
             }
             else if(status == Status.KOCHEN){
@@ -263,5 +276,116 @@ public class Spiel {
 
     public void setEinkauf(Einkauf einkauf) {
         this.einkauf = einkauf;
+    }
+
+    private ArrayList<String> zeigeAusrüstungsmenü() {
+        ArrayList<String> antwort = new ArrayList<>();
+        antwort.add("\n=== AUSRÜSTUNGSMENÜ ===");
+        antwort.add("\nDein Team:");
+        for (int i = 0; i < team.getWesenInTeam().size(); i++) {
+            TeamWesen wesen = team.getWesenInTeam().get(i);
+            antwort.add(i + ": " + wesen.getAusrüstungsStatus());
+        }
+        
+        antwort.add("\nVerfügbare Ausrüstung im Inventar:");
+        List<Gegenstand> ausrüstung = team.getInventar().getAusrüstung();
+        if (ausrüstung.isEmpty()) {
+            antwort.add("  Keine Ausrüstung verfügbar");
+        } else {
+            for (int i = 0; i < ausrüstung.size(); i++) {
+                antwort.add(i + ": " + ausrüstung.get(i).getName() + " - " + ausrüstung.get(i).getBeschreibung());
+            }
+        }
+        
+        antwort.add("\nFormat: AUSRÜSTEN <Wesen-Index> <Ausrüstungs-Index>");
+        antwort.add("Beispiel: AUSRÜSTEN 0 0");
+        return antwort;
+    }
+
+    private ArrayList<String> respawnImDorf() {
+        ArrayList<String> antwort = new ArrayList<>();
+        
+        antwort.add("\n=== NIEDERLAGE ===");
+        antwort.add("Dein Team wurde besiegt...");
+        
+        ArrayList<Gegenstand> verloreneGegenstände = team.getInventar().verliereZufälligeGegenstände(3);
+        
+        if (!verloreneGegenstände.isEmpty()) {
+            antwort.add("\nIn der Panik habt ihr folgende Gegenstände verloren:");
+            for (Gegenstand g : verloreneGegenstände) {
+                antwort.add("  - " + g.getName());
+            }
+        }
+        
+        team.heileKomplett();
+        karte.setMomentanePosition(new flo.jasmin.projekt.domain.Values.Position(3, 7));
+        status = Status.EXISTIEREN;
+        
+        antwort.add("\nIhr wacht im Dorf Farore auf, vollständig geheilt.");
+        antwort.add("Die freundlichen Dorfbewohner haben sich um euch gekümmert.");
+        antwort.add("\n" + karte.gibMomentaneZelle().getBeschreibung());
+        
+        return antwort;
+    }
+
+    private ArrayList<String> ausrüstungsbefehl(String parameter) {
+        ArrayList<String> antwort = new ArrayList<>();
+        
+        try {
+            String[] parts = parameter.trim().split("\\s+");
+            if (parts.length != 2) {
+                antwort.add("Bitte gib genau zwei Zahlen an: <Wesen-Index> <Ausrüstungs-Index>");
+                antwort.addAll(zeigeAusrüstungsmenü());
+                return antwort;
+            }
+            
+            int wesenIndex = Integer.parseInt(parts[0]);
+            int ausrüstungsIndex = Integer.parseInt(parts[1]);
+            
+            if (wesenIndex < 0 || wesenIndex >= team.getWesenInTeam().size()) {
+                antwort.add("Ungültiger Wesen-Index!");
+                antwort.addAll(zeigeAusrüstungsmenü());
+                return antwort;
+            }
+            
+            List<Gegenstand> verfügbareAusrüstung = team.getInventar().getAusrüstung();
+            if (ausrüstungsIndex < 0 || ausrüstungsIndex >= verfügbareAusrüstung.size()) {
+                antwort.add("Ungültiger Ausrüstungs-Index!");
+                antwort.addAll(zeigeAusrüstungsmenü());
+                return antwort;
+            }
+            
+            TeamWesen wesen = team.getWesenInTeam().get(wesenIndex);
+            flo.jasmin.projekt.domain.Gegenstaende.Ausstattung ausrüstung = 
+                (flo.jasmin.projekt.domain.Gegenstaende.Ausstattung) verfügbareAusrüstung.get(ausrüstungsIndex);
+            
+            flo.jasmin.projekt.domain.Gegenstaende.Ausstattung alteAusrüstung = null;
+            if (ausrüstung.getBeinflussterWert() == flo.jasmin.projekt.domain.Gegenstaende.Ausstattung.BeinflussterWert.ANGRIFF) {
+                alteAusrüstung = wesen.entferneWaffe();
+            } else {
+                alteAusrüstung = wesen.entferneRüstung();
+            }
+            
+            wesen.rüsteAus(ausrüstung);
+            team.getInventar().entferneAusrüstung(ausrüstung);
+            
+            if (alteAusrüstung != null) {
+                team.getInventar().fügeAusrüstungHinzu(alteAusrüstung);
+                antwort.add(wesen.getName() + " hat " + alteAusrüstung.getName() + " abgelegt und " + 
+                           ausrüstung.getName() + " ausgerüstet!");
+            } else {
+                antwort.add(wesen.getName() + " hat " + ausrüstung.getName() + " ausgerüstet!");
+            }
+            
+            antwort.add("\nNeuer Status:");
+            antwort.add(wesen.getAusrüstungsStatus());
+            antwort.add("\nAngriff: " + wesen.getAngriff() + " | Verteidigung: " + wesen.getVerteidigung());
+            
+        } catch (NumberFormatException e) {
+            antwort.add("Bitte gib gültige Zahlen ein!");
+            antwort.addAll(zeigeAusrüstungsmenü());
+        }
+        
+        return antwort;
     }
 }

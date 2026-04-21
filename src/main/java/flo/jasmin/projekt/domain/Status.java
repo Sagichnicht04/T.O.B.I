@@ -8,7 +8,8 @@ public enum Status {
     DORF,
     EINKAUF,
     DIALOG,
-    CAMPEN
+    CAMPEN,
+    AUSRÜSTEN
 }
 
 // status für generell:

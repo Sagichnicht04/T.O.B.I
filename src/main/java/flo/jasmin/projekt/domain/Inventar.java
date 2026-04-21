@@ -3,21 +3,24 @@ package flo.jasmin.projekt.domain;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import flo.jasmin.projekt.domain.Exceptions.NichtGenugErsparrtes;
 import flo.jasmin.projekt.domain.Exceptions.NichtGenugZutatenImInventar;
+import flo.jasmin.projekt.domain.Gegenstaende.Ausstattung;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
+import flo.jasmin.projekt.domain.Values.Geld;
 
 public class Inventar {
-    private int erspartes;
+    private Geld erspartes;
     private ArrayList<Gegenstand> gegenstände;
     private Map<Zutat, Integer> zutaten;
     private int zeltkapazität;
     private float kochtopfMultiplikator;
 
     public Inventar(){
-        erspartes = 5;
+        erspartes = Geld.von(5);
         gegenstände = new ArrayList<>();
         zutaten = new HashMap<>();
         zeltkapazität = 1;
@@ -25,11 +28,19 @@ public class Inventar {
     }
 
     public int getErspartes() {
+        return erspartes.getBetrag();
+    }
+
+    public Geld getGeld() {
         return erspartes;
     }
 
-    public void setErspartes(int erspartes) {
-        this.erspartes = erspartes;
+    public void setErspartes(int betrag) {
+        this.erspartes = Geld.von(betrag);
+    }
+
+    public void setGeld(Geld geld) {
+        this.erspartes = geld;
     }
 
     public ArrayList<Gegenstand> getGegenstände() {
@@ -103,14 +114,22 @@ public class Inventar {
     }
 
     public void genugErsparrtes(int betrag) throws NichtGenugErsparrtes{
-        if (betrag > erspartes){
+        if (!erspartes.kannBezahlen(Geld.von(betrag))){
             throw new NichtGenugErsparrtes();
         }
     }
 
     public void geldEntfernen(int betrag) throws NichtGenugErsparrtes{
         genugErsparrtes(betrag);
-        erspartes -= betrag;
+        erspartes = erspartes.subtrahiere(Geld.von(betrag));
+    }
+
+    public void geldHinzufügen(Geld betrag) {
+        erspartes = erspartes.addiere(betrag);
+    }
+
+    public void geldHinzufügen(int betrag) {
+        erspartes = erspartes.addiere(Geld.von(betrag));
     }
 
     public void fügeGemischteGegenständeHinzu(Map<Gegenstand, Integer> einkauf){
@@ -148,5 +167,33 @@ public class Inventar {
         }
         fügeZutatenHinzu(zutaten);
         fügeGegenständeHinzu(anderes);
+    }
+
+    public ArrayList<Gegenstand> getAusrüstung() {
+        return gegenstände.stream()
+            .filter(g -> g instanceof Ausstattung)
+            .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public void entferneAusrüstung(Ausstattung ausstattung) {
+        gegenstände.remove(ausstattung);
+    }
+
+    public void fügeAusrüstungHinzu(Ausstattung ausstattung) {
+        gegenstände.add(ausstattung);
+    }
+
+    public ArrayList<Gegenstand> verliereZufälligeGegenstände(int anzahl) {
+        ArrayList<Gegenstand> verloreneGegenstände = new ArrayList<>();
+        int zuVerlieren = Math.min(anzahl, gegenstände.size());
+        
+        for (int i = 0; i < zuVerlieren; i++) {
+            if (!gegenstände.isEmpty()) {
+                int randomIndex = (int) (Math.random() * gegenstände.size());
+                verloreneGegenstände.add(gegenstände.remove(randomIndex));
+            }
+        }
+        
+        return verloreneGegenstände;
     }
 }

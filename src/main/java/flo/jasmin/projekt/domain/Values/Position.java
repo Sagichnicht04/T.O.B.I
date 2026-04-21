@@ -38,4 +38,8 @@ public class Position {
     public int hashCode() {
         return 31 * vertikal + horizontal;
     }
+
+    public String toString() {
+        return horizontal + "-" + vertikal;
+    }
 }

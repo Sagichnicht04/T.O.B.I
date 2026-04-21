@@ -6,14 +6,15 @@ public enum Befehl {
     LINKS,
     RECHTS,
     KOCHEN,
-    ZUTATEN, //Wenn im Kochmenü, soll Zutaten verwenden
+    ZUTATEN,
     REDEN,
     ANGRIFF,
-    KAUFEN, //Um im Dorf das Sortiment anzuzeigen ABER wenn der Spieler beim Kaufen ist, dann um die Items zu kaufen
+    KAUFEN,
     CAMPEN,
     SPEICHERN,
     HILFE,
     KREATURAUSSTATTEN,
+    AUSRÜSTEN,
     ZURÜCK,
-    JA
+    NEIN, JA
 }

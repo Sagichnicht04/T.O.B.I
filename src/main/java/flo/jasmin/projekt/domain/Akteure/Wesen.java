@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Wesen {
     private int gesundheit;
+    private int maxGesundheit;
     private int verteidigung;
     private int angriff;
     private int initiative;
@@ -13,6 +14,7 @@ public class Wesen {
 
     public Wesen(int gesundheit, int verteidigung, int angriff, int initiative, int erfahrung, String name) {
         this.gesundheit = gesundheit;
+        this.maxGesundheit = gesundheit;
         this.verteidigung = verteidigung;
         this.angriff = angriff;
         this.initiative = initiative;
@@ -48,6 +50,14 @@ public class Wesen {
 
     public void setGesundheit(int gesundheit) {
         this.gesundheit = gesundheit;
+    }
+
+    public int getMaxGesundheit() {
+        return maxGesundheit;
+    }
+
+    public void setMaxGesundheit(int maxGesundheit) {
+        this.maxGesundheit = maxGesundheit;
     }
 
     public int getVerteidigung() {

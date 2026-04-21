@@ -33,6 +33,16 @@ public class Team {
         return wesenInTeam.stream().filter(wesen -> wesen.kampfFähig()).toList();
     }
 
+    public boolean istBesiegt(){
+        return holeKampffähigeWesen().isEmpty();
+    }
+
+    public void heileKomplett(){
+        for (TeamWesen teamWesen: wesenInTeam){
+            teamWesen.setGesundheit(teamWesen.getMaxGesundheit());
+        }
+    }
+
     public String heile(int lebensPunkte){
         for (TeamWesen teamWesen: wesenInTeam){
             //TODO: Lebenspunkteverlust wegen Floor
