@@ -1,9 +1,6 @@
 package flo.jasmin.projekt.application;
 
-import flo.jasmin.projekt.domain.Akteure.Gegner;
-import flo.jasmin.projekt.domain.Akteure.Team;
-import flo.jasmin.projekt.domain.Akteure.TeamWesen;
-import flo.jasmin.projekt.domain.Akteure.Wesen;
+import flo.jasmin.projekt.domain.Akteure.*;
 import flo.jasmin.projekt.domain.Befehl;
 import flo.jasmin.projekt.domain.Dorf;
 import flo.jasmin.projekt.domain.Exceptions.FalscheZutatenEingabe;
@@ -54,6 +51,8 @@ public class Spiel {
             return Set.of(Befehl.JA, Befehl.NEIN);
         } else if (status == Status.AUSRÜSTEN){
             return Set.of(Befehl.AUSRÜSTEN, Befehl.ZURÜCK);
+        } else if (status == Status.DIALOG){
+            return Set.of(Befehl.REDEN, Befehl.ZURÜCK);
         }
         return new HashSet<>();
     }
@@ -90,6 +89,14 @@ public class Spiel {
                     status = Status.DORF;
                     antwort.add("\nDeine Ersparrnisse: " + team.getInventar().getErspartes());
                     antwort.add("\n"+karte.gibMomentaneZelle().getDorf().sortimentAnzeigen());
+                } else if(befehl == Befehl.REDEN) {
+                    status = Status.DIALOG;
+                    antwort.add("\nDa steht eine Person in der Gegend rum.");
+                    NPC.DialogWithEnd dialogWithEnd = karte.gibMomentaneZelle().getNpc().popDialogString();
+                    antwort.add(dialogWithEnd.string());
+                    if(dialogWithEnd.endOfDialog()){
+                        status = Status.EXISTIEREN;
+                    }
                 }
             }
             else if(status == Status.CAMPEN){
@@ -159,6 +166,18 @@ public class Spiel {
                 }
                 einkauf = null;
                 status = Status.EXISTIEREN;
+            }
+            else if (status == Status.DIALOG){
+                if(befehl == Befehl.REDEN){
+                    NPC.DialogWithEnd dialogWithEnd = karte.gibMomentaneZelle().getNpc().popDialogString();
+                    antwort.add(dialogWithEnd.string());
+                    if(dialogWithEnd.endOfDialog()){
+                        status = Status.EXISTIEREN;
+                    }
+                }
+                else if(befehl == Befehl.ZURÜCK){
+                    status = Status.EXISTIEREN;
+                }
             }
         }
         return antwort;
