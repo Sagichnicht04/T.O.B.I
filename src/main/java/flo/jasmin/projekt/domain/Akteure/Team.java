@@ -29,6 +29,10 @@ public class Team {
         this.wesenInTeam = wesenInTeam;
     }
 
+    public void addWesenInTeam(TeamWesen teamWesen){
+        wesenInTeam.add(teamWesen);
+    }
+
     public List<TeamWesen> holeKampffähigeWesen(){
         return wesenInTeam.stream().filter(wesen -> wesen.kampfFähig()).toList();
     }

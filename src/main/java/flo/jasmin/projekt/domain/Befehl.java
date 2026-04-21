@@ -16,5 +16,6 @@ public enum Befehl {
     KREATURAUSSTATTEN,
     AUSRÜSTEN,
     ZURÜCK,
-    NEIN, JA
+    NEIN, JA,
+    REKRUTIEREN
 }

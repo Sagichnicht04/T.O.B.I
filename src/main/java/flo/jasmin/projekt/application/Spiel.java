@@ -10,11 +10,10 @@ import flo.jasmin.projekt.domain.Exceptions.NichtGenugZutatenImInventar;
 import flo.jasmin.projekt.domain.Exceptions.ZielIstSpielerWesen;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
+import flo.jasmin.projekt.domain.NPCs.NPC;
 import flo.jasmin.projekt.domain.Values.Einkauf;
-import flo.jasmin.projekt.domain.Inventar;
 import flo.jasmin.projekt.domain.Kochsystem;
 import flo.jasmin.projekt.domain.Status;
-import flo.jasmin.projekt.domain.Values.Geld;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -52,7 +51,7 @@ public class Spiel {
         } else if (status == Status.AUSRÜSTEN){
             return Set.of(Befehl.AUSRÜSTEN, Befehl.ZURÜCK);
         } else if (status == Status.DIALOG){
-            return Set.of(Befehl.REDEN, Befehl.ZURÜCK);
+            return Set.of(Befehl.REDEN, Befehl.ZURÜCK, Befehl.REKRUTIEREN);
         }
         return new HashSet<>();
     }
@@ -176,6 +175,13 @@ public class Spiel {
                     }
                 }
                 else if(befehl == Befehl.ZURÜCK){
+                    status = Status.EXISTIEREN;
+                }
+                else if (befehl == Befehl.REKRUTIEREN){
+                    NPC derNPC = karte.gibMomentaneZelle().getNpc();
+                    antwort.add(derNPC.getName() + " tritt deinem Team bei!");
+                    team.addWesenInTeam(derNPC.getWesenWennRekrutiert());
+                    karte.gibMomentaneZelle().setNpc(null);
                     status = Status.EXISTIEREN;
                 }
             }

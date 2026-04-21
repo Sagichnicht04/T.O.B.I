@@ -1,6 +1,6 @@
 package flo.jasmin.projekt.domain.NPCs;
 
-import flo.jasmin.projekt.domain.Akteure.NPC;
+import flo.jasmin.projekt.domain.Akteure.TeamWesen;
 import flo.jasmin.projekt.domain.Visualisierung.TobiVisualisierung;
 
 import java.util.ArrayList;
@@ -10,8 +10,9 @@ public class Tobi extends NPC {
     public Tobi() {
         super(
                 "Tobi",
-                new ArrayList<>(List.of("Nanu? Wer bist denn du?", "Wusstest du das man nicht weiß ob ein np schweres Problem vielleicht doch nur p schwer ist?", "Pass auf dich auf!")),
-                new TobiVisualisierung()
+                new ArrayList<>(List.of("Nanu? Wer bist denn du?", "Wusstest du das man nicht weiß ob ein np schweres Problem vielleicht doch nur p schwer ist?", "Darf ich mitkommen?!")),
+                new TobiVisualisierung(),
+                new TeamWesen(10,5,10,0,0, "Tobi")
         );
 
     }

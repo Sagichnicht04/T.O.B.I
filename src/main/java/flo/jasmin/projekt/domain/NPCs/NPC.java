@@ -1,9 +1,8 @@
-package flo.jasmin.projekt.domain.Akteure;
+package flo.jasmin.projekt.domain.NPCs;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
+import flo.jasmin.projekt.domain.Akteure.TeamWesen;
 import flo.jasmin.projekt.domain.Visualisierung.AsciiVisualisierung;
 
 public class NPC {
@@ -11,16 +10,25 @@ public class NPC {
     private ArrayList<String> dialog;
     private AsciiVisualisierung visualisierung;
     private int dialogIndex;
+    private TeamWesen wesenWennRekrutiert;
 
-    public NPC(String name, ArrayList<String> dialog, AsciiVisualisierung visualisierung) {
+    public NPC(String name, ArrayList<String> dialog, AsciiVisualisierung visualisierung, TeamWesen wesenWennRekrutiert) {
         this.name = name;
         this.dialog = dialog;
         this.visualisierung = visualisierung;
         this.dialogIndex = 0;
+        this.wesenWennRekrutiert = wesenWennRekrutiert;
     }
 
     public record DialogWithEnd(String string, boolean endOfDialog) { }
 
+    public TeamWesen getWesenWennRekrutiert() {
+        return wesenWennRekrutiert;
+    }
+
+    public void setWesenWennRekrutiert(TeamWesen wesenWennRekrutiert) {
+        this.wesenWennRekrutiert = wesenWennRekrutiert;
+    }
 
     public DialogWithEnd popDialogString(){
         boolean endOfDialog = false;

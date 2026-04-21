@@ -1,6 +1,6 @@
 package flo.jasmin.projekt.application;
 
-import flo.jasmin.projekt.domain.Akteure.NPC;
+import flo.jasmin.projekt.domain.NPCs.NPC;
 import flo.jasmin.projekt.domain.Dörfer.Farore;
 import flo.jasmin.projekt.domain.Befehl;
 import flo.jasmin.projekt.domain.Dorf;

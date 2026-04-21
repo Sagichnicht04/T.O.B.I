@@ -49,6 +49,8 @@ public class BefehleÜbersetzt {
         befehlString.put(Befehl.HILFE, "hilfe");
         stringBefehl.put("reden", Befehl.REDEN);
         befehlString.put(Befehl.REDEN, "reden");
+        stringBefehl.put("rekrutieren", Befehl.REKRUTIEREN);
+        befehlString.put(Befehl.REKRUTIEREN, "rekrutieren");
     }
 
     public static Befehl übersetze(String befehl){
