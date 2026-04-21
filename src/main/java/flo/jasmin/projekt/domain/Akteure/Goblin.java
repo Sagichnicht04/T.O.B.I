@@ -9,7 +9,7 @@ import java.util.Comparator;
 
 public class Goblin extends Gegner {
     public Goblin(){
-        super(10, 5, 5, 3, 2, "Goblin", new GoblinVisualisierung());
+        super(10, 2, 5, 3, 2, "Goblin", new GoblinVisualisierung());
         super.getInventar().add(new Banane());
     }
 

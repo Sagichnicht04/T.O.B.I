@@ -9,6 +9,7 @@ import flo.jasmin.projekt.domain.Akteure.Wesen;
 import flo.jasmin.projekt.domain.Exceptions.ZielIstSpielerWesen;
 import flo.jasmin.projekt.domain.Befehl;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
+import flo.jasmin.projekt.domain.Values.Schaden;
 
 public class Kampf {
     private ArrayList<Wesen> alleWesen;
@@ -85,10 +86,11 @@ public class Kampf {
         if(ziel.getClass() == TeamWesen.class){
             throw new ZielIstSpielerWesen();
         }
-        ziel.nehmeSchaden(getMomentanesWesen().getAngriff());
+        Schaden schaden = getMomentanesWesen().berechneSchaden();
+        ziel.nehmeSchaden(schaden);
 
         ArrayList<String> antwort = new ArrayList<String>();
-        antwort.add(ziel.getName() + " nimmt " + getMomentanesWesen().getAngriff() + " Schaden. HP übrig: "+ziel.getGesundheit());
+        antwort.add(ziel.getName() + " nimmt " + schaden.getWert() + " Schaden. HP übrig: "+ziel.getGesundheit());
 
         if(!ziel.kampfFähig()){
             antwort.add(ziel.getName() + " fällt zu Boden.");
@@ -132,9 +134,10 @@ public class Kampf {
         while(getMomentanesWesen() instanceof Gegner && !alleWesen.stream().filter(wesen -> wesen instanceof TeamWesen).toList().isEmpty()) {
             Gegner angreifer = (Gegner) getMomentanesWesen();
             Wesen ziel = angreifer.ausgewähltesZiel(new ArrayList<>(alleWesen.stream().filter(wesen -> wesen instanceof TeamWesen).toList()));
-            ziel.nehmeSchaden(angreifer.getAngriff());
+            Schaden schaden = angreifer.berechneSchaden();
+            ziel.nehmeSchaden(schaden);
             antwort.add(getMomentanesWesen().getName() + " greift an.");
-            antwort.add(ziel.getName() + " nimmt " + angreifer.getAngriff() + " Schaden. HP übrig: "+ziel.getGesundheit());
+            antwort.add(ziel.getName() + " nimmt " + schaden.reduziereDurch(ziel.getVerteidigung()).getWert() + " Schaden. HP übrig: "+ziel.getGesundheit());
             if(!ziel.kampfFähig()){
                 entferneWesenAusListe(ziel);
             }
