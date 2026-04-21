@@ -17,6 +17,7 @@ import flo.jasmin.projekt.domain.Values.Einkauf;
 import flo.jasmin.projekt.domain.Inventar;
 import flo.jasmin.projekt.domain.Kochsystem;
 import flo.jasmin.projekt.domain.Status;
+import flo.jasmin.projekt.domain.Values.Geld;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -121,6 +122,7 @@ public class Spiel {
                     antwort.addAll(kampf.überMittelZiel(Integer.valueOf(parameter)));
                     if (!kampf.isKampfImGange()) {
                         team.getInventar().fügeGemischteGegenständeHinzu(((kampf.getVerloreneGegenstände())));
+                        team.getInventar().geldHinzufügen(kampf.errechneZufälligVerlorenesGeld());
                         status = Status.EXISTIEREN;
                         antwort.add("Endlich kannst du dich umschauen.\n"+karte.gibMomentaneZelle().getZellentyp().getBeschreibung());
                     }

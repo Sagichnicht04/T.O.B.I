@@ -128,9 +128,6 @@ public class Inventar {
         erspartes = erspartes.addiere(betrag);
     }
 
-    public void geldHinzufügen(int betrag) {
-        erspartes = erspartes.addiere(Geld.von(betrag));
-    }
 
     public void fügeGemischteGegenständeHinzu(Map<Gegenstand, Integer> einkauf){
         Map<Zutat, Integer> zutaten = new HashMap<>();
