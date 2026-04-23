@@ -26,9 +26,7 @@ public abstract class Gegenstand{
     public int getPreis() {
         return preis;
     }
-    public void setPreis(int preis) {
-        this.preis = preis;
-    }
+
     public String getBeschreibung() {
         return beschreibung;
     }

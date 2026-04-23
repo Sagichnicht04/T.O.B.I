@@ -19,17 +19,11 @@ public class Ausstattung extends Gegenstand {
         return wert;
     }
 
-    public void setWert(int wert) {
-        this.wert = wert;
-    }
 
     public BeinflussterWert getBeinflussterWert() {
         return beinflussterWert;
     }
 
-    public void setBeinflussterWert(BeinflussterWert beinflussterWert) {
-        this.beinflussterWert = beinflussterWert;
-    }
 
 
 

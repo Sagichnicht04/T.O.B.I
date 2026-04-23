@@ -20,24 +20,6 @@ public class Erfahrung {
         return new Erfahrung(0);
     }
 
-    public Erfahrung addiere(int punkte) {
-        if (punkte < 0) {
-            throw new IllegalArgumentException("Erfahrungspunkte koennen nicht negativ sein");
-        }
-        return new Erfahrung(this.erfahrungsPunkte + punkte);
-    }
-
-    public Erfahrung addiere(Erfahrung andere) {
-        return new Erfahrung(this.erfahrungsPunkte + andere.erfahrungsPunkte);
-    }
-
-    public Erfahrung multipliziere(int faktor) {
-        if (faktor < 0) {
-            throw new IllegalArgumentException("Faktor kann nicht negativ sein");
-        }
-        return new Erfahrung(this.erfahrungsPunkte * faktor);
-    }
-
     public int getPunkte() {
         return erfahrungsPunkte;
     }

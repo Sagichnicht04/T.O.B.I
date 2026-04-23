@@ -51,28 +51,6 @@ public class Inventar {
         this.gegenstaende = gegenstaende;
     }
 
-    public int getZeltkapazitaet() {
-        return zeltkapazitaet;
-    }
-
-    public void setZeltkapazitaet(int zeltkapazitaet) {
-        this.zeltkapazitaet = zeltkapazitaet;
-    }
-
-    public float getKochtopfMultiplikator() {
-        return kochtopfMultiplikator;
-    }
-
-    public void entferneGegenstaende(ArrayList<Gegenstand> gegenstaende){
-        this.gegenstaende.removeAll(gegenstaende);
-    }
-
-    public void setKochtopfMultiplikator(float kochtopfMultiplikator) {
-        this.kochtopfMultiplikator = kochtopfMultiplikator;
-    }
-    public void fuegeGegenstandHinzu(Gegenstand gegenstand){
-        gegenstaende.add(gegenstand);
-    }
     public void fuegeGegenstaendeHinzu(ArrayList<Gegenstand> gegenstaende){
         this.gegenstaende.addAll(gegenstaende);
     }

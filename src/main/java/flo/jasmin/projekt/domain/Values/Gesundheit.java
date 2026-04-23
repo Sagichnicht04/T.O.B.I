@@ -38,9 +38,6 @@ public class Gesundheit {
         return new Gesundheit(neueGesundheit, this.maxGesundheit);
     }
 
-    public Gesundheit vollstaendigHeilen() {
-        return new Gesundheit(this.maxGesundheit, this.maxGesundheit);
-    }
 
     public Gesundheit mitNeuerMaxGesundheit(int neueMaxGesundheit) {
         if (neueMaxGesundheit <= 0) {
@@ -51,10 +48,6 @@ public class Gesundheit {
 
     public boolean istKampfFaehig() {
         return aktuelleGesundheit > 0;
-    }
-
-    public boolean istVollstaendigGeheilt() {
-        return aktuelleGesundheit == maxGesundheit;
     }
 
     public int getAktuelleGesundheit() {

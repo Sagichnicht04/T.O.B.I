@@ -47,9 +47,7 @@ public class Zelle {
     public float getGegnerWahrscheinlichkeit() {
         return gegnerWahrscheinlichkeit;
     }
-    public void setGegnerWahrscheinlichkeit(float gegnerWahrscheinlichkeit) {
-        this.gegnerWahrscheinlichkeit = gegnerWahrscheinlichkeit;
-    }
+
     public NPC getNpc() {
         return npc;
     }

@@ -16,10 +16,6 @@ public class Geld {
         return new Geld(betrag);
     }
 
-    public static Geld nichts() {
-        return new Geld(0);
-    }
-
     public Geld addiere(Geld anderes) {
         return new Geld(this.betrag + anderes.betrag);
     }

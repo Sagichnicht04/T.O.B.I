@@ -16,7 +16,6 @@ public class BefehleUebersetzt {
         stringBefehl.put("westen", Befehl.LINKS);
         befehlString.put(Befehl.LINKS, "westen");
         stringBefehl.put("sueden", Befehl.RUNTER);
-        stringBefehl.put("sueden", Befehl.RUNTER);
         befehlString.put(Befehl.RUNTER, "sueden");
         stringBefehl.put("osten", Befehl.RECHTS);
         befehlString.put(Befehl.RECHTS, "osten");
@@ -24,7 +23,6 @@ public class BefehleUebersetzt {
         befehlString.put(Befehl.CAMPEN, "campen");
         stringBefehl.put("kochen", Befehl.KOCHEN);
         befehlString.put(Befehl.KOCHEN, "kochen");
-        stringBefehl.put("zurueck", Befehl.ZURUeCK);
         stringBefehl.put("zurueck", Befehl.ZURUeCK);
         befehlString.put(Befehl.ZURUeCK, "zurueck");
         stringBefehl.put("speichern", Befehl.SPEICHERN);
@@ -35,7 +33,6 @@ public class BefehleUebersetzt {
         befehlString.put(Befehl.ZUTATEN, "zutaten");
         stringBefehl.put("ausstatten", Befehl.KREATURAUSSTATTEN);
         befehlString.put(Befehl.KREATURAUSSTATTEN, "ausstatten");
-        stringBefehl.put("ausruesten", Befehl.AUSRUeSTEN);
         stringBefehl.put("ausruesten", Befehl.AUSRUeSTEN);
         befehlString.put(Befehl.AUSRUeSTEN, "ausruesten");
         stringBefehl.put("kaufen", Befehl.KAUFEN);

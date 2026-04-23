@@ -24,9 +24,6 @@ public class Gegner extends Wesen{
         this.inventar = inventar;
     }
 
-    public AsciiVisualisierung getAsciiVisualisierung() {
-        return asciiVisualisierung;
-    }
 
     public void setAsciiVisualisierung(AsciiVisualisierung asciiVisualisierung) {
         this.asciiVisualisierung = asciiVisualisierung;

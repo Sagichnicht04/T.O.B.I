@@ -20,16 +20,6 @@ public class Stufe {
         return new Stufe(1);
     }
 
-    public Stufe erhoehen() {
-        return new Stufe(this.stufe + 1);
-    }
-
-    public Stufe erhoehenUm(int stufen) {
-        if (stufen < 0) {
-            throw new IllegalArgumentException("Stufenerhoehung kann nicht negativ sein");
-        }
-        return new Stufe(this.stufe + stufen);
-    }
 
     public int getStufe() {
         return stufe;
@@ -37,14 +27,6 @@ public class Stufe {
 
     public int getMultiplikator() {
         return stufe;
-    }
-
-    public boolean istHoeherAls(Stufe andere) {
-        return this.stufe > andere.stufe;
-    }
-
-    public boolean istNiedrigerAls(Stufe andere) {
-        return this.stufe < andere.stufe;
     }
 
     @Override

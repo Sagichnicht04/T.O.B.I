@@ -21,10 +21,6 @@ public class Kampf {
         return kampfImGange;
     }
 
-    public void setKampfImGange(boolean kampfImGange) {
-        this.kampfImGange = kampfImGange;
-    }
-
     public Kampf(ArrayList<Wesen> alleWesen){
         this.alleWesen = alleWesen;
         alleWesen.sort(Comparator.comparingInt(Wesen::getInitiative).reversed());
@@ -37,15 +33,8 @@ public class Kampf {
         return verloreneGegenstaende;
     }
 
-    public void setVerloreneGegenstaende(ArrayList<Gegenstand> verloreneGegenstaende) {
-        this.verloreneGegenstaende = verloreneGegenstaende;
-    }
-
     private void fuegeVerlorenenGegenstandHinzu(Gegenstand gegenstand){
         this.verloreneGegenstaende.add(gegenstand);
-    }
-    private void fuegeVerlorenenGegenstaendeHinzu(ArrayList<Gegenstand> gegenstaende){
-        this.verloreneGegenstaende.addAll(gegenstaende);
     }
 
     public Geld errechneZufaelligVerlorenesGeld(){
@@ -56,27 +45,7 @@ public class Kampf {
         return alleWesen;
     }
 
-    public void setAlleWesen(ArrayList<Wesen> alleWesen) {
-        this.alleWesen = alleWesen;
-    }
 
-    public int getMomentanesWesenIndex() {
-        return momentanesWesenIndex;
-    }
-
-    public void setMomentanesWesenIndex(int momentanesWesenIndex) {
-        this.momentanesWesenIndex = momentanesWesenIndex;
-    }
-
-    //Kapmfschritt wird benoetigt weil wir keine While Loop haben koennen
-   /*  public void kampfSchritt(){
-        if (getMomentanesWesen().getClass() == Gegner.class){
-            gegnerGreiftAn();
-            kampfSchritt();
-        } else{
-            //spieler darf angreifen
-        }
-    } */
 
     public void erhoeheMomentanesWesenIndex(){
         momentanesWesenIndex = (momentanesWesenIndex + 1) % alleWesen.size();

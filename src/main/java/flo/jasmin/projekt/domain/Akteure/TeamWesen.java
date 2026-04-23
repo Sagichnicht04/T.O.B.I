@@ -48,14 +48,6 @@ public class TeamWesen extends Wesen{
         return alte;
     }
 
-    public Ausstattung getAusgeruesteteWaffe() {
-        return ausgeruesteteWaffe;
-    }
-
-    public Ausstattung getAusgeruesteteRuestung() {
-        return ausgeruesteteRuestung;
-    }
-
     public String getAusruestungsStatus() {
         StringBuilder sb = new StringBuilder();
         sb.append(getName()).append(": ");

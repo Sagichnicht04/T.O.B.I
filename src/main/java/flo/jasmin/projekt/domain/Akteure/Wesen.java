@@ -57,18 +57,6 @@ public class Wesen {
         return gesundheit.getMaxGesundheit();
     }
 
-    public void setMaxGesundheit(int maxGesundheit) {
-        this.gesundheit = gesundheit.mitNeuerMaxGesundheit(maxGesundheit);
-    }
-
-    public Gesundheit getGesundheitObjekt() {
-        return gesundheit;
-    }
-
-    public void setGesundheitObjekt(Gesundheit gesundheit) {
-        this.gesundheit = gesundheit;
-    }
-
     public int getVerteidigung() {
         return stats.getVerteidigung();
     }
@@ -109,13 +97,6 @@ public class Wesen {
         this.erfahrung = Erfahrung.von(erfahrungsPunkte);
     }
 
-    public Erfahrung getErfahrungObjekt() {
-        return erfahrung;
-    }
-
-    public void setErfahrungObjekt(Erfahrung erfahrung) {
-        this.erfahrung = erfahrung;
-    }
 
     public int getStufe() {
         return stufe.getStufe();
@@ -139,14 +120,6 @@ public class Wesen {
         
         // Erfahrung mit neuer Stufe skalieren
         this.erfahrung = Erfahrung.von(erfahrung.getPunkte() / alterMultiplikator * neuerMultiplikator);
-    }
-
-    public Stufe getStufeObjekt() {
-        return stufe;
-    }
-
-    public void setStufeObjekt(Stufe stufe) {
-        setStufe(stufe.getStufe());
     }
 
     public String getName() {

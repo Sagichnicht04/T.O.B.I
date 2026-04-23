@@ -26,9 +26,7 @@ public class NPC {
         return wesenWennRekrutiert;
     }
 
-    public void setWesenWennRekrutiert(TeamWesen wesenWennRekrutiert) {
-        this.wesenWennRekrutiert = wesenWennRekrutiert;
-    }
+
 
     public DialogWithEnd popDialogString(){
         boolean endOfDialog = false;

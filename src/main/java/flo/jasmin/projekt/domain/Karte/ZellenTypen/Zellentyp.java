@@ -28,19 +28,9 @@ public class Zellentyp {
     public Set<Befehl> getErlaubteBefehle() {
         return erlaubteBefehle;
     }
-    public void setErlaubteBefehle(Set<Befehl> erlaubteBefehle) {
-        this.erlaubteBefehle = erlaubteBefehle;
-    }
 
     public ArrayList<Gegner> getGegnerAuswahl() {
         return gegnerAuswahl;
     }
-
-
-    public void setGegnerAuswahl(ArrayList<Gegner> gegnerAuswahl) {
-        this.gegnerAuswahl = gegnerAuswahl;
-    }
-
-
     
 }

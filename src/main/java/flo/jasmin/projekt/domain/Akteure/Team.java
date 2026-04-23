@@ -22,9 +22,6 @@ public class Team {
         return wesenInTeam;
     }
 
-    public void setWesenInTeam(ArrayList<TeamWesen> wesenInTeam) {
-        this.wesenInTeam = wesenInTeam;
-    }
 
     public void addWesenInTeam(TeamWesen teamWesen){
         wesenInTeam.add(teamWesen);

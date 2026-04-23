@@ -68,17 +68,5 @@ public class Dorf {
         this.beschreibung = beschreibung;
     }
 
-    public Set<Gegenstand> getSortiment() {
-        return sortiment;
-    }
-
-    public void setSortiment(Set<Gegenstand> sortiment) {
-        this.sortiment = sortiment;
-    }
-
-  
-
-    
-    
 
 }

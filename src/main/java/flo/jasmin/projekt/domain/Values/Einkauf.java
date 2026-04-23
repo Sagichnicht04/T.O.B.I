@@ -17,17 +17,10 @@ public class Einkauf {
         return auswahl;
     }
 
-    public void setAuswahl(Map<Gegenstand, Integer> auswahl) {
-        this.auswahl = auswahl;
-    }
+
 
     public int getGesamtpreis() {
         return gesamtpreis.getBetrag();
     }
 
-    public void setGesamtpreis(int gesamtpreis) {
-        this.gesamtpreis = Geld.von(gesamtpreis);
-    } 
-
-    
 }

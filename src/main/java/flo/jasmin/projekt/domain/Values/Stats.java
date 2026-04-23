@@ -20,14 +20,6 @@ public class Stats {
         return new Stats(angriff, verteidigung, initiative);
     }
 
-    public Stats mitAngriffBonus(int bonus) {
-        return new Stats(this.angriff + bonus, this.verteidigung, this.initiative);
-    }
-
-    public Stats mitVerteidigungBonus(int bonus) {
-        return new Stats(this.angriff, this.verteidigung + bonus, this.initiative);
-    }
-
     public int getAngriff() {
         return angriff;
     }
@@ -40,9 +32,6 @@ public class Stats {
         return initiative;
     }
 
-    public Schaden berechneSchaden() {
-        return Schaden.von(angriff);
-    }
 
     @Override
     public boolean equals(Object o) {

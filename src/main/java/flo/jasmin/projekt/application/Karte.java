@@ -173,11 +173,4 @@ public class Karte {
         this.momentanePosition = momentanePosition;
     }
 
-    public Map<Position, Zelle> getPositionen() {
-        return positionen;
-    }
-
-    public void setPositionen(Map<Position, Zelle> positionen) {
-        this.positionen = positionen;
-    }
 }

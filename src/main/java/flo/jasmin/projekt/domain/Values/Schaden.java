@@ -16,10 +16,6 @@ public class Schaden {
         return new Schaden(wert);
     }
 
-    public static Schaden keinSchaden() {
-        return new Schaden(0);
-    }
-
     public Schaden reduziereDurch(int verteidigung) {
         int reduzierterSchaden = Math.max(0, this.wert - verteidigung);
         return new Schaden(reduzierterSchaden);
