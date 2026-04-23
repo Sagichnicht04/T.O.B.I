@@ -1,6 +1,4 @@
-package flo.jasmin.projekt.domain.Gegenstaende.konkreteZutaten;
-
-import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
+package flo.jasmin.projekt.domain.Gegenstaende.Zutaten;
 
 public class Fleisch extends Zutat {
     

@@ -1,17 +1,14 @@
-package flo.jasmin.projekt.domain;
+package flo.jasmin.projekt.domain.Doerfer;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import flo.jasmin.projekt.domain.Exceptions.FalscheZutatenEingabe;
-import flo.jasmin.projekt.domain.Gegenstaende.Ausstattung;
+import flo.jasmin.projekt.domain.Gegenstaende.Ausstattungen.Ausstattung;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
-import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutaten.Zutat;
 
 public class Dorf {
 

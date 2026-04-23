@@ -1,6 +1,7 @@
 package flo.jasmin.projekt.domain.Karte;
 
-import flo.jasmin.projekt.domain.Dorf;
+import flo.jasmin.projekt.domain.Doerfer.Dorf;
+import flo.jasmin.projekt.domain.Karte.ZellenTypen.Zellentyp;
 import flo.jasmin.projekt.domain.NPCs.NPC;
 
 public class Zelle {

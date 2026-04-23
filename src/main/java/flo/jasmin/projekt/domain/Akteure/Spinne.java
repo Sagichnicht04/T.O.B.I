@@ -1,7 +1,7 @@
 package flo.jasmin.projekt.domain.Akteure;
 
 import flo.jasmin.projekt.domain.Visualisierung.AsciiVisualisierung;
-import flo.jasmin.projekt.domain.Gegenstaende.konkreteZutaten.Spinnenseide;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutaten.Spinnenseide;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Spinne extends Gegner {
     
     public Spinne() {
-        super(35, 3, 10, 12, 25, "Riesenspinne", new SpinneVisualisierung());
+        super(35, 3, 10, 12, 25, "Riesenspinne", new SpinnenVisualisierung());
         getInventar().add(new Spinnenseide());
         if (Math.random() < 0.4) {
             getInventar().add(new Spinnenseide());
@@ -28,7 +28,7 @@ public class Spinne extends Gegner {
         return schwaechstesZiel;
     }
     
-    private static class SpinneVisualisierung implements AsciiVisualisierung {
+    private static class SpinnenVisualisierung implements AsciiVisualisierung {
         @Override
         public String getVisualisierung() {
             return """

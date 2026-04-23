@@ -1,15 +1,19 @@
 package flo.jasmin.projekt.application;
 
-import flo.jasmin.projekt.domain.Akteure.*;
+import flo.jasmin.projekt.domain.Akteure.Gegner;
+import flo.jasmin.projekt.domain.Akteure.Team;
+import flo.jasmin.projekt.domain.Akteure.TeamWesen;
+import flo.jasmin.projekt.domain.Akteure.Wesen;
 import flo.jasmin.projekt.domain.Befehl;
-import flo.jasmin.projekt.domain.Dorf;
+import flo.jasmin.projekt.domain.Doerfer.Dorf;
 import flo.jasmin.projekt.domain.Exceptions.FalscheZutatenEingabe;
 import flo.jasmin.projekt.domain.Exceptions.LaufGegenBarriereException;
 import flo.jasmin.projekt.domain.Exceptions.NichtGenugErsparrtes;
 import flo.jasmin.projekt.domain.Exceptions.NichtGenugZutatenImInventar;
 import flo.jasmin.projekt.domain.Exceptions.ZielIstSpielerWesen;
+import flo.jasmin.projekt.domain.Gegenstaende.Ausstattungen.Ausstattung;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
-import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutaten.Zutat;
 import flo.jasmin.projekt.domain.NPCs.NPC;
 import flo.jasmin.projekt.domain.Values.Einkauf;
 import flo.jasmin.projekt.domain.Kochsystem;
@@ -383,11 +387,11 @@ public class Spiel {
             }
             
             TeamWesen wesen = team.getWesenInTeam().get(wesenIndex);
-            flo.jasmin.projekt.domain.Gegenstaende.Ausstattung ausruestung = 
-                (flo.jasmin.projekt.domain.Gegenstaende.Ausstattung) verfuegbareAusruestung.get(ausruestungsIndex);
+            Ausstattung ausruestung =
+                (Ausstattung) verfuegbareAusruestung.get(ausruestungsIndex);
             
-            flo.jasmin.projekt.domain.Gegenstaende.Ausstattung alteAusruestung = null;
-            if (ausruestung.getBeinflussterWert() == flo.jasmin.projekt.domain.Gegenstaende.Ausstattung.BeinflussterWert.ANGRIFF) {
+            Ausstattung alteAusruestung = null;
+            if (ausruestung.getBeinflussterWert() == Ausstattung.BeinflussterWert.ANGRIFF) {
                 alteAusruestung = wesen.entferneWaffe();
             } else {
                 alteAusruestung = wesen.entferneRuestung();

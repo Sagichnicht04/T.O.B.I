@@ -1,8 +1,9 @@
 package flo.jasmin.projekt.domain.Karte.ZellenTypen;
 
+import flo.jasmin.projekt.domain.Akteure.Garnele;
+import flo.jasmin.projekt.domain.Akteure.Gegner;
+import flo.jasmin.projekt.domain.Akteure.Skelett;
 import flo.jasmin.projekt.domain.Befehl;
-import flo.jasmin.projekt.domain.Karte.Zellentyp;
-import flo.jasmin.projekt.domain.Akteure.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;

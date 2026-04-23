@@ -1,4 +1,4 @@
-package flo.jasmin.projekt.domain.Karte;
+package flo.jasmin.projekt.domain.Karte.ZellenTypen;
 
 import java.util.*;
 

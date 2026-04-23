@@ -1,6 +1,6 @@
 package flo.jasmin.projekt.domain.Akteure;
 
-import flo.jasmin.projekt.domain.Gegenstaende.Ausstattung;
+import flo.jasmin.projekt.domain.Gegenstaende.Ausstattungen.Ausstattung;
 
 public class TeamWesen extends Wesen{
     private Ausstattung ausgeruesteteWaffe;

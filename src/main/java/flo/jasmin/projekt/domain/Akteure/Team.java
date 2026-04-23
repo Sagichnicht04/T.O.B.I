@@ -31,7 +31,7 @@ public class Team {
     }
 
     public List<TeamWesen> holeKampffaehigeWesen(){
-        return wesenInTeam.stream().filter(wesen -> wesen.kampfFaehig()).toList();
+        return wesenInTeam.stream().filter(Wesen::kampfFaehig).toList();
     }
 
     public boolean istBesiegt(){

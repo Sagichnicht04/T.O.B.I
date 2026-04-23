@@ -1,8 +1,8 @@
 package flo.jasmin.projekt.domain.Akteure;
 
 import flo.jasmin.projekt.domain.Visualisierung.AsciiVisualisierung;
-import flo.jasmin.projekt.domain.Gegenstaende.konkreteZutaten.Drachenschuppe;
-import flo.jasmin.projekt.domain.Gegenstaende.konkreteAusstattung.Drachenschwert;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutaten.Drachenschuppe;
+import flo.jasmin.projekt.domain.Gegenstaende.Ausstattungen.Drachenschwert;
 
 import java.util.ArrayList;
 

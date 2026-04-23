@@ -1,5 +1,7 @@
 package flo.jasmin.projekt.domain.Values;
 
+import java.util.Objects;
+
 public class Position {
     private final int horizontal;
     private final int vertikal;
@@ -36,7 +38,7 @@ public class Position {
 
     @Override
     public int hashCode() {
-        return 31 * vertikal + horizontal;
+        return Objects.hash(horizontal, vertikal);
     }
 
     public String toString() {

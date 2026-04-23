@@ -6,11 +6,11 @@ import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 
 public class Einkauf {
     Map<Gegenstand, Integer> auswahl;
-    int gesamtpreis;
+    Geld gesamtpreis;
     
     public Einkauf(Map<Gegenstand, Integer> auswahl, int gesamtpreis) {
         this.auswahl = auswahl;
-        this.gesamtpreis = gesamtpreis;
+        this.gesamtpreis = Geld.von(gesamtpreis);
     }
 
     public Map<Gegenstand, Integer> getAuswahl() {
@@ -22,11 +22,11 @@ public class Einkauf {
     }
 
     public int getGesamtpreis() {
-        return gesamtpreis;
+        return gesamtpreis.getBetrag();
     }
 
     public void setGesamtpreis(int gesamtpreis) {
-        this.gesamtpreis = gesamtpreis;
+        this.gesamtpreis = Geld.von(gesamtpreis);
     } 
 
     

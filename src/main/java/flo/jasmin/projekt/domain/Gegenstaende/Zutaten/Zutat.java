@@ -1,8 +1,8 @@
-package flo.jasmin.projekt.domain.Gegenstaende;
+package flo.jasmin.projekt.domain.Gegenstaende.Zutaten;
 
-import java.util.Objects;
+import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 
-public class Zutat extends Gegenstand{
+public class Zutat extends Gegenstand {
     
     private int heilwert;
 

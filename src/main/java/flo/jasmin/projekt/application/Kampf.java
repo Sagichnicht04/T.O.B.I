@@ -7,7 +7,6 @@ import flo.jasmin.projekt.domain.Akteure.Gegner;
 import flo.jasmin.projekt.domain.Akteure.TeamWesen;
 import flo.jasmin.projekt.domain.Akteure.Wesen;
 import flo.jasmin.projekt.domain.Exceptions.ZielIstSpielerWesen;
-import flo.jasmin.projekt.domain.Befehl;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 import flo.jasmin.projekt.domain.Values.Geld;
 import flo.jasmin.projekt.domain.Values.Schaden;

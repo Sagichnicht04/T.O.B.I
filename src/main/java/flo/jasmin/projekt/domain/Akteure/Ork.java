@@ -1,8 +1,8 @@
 package flo.jasmin.projekt.domain.Akteure;
 
 import flo.jasmin.projekt.domain.Visualisierung.AsciiVisualisierung;
-import flo.jasmin.projekt.domain.Gegenstaende.konkreteZutaten.Fleisch;
-import flo.jasmin.projekt.domain.Gegenstaende.konkreteAusstattung.Axt;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutaten.Fleisch;
+import flo.jasmin.projekt.domain.Gegenstaende.Ausstattungen.Axt;
 
 public class Ork extends Gegner {
     

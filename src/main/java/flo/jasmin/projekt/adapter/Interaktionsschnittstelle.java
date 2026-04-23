@@ -1,127 +1,150 @@
 package flo.jasmin.projekt.adapter;
 
-import flo.jasmin.projekt.application.Persistenz;
 import flo.jasmin.projekt.application.Spiel;
-import flo.jasmin.projekt.domain.Akteure.Wesen;
+import flo.jasmin.projekt.domain.Akteure.TeamWesen;
 import flo.jasmin.projekt.domain.Befehl;
-import flo.jasmin.projekt.domain.Exceptions.FalscheBefehlEingabe;
-import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
-import flo.jasmin.projekt.domain.Status;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Interaktionsschnittstelle {
-    Spiel spiel;
-    public static void main(String[] args){
-        new Interaktionsschnittstelle();
+    private Spiel spiel;
+    private Scanner scanner;
+
+    public Interaktionsschnittstelle() {
+        this.spiel = new Spiel();
+        this.scanner = new Scanner(System.in);
     }
-    public Interaktionsschnittstelle(){
 
-        Scanner scanner = new Scanner(System.in);
+    public void starte() {
+        zeigeWillkommensNachricht();
+        zeigeSpielStatus();
 
-        spiel = (new Persistenz("")).laden();
-        while(true){
+        while (true) {
+            String eingabe = leseEingabe();
+            if (eingabe.equalsIgnoreCase("ENDE")) {
+                zeigeTschuessNachricht();
+                break;
+            }
+            System.out.println("\n".repeat(30));
+            verarbeiteEingabe(eingabe);
+        }
+    }
 
-            anzeigen(spiel);
+    private void zeigeWillkommensNachricht() {
+        System.out.println("\n╔══════════════════════════════════════════════╗");
+        System.out.println("║                                              ║");
+        System.out.println("║          T.O.B.I - Text Adventure            ║");
+        System.out.println("║                                              ║");
+        System.out.println("╚══════════════════════════════════════════════╝");
+        System.out.println("\nWillkommen in der Welt von T.O.B.I!");
+        System.out.println("Dein Abenteuer beginnt jetzt...\n");
+    }
 
-            String eingabe = scanner.nextLine();  // Read user input
-            String befehlTeil;
-            String paramTeil = "";
-            if (eingabe.contains("|")){
-                befehlTeil = eingabe.split("\\|")[0].toLowerCase();
-                paramTeil = eingabe.split("\\|")[1].toLowerCase();
+    private void zeigeTschuessNachricht() {
+        System.out.println("\n╔══════════════════════════════════════════════╗");
+        System.out.println("║        Danke fuers Spielen! Bis bald!         ║");
+        System.out.println("╚══════════════════════════════════════════════╝\n");
+    }
+
+    private void zeigeSpielStatus() {
+        System.out.println("\n" + "═".repeat(60));
+        
+        zeigeTeamStatus();
+        zeigeErlaubteBefehle();
+        zeigePosition();
+        
+        System.out.println("═".repeat(60));
+    }
+
+    private void zeigeTeamStatus() {
+        List<TeamWesen> team = new ArrayList<>(spiel.getTeam().getWesenInTeam());
+        
+        System.out.println("\nTEAM STATUS:");
+        for (TeamWesen wesen : team) {
+            String healthBar = createHealthBar(wesen.getGesundheit(), wesen.getMaxGesundheit());
+            System.out.printf("  %-12s %s ❤️  %3d/%-3d │ ⚔️  ATK: %2d │ 🛡️  DEF: %2d%n",
+                wesen.getName(),
+                healthBar,
+                wesen.getGesundheit(),
+                wesen.getMaxGesundheit(),
+                wesen.getAngriff(),
+                wesen.getVerteidigung()
+            );
+        }
+    }
+
+    private void zeigeErlaubteBefehle() {
+        System.out.println("\nVERFUeGBARE BEFEHLE:");
+        System.out.print("  ");
+        for (Befehl befehl : spiel.gibErlaubteBefehle()) {
+            System.out.print(BefehleUebersetzt.uebersetze(befehl) + " │ ");
+        }
+        System.out.println("\nOder: ENDE (zum Beenden)");
+    }
+
+    private void zeigePosition() {
+        System.out.println("\nPOSITION:");
+        System.out.println("  " + spiel.getKarte().getMomentanePosition());
+        System.out.println("  Ersparnisse: " + spiel.getTeam().getInventar().getErspartes() + " Muenzen");
+    }
+
+    private String createHealthBar(int current, int max) {
+        int barLength = 10;
+        int filled = (int) Math.ceil((double) current / max * barLength);
+        StringBuilder bar = new StringBuilder("[");
+        for (int i = 0; i < barLength; i++) {
+            if (i < filled) {
+                bar.append("█");
             } else {
-                befehlTeil = eingabe.toLowerCase();
+                bar.append("░");
+            }
+        }
+        bar.append("]");
+        return bar.toString();
+    }
+
+    private String leseEingabe() {
+        System.out.print("\n➤ Deine Eingabe: ");
+        return scanner.nextLine().trim();
+    }
+
+    private void verarbeiteEingabe(String eingabe) {
+        String[] teile = eingabe.split("\\s+", 2);
+        String befehlString = teile[0].toUpperCase();
+        String parameter = teile.length > 1 ? teile[1] : "";
+
+        try {
+            Befehl befehl = BefehleUebersetzt.uebersetze(befehlString);
+
+            if (!spiel.gibErlaubteBefehle().contains(befehl)) {
+                System.out.println("\nDieser Befehl ist hier nicht erlaubt!");
+                zeigeSpielStatus();
+                return;
             }
 
-            try {
-                Befehl befehl = eingabeUebersetzenInBefehl(befehlTeil);
-                gebAlleInfosAus(spiel.spieleBefehl(befehl, paramTeil));
-                
-            } catch (FalscheBefehlEingabe e) {
-                System.out.println("Hae?");;
+            List<String> antworten = spiel.spieleBefehl(befehl, parameter);
+            zeigeSpielStatus();
+
+            System.out.println("\n" + "─".repeat(60));
+            for (String antwort : antworten) {
+                if (!antwort.trim().isEmpty() && !antwort.startsWith("Du willst")) {
+                    System.out.println(antwort);
+                }
             }
+            System.out.println("─".repeat(60));
+
+        } catch (NullPointerException e) {
+            System.out.println("\nUnbekannter Befehl: " + befehlString);
+            System.out.println("Nutze einen der verfuegbaren Befehle oder ENDE zum Beenden.");
         }
     }
 
 
-    public void gebAlleInfosAus(ArrayList<String> antwort){
-        for (String i :antwort){
-            System.out.println(i);
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-    }
 
-
-    public Befehl eingabeUebersetzenInBefehl(String eingabe) throws FalscheBefehlEingabe {
-        //Kognitive engagement
-        if(Objects.equals(eingabe, "norden")){
-            return Befehl.HOCH;
-        }
-        else if(Objects.equals(eingabe, "westen")){
-            return Befehl.LINKS;
-        }
-        else if(Objects.equals(eingabe, "sueden")){
-            return Befehl.RUNTER;
-        }
-        else if(Objects.equals(eingabe, "osten")){
-            return Befehl.RECHTS;
-        }
-        else if(Objects.equals(eingabe, "campen")){
-            return Befehl.CAMPEN;
-        }
-        else if(Objects.equals(eingabe, "kochen")){
-            return Befehl.KOCHEN;
-        }
-        else if(Objects.equals(eingabe, "zurueck")){
-            return Befehl.ZURUeCK;
-        }
-        else if(Objects.equals(eingabe, "speichern")){
-            return Befehl.SPEICHERN;
-        }
-        else if(Objects.equals(eingabe, "angriff")){
-            return Befehl.ANGRIFF;
-        }
-        else if(Objects.equals(eingabe, "zutaten")){
-            return Befehl.ZUTATEN;
-        }
-        else if(Objects.equals(eingabe, "ausstatten")){
-            return Befehl.KREATURAUSSTATTEN;
-        }
-        else if(Objects.equals(eingabe, "kaufen")){
-            return Befehl.KAUFEN;
-        }
-        else if(Objects.equals(eingabe, "ja")){
-            return Befehl.JA;
-        }
-        throw new FalscheBefehlEingabe();
-    }
-
-    public void anzeigen(Spiel spiel){
-        Status status = spiel.getStatus();
-        System.out.println("Momentaner Status: " + status);
-/*         else if (status == Status.CAMPEN){
-            System.out.println("Ihr sitzt am Lagerfeuer und singt das Lagerfeuerlied.");
-            System.out.println("Inventar:");
-            for(Gegenstand gegenstand : spiel.getTeam().getInventar().getGegenstaende()){
-                System.out.println(gegenstand.getName());
-            }
-            System.out.println();
-            System.out.println("Team:");
-            for(Wesen wesen : spiel.getTeam().getWesenInTeam()){
-                System.out.println(wesen.getName());
-            }
-        } else if (status == Status.KOCHEN) {
-            System.out.println("Jetzt wird gekocht");
-            System.out.println("Inventar:");
-            for(Gegenstand gegenstand : spiel.getTeam().getInventar().getGegenstaende()){
-                System.out.println(gegenstand.getName());
-            }
-        } */
+    public static void main(String[] args) {
+        Interaktionsschnittstelle interaktion = new Interaktionsschnittstelle();
+        interaktion.starte();
     }
 }

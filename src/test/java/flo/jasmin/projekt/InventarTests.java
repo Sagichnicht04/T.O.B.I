@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 import flo.jasmin.projekt.domain.Inventar;
 import flo.jasmin.projekt.domain.Exceptions.NichtGenugErsparrtes;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
-import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
-import flo.jasmin.projekt.domain.Gegenstaende.konkreteAusstattung.Holzschwert;
-import flo.jasmin.projekt.domain.Gegenstaende.konkreteZutaten.Karotte;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutaten.Zutat;
+import flo.jasmin.projekt.domain.Gegenstaende.Ausstattungen.Holzschwert;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutaten.Karotte;
 
 public class InventarTests {
 

@@ -1,6 +1,4 @@
-package flo.jasmin.projekt.domain.Gegenstaende.konkreteAusstattung;
-
-import flo.jasmin.projekt.domain.Gegenstaende.Ausstattung;
+package flo.jasmin.projekt.domain.Gegenstaende.Ausstattungen;
 
 public class Holzschwert extends Ausstattung{
 

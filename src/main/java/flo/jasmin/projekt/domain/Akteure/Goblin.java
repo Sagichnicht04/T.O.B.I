@@ -1,6 +1,6 @@
 package flo.jasmin.projekt.domain.Akteure;
 
-import flo.jasmin.projekt.domain.Gegenstaende.konkreteZutaten.Banane;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutaten.Banane;
 import flo.jasmin.projekt.domain.Visualisierung.GoblinVisualisierung;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package flo.jasmin.projekt.domain.Akteure;
 
-import flo.jasmin.projekt.domain.Gegenstaende.konkreteAusstattung.Schale;
+import flo.jasmin.projekt.domain.Gegenstaende.Ausstattungen.Schale;
 import flo.jasmin.projekt.domain.Visualisierung.GarneleVisualisierung;
 
 import java.util.ArrayList;

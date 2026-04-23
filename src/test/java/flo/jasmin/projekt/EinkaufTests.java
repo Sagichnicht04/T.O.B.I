@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test;
 
 import flo.jasmin.projekt.application.Spiel;
 import flo.jasmin.projekt.domain.Befehl;
-import flo.jasmin.projekt.domain.Dorf;
+import flo.jasmin.projekt.domain.Doerfer.Dorf;
 import flo.jasmin.projekt.domain.Status;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
-import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
-import flo.jasmin.projekt.domain.Gegenstaende.konkreteZutaten.Karotte;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutaten.Zutat;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutaten.Karotte;
 import flo.jasmin.projekt.domain.Values.Einkauf;
 
 public class EinkaufTests {

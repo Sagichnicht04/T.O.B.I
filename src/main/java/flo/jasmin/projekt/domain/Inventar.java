@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 
 import flo.jasmin.projekt.domain.Exceptions.NichtGenugErsparrtes;
 import flo.jasmin.projekt.domain.Exceptions.NichtGenugZutatenImInventar;
-import flo.jasmin.projekt.domain.Gegenstaende.Ausstattung;
+import flo.jasmin.projekt.domain.Gegenstaende.Ausstattungen.Ausstattung;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
-import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutaten.Zutat;
 import flo.jasmin.projekt.domain.Values.Geld;
 
 public class Inventar {

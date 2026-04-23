@@ -1,8 +1,8 @@
-package flo.jasmin.projekt.domain.Gegenstaende;
+package flo.jasmin.projekt.domain.Gegenstaende.Ausstattungen;
 
-import java.util.Objects;
+import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 
-public class Ausstattung extends Gegenstand{
+public class Ausstattung extends Gegenstand {
     int wert;
     BeinflussterWert beinflussterWert;
 

@@ -1,33 +1,13 @@
 package flo.jasmin.projekt.domain;
 
 import flo.jasmin.projekt.domain.Exceptions.FalscheZutatenEingabe;
-import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
-import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutaten.Zutat;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 public class Kochsystem{
-
-
-    //TODO: Heilwert zurueckgeben
-/*     public Map<Zutat, Integer> errechneMoeglicheZutaten(Inventar inventar){
-        Map<Zutat, Integer> ergebnis = new HashMap<>();
-        for (Gegenstand gegenstand: inventar.getGegenstaende()){
-            if(gegenstand.getClass().getSuperclass() == Zutat.class){
-                if(ergebnis.containsKey(gegenstand)){
-                    ergebnis.put((Zutat)gegenstand, ergebnis.get(gegenstand) + 1);
-                }
-                else {
-                    ergebnis.put((Zutat)gegenstand, 1);
-                }
-            }
-        }
-        return ergebnis;
-    } */
 
     public String stringRepraesentationVonZutaten(Map<Zutat, Integer> moeglicheZutaten){
         Map<Zutat, Integer> zutaten = moeglicheZutaten;

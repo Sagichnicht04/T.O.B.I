@@ -8,15 +8,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import flo.jasmin.projekt.domain.Inventar;
 import flo.jasmin.projekt.domain.Exceptions.NichtGenugZutatenImInventar;
-import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
-import flo.jasmin.projekt.domain.Gegenstaende.konkreteZutaten.Banane;
-import flo.jasmin.projekt.domain.Gegenstaende.konkreteZutaten.Karotte;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutaten.Zutat;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutaten.Banane;
+import flo.jasmin.projekt.domain.Gegenstaende.Zutaten.Karotte;
 
 public class ZutatenInventarTest {
 
