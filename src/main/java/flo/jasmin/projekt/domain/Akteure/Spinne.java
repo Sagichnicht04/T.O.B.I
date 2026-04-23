@@ -18,14 +18,14 @@ public class Spinne extends Gegner {
     
 
     @Override
-    public Wesen ausgewähltesZiel(ArrayList<Wesen> wesen) {
-        Wesen schwächstesZiel = wesen.get(0);
+    public Wesen ausgewaehltesZiel(ArrayList<Wesen> wesen) {
+        Wesen schwaechstesZiel = wesen.get(0);
         for (Wesen w : wesen) {
-            if (w.getGesundheit() < schwächstesZiel.getGesundheit()) {
-                schwächstesZiel = w;
+            if (w.getGesundheit() < schwaechstesZiel.getGesundheit()) {
+                schwaechstesZiel = w;
             }
         }
-        return schwächstesZiel;
+        return schwaechstesZiel;
     }
     
     private static class SpinneVisualisierung implements AsciiVisualisierung {

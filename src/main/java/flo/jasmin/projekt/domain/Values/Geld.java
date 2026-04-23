@@ -58,6 +58,6 @@ public class Geld {
 
     @Override
     public String toString() {
-        return betrag + " Münzen";
+        return betrag + " Muenzen";
     }
 }

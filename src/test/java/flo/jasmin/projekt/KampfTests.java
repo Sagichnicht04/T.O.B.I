@@ -23,7 +23,7 @@ public class KampfTests {
     Kampf testKampf;
 
     @Test
-    void reihenfolgeNachHöchsterInitiativeGestellt(){
+    void reihenfolgeNachHoechsterInitiativeGestellt(){
         ArrayList<Wesen> alleWesen = new ArrayList<>();
         TeamWesen wesen1 = new TeamWesen(10, 0, 0, 2, 0, "Wesen1");
         TeamWesen wesen2 = new TeamWesen(10, 0, 0, 1, 0, "Wesen2");
@@ -44,7 +44,7 @@ public class KampfTests {
 
 
     @Test
-    void gegnerGreiftZuerstAnWennInitiativeAmHöchsten(){
+    void gegnerGreiftZuerstAnWennInitiativeAmHoechsten(){
         ArrayList<Wesen> alleWesen = new ArrayList<>();
         TeamWesen wesen1 = new TeamWesen(10, 0, 0, 2, 0, "Wesen1");
         TeamWesen wesen2 = new TeamWesen(10, 0, 0, 1, 0, "Wesen2");
@@ -56,7 +56,7 @@ public class KampfTests {
         testKampf = new Kampf(alleWesen);
         ArrayList<String> ergebnis = new ArrayList<>();
         ergebnis.add("Goblin greift an.");
-        ergebnis.add("Wesen1 nimmt 5 Schaden. HP übrig: 5");
+        ergebnis.add("Wesen1 nimmt 5 Schaden. HP uebrig: 5");
         ergebnis.add("Goblin : 0");
         ergebnis.add("Wesen1 : 1");
         ergebnis.add("Wesen2 : 2");
@@ -101,7 +101,7 @@ public class KampfTests {
         alleWesen.add(wesen2);
         testKampf = new Kampf(alleWesen);
 
-        testKampf.überMittelZiel(1);
+        testKampf.ueberMittelZiel(1);
 
         assertEquals(7, goblin1.getGesundheit());
     }
@@ -118,7 +118,7 @@ public class KampfTests {
         alleWesen.add(wesen2);
         testKampf = new Kampf(alleWesen);
         
-        assertThrows(ZielIstSpielerWesen.class, () -> testKampf.überMittelZiel(2));
+        assertThrows(ZielIstSpielerWesen.class, () -> testKampf.ueberMittelZiel(2));
     }
 
     @Test
@@ -133,12 +133,12 @@ public class KampfTests {
         alleWesen.add(wesen2);
         testKampf = new Kampf(alleWesen);
         
-        assertThrows(IndexOutOfBoundsException.class, () -> testKampf.überMittelZiel(8));
+        assertThrows(IndexOutOfBoundsException.class, () -> testKampf.ueberMittelZiel(8));
     }
 
-    //Test für gegner geht down und droppt Items
+    //Test fuer gegner geht down und droppt Items
     @Test
-    void gegnerGibtGegenständeNachKO() throws IndexOutOfBoundsException, ZielIstSpielerWesen{
+    void gegnerGibtGegenstaendeNachKO() throws IndexOutOfBoundsException, ZielIstSpielerWesen{
         ArrayList<Wesen> alleWesen = new ArrayList<>();
         TeamWesen wesen1 = new TeamWesen(10, 0, 50, 8, 0, "Wesen1");
         TeamWesen wesen2 = new TeamWesen(10, 0, 0, 1, 0, "Wesen2");
@@ -149,14 +149,14 @@ public class KampfTests {
         alleWesen.add(wesen2);
         testKampf = new Kampf(alleWesen);
 
-        testKampf.überMittelZiel(1);
+        testKampf.ueberMittelZiel(1);
         ArrayList<Gegenstand> ergebnis = new ArrayList<>();
         ergebnis.add(new Banane());
-        assertEquals(ergebnis, testKampf.getVerloreneGegenstände());
+        assertEquals(ergebnis, testKampf.getVerloreneGegenstaende());
     }
     
 
-    //Test für alle gegner sind besiegt
+    //Test fuer alle gegner sind besiegt
     @Test
     void alleGegnerBesigt() throws IndexOutOfBoundsException, ZielIstSpielerWesen{
         ArrayList<Wesen> alleWesen = new ArrayList<>();
@@ -169,10 +169,10 @@ public class KampfTests {
         alleWesen.add(wesen2);
         testKampf = new Kampf(alleWesen);
 
-        assertTrue(testKampf.überMittelZiel(1).contains("Alle Gegner wurden besiegt!"));
+        assertTrue(testKampf.ueberMittelZiel(1).contains("Alle Gegner wurden besiegt!"));
         assertFalse(testKampf.isKampfImGange());
     }
-    //Test für alle SpielerWesen sind besiegt
+    //Test fuer alle SpielerWesen sind besiegt
     @Test
     void alleTeamwesenBesiegt() throws IndexOutOfBoundsException, ZielIstSpielerWesen{
         ArrayList<Wesen> alleWesen = new ArrayList<>();
@@ -187,7 +187,7 @@ public class KampfTests {
         assertFalse(testKampf.isKampfImGange());
     }
 
-    // test für das Index richtig ist, wenn ein Wesen aus der Liste entfernt wird, damit das nicht ausversehen geskippt wird
+    // test fuer das Index richtig ist, wenn ein Wesen aus der Liste entfernt wird, damit das nicht ausversehen geskippt wird
 
     @Test
     void gegnerBesiegtIndexRichtigBewegt_BesiegterGegnerVorMomentanemWesen() throws IndexOutOfBoundsException, ZielIstSpielerWesen{
@@ -202,7 +202,7 @@ public class KampfTests {
         testKampf = new Kampf(alleWesen);
 
         testKampf.gegnerGreiftAn();
-        testKampf.überMittelZiel(0);
+        testKampf.ueberMittelZiel(0);
         assertEquals(wesen2, testKampf.getMomentanesWesen());
     }
 
@@ -219,7 +219,7 @@ public class KampfTests {
         testKampf = new Kampf(alleWesen);
 
         testKampf.gegnerGreiftAn();
-        testKampf.überMittelZiel(1);
+        testKampf.ueberMittelZiel(1);
         assertEquals(wesen2, testKampf.getMomentanesWesen());
     }
     

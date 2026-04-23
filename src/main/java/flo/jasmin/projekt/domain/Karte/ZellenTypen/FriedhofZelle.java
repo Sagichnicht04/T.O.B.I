@@ -12,7 +12,7 @@ import java.util.Set;
 public class FriedhofZelle extends Zellentyp {
     
     public FriedhofZelle() {
-        super("Du befindest dich auf einem verlassenen Friedhof. Alte Grabsteine ragen aus dem Boden und Nebel wabert zwischen den Gräbern.",
+        super("Du befindest dich auf einem verlassenen Friedhof. Alte Grabsteine ragen aus dem Boden und Nebel wabert zwischen den Graebern.",
               erstelleErlaubteBefehle(),
               erstelleGegnerAuswahl());
     }

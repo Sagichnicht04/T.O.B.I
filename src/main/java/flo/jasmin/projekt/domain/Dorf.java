@@ -36,7 +36,7 @@ public class Dorf {
         return sortimentAnzeige;
     }
 
-    public Map<Gegenstand, Integer> übersetzeNameZuGegenstand(Map<String, Integer> eingabe) throws FalscheZutatenEingabe{
+    public Map<Gegenstand, Integer> uebersetzeNameZuGegenstand(Map<String, Integer> eingabe) throws FalscheZutatenEingabe{
         try {
                    Map<Gegenstand, Integer> ergebniss = new HashMap<Gegenstand,Integer>();
         for(String s : eingabe.keySet()){
@@ -59,7 +59,7 @@ public class Dorf {
     }
 
     public static String preisVisualisierung(int preis){
-        return "Der Gesamtpreis für deinen Einkauf beträgt: " + preis + "\nBestätige deinen Einkauf mit JA oder breche ab mit NEIN";
+        return "Der Gesamtpreis fuer deinen Einkauf betraegt: " + preis + "\nBestaetige deinen Einkauf mit JA oder breche ab mit NEIN";
     }
 
   

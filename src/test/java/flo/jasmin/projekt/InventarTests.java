@@ -34,20 +34,20 @@ public class InventarTests {
     }
 
     @Test 
-    void gemischteGegenständeKorrektEingeordnet(){
+    void gemischteGegenstaendeKorrektEingeordnet(){
         Map<Gegenstand, Integer> eingabe = new HashMap<>();
         eingabe.put(new Karotte(), 5);
         eingabe.put(new Holzschwert(), 2);
 
-        testInventar.fügeGemischteGegenständeHinzu(eingabe);
+        testInventar.fuegeGemischteGegenstaendeHinzu(eingabe);
         Map<Zutat, Integer> korrekteZutaten = new HashMap<>();
         korrekteZutaten.put(new Karotte(), 5);
 
-        List<Gegenstand> korrekteGegenstände = new ArrayList<>();
-        korrekteGegenstände.add(new Holzschwert());
-        korrekteGegenstände.add(new Holzschwert());
+        List<Gegenstand> korrekteGegenstaende = new ArrayList<>();
+        korrekteGegenstaende.add(new Holzschwert());
+        korrekteGegenstaende.add(new Holzschwert());
 
         assertEquals(korrekteZutaten, testInventar.getZutaten());
-        assertEquals(korrekteGegenstände, testInventar.getGegenstände());
+        assertEquals(korrekteGegenstaende, testInventar.getGegenstaende());
     }
 }

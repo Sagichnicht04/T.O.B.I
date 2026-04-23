@@ -1,11 +1,9 @@
 package flo.jasmin.projekt.domain.Akteure;
 
-import flo.jasmin.projekt.domain.Inventar;
 import flo.jasmin.projekt.domain.Gegenstaende.Gegenstand;
 import flo.jasmin.projekt.domain.Visualisierung.AsciiVisualisierung;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Gegner extends Wesen{
     private AsciiVisualisierung asciiVisualisierung;
@@ -35,7 +33,7 @@ public class Gegner extends Wesen{
     }
 
     //Im Kampf
-    public Wesen ausgewähltesZiel(ArrayList<Wesen> wesen){
+    public Wesen ausgewaehltesZiel(ArrayList<Wesen> wesen){
         return wesen.get(0);
     }
     

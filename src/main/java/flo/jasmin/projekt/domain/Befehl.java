@@ -14,8 +14,8 @@ public enum Befehl {
     SPEICHERN,
     HILFE,
     KREATURAUSSTATTEN,
-    AUSRÜSTEN,
-    ZURÜCK,
+    AUSRUeSTEN,
+    ZURUeCK,
     NEIN, JA,
     REKRUTIEREN
 }

@@ -9,10 +9,10 @@ public enum Status {
     EINKAUF,
     DIALOG,
     CAMPEN,
-    AUSRÜSTEN
+    AUSRUeSTEN
 }
 
-// status für generell:
+// status fuer generell:
 /* 
 existieren
     ->kampf

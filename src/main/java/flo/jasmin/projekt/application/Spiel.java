@@ -41,23 +41,23 @@ public class Spiel {
         if(status == Status.EXISTIEREN || status == Status.DORF) {
             return karte.gibMomentaneZelle().getZellentyp().getErlaubteBefehle();
         } else if (status == Status.CAMPEN) {
-            return Set.of(Befehl.ZURÜCK, Befehl.KOCHEN, Befehl.KREATURAUSSTATTEN);
+            return Set.of(Befehl.ZURUeCK, Befehl.KOCHEN, Befehl.KREATURAUSSTATTEN);
         } else if (status == Status.KOCHEN) {
-            return Set.of(Befehl.ZURÜCK, Befehl.ZUTATEN);
+            return Set.of(Befehl.ZURUeCK, Befehl.ZUTATEN);
         } else if (status == Status.KAMPF) {
             return Set.of(Befehl.ANGRIFF);
         } else if (status == Status.EINKAUF){
             return Set.of(Befehl.JA, Befehl.NEIN);
-        } else if (status == Status.AUSRÜSTEN){
-            return Set.of(Befehl.AUSRÜSTEN, Befehl.ZURÜCK);
+        } else if (status == Status.AUSRUeSTEN){
+            return Set.of(Befehl.AUSRUeSTEN, Befehl.ZURUeCK);
         } else if (status == Status.DIALOG){
-            return Set.of(Befehl.REDEN, Befehl.ZURÜCK, Befehl.REKRUTIEREN);
+            return Set.of(Befehl.REDEN, Befehl.ZURUeCK, Befehl.REKRUTIEREN);
         }
         return new HashSet<>();
     }
 
 
-    //here sollte die Antwort zurück gegeben werden
+    //here sollte die Antwort zurueck gegeben werden
     public ArrayList<String> spieleBefehl(Befehl befehl, String parameter){
         ArrayList<String> antwort = new ArrayList<String>();
         antwort.add("Du willst " + befehl.name());
@@ -83,7 +83,7 @@ public class Spiel {
                     }
                 } else if (befehl == Befehl.CAMPEN) {
                     status = Status.CAMPEN;
-                    antwort.add("Gemeinsam schlagt ihr euer Zelt auf. Klein aber fein\nWährend dem Campen könnt ihr KOCHEN um euch zu heilen");
+                    antwort.add("Gemeinsam schlagt ihr euer Zelt auf. Klein aber fein\nWaehrend dem Campen koennt ihr KOCHEN um euch zu heilen");
                 } else if(befehl == Befehl.KAUFEN) {
                     status = Status.DORF;
                     antwort.add("\nDeine Ersparrnisse: " + team.getInventar().getErspartes());
@@ -101,21 +101,21 @@ public class Spiel {
             else if(status == Status.CAMPEN){
                 if(befehl == Befehl.KOCHEN){
                     status = Status.KOCHEN;
-                    antwort.add(kochsystem.stringRepräsentationVonZutaten(team.getInventar().getZutaten()));
+                    antwort.add(kochsystem.stringRepraesentationVonZutaten(team.getInventar().getZutaten()));
                 }
                 else if(befehl == Befehl.KREATURAUSSTATTEN){
-                    status = Status.AUSRÜSTEN;
-                    antwort.addAll(zeigeAusrüstungsmenü());
+                    status = Status.AUSRUeSTEN;
+                    antwort.addAll(zeigeAusruestungsmenue());
                 }
-                else if (befehl == Befehl.ZURÜCK) {
+                else if (befehl == Befehl.ZURUeCK) {
                     status = Status.EXISTIEREN;
                 }
             }
-            else if(status == Status.AUSRÜSTEN){
-                if(befehl == Befehl.AUSRÜSTEN){
-                    antwort.addAll(ausrüstungsbefehl(parameter));
+            else if(status == Status.AUSRUeSTEN){
+                if(befehl == Befehl.AUSRUeSTEN){
+                    antwort.addAll(ausruestungsbefehl(parameter));
                 }
-                else if(befehl == Befehl.ZURÜCK){
+                else if(befehl == Befehl.ZURUeCK){
                     status = Status.CAMPEN;
                 }
             }
@@ -125,10 +125,10 @@ public class Spiel {
             else if(status == Status.KAMPF){
                 //wird an den kampf dann weiterdeligiert:
                 try{
-                    antwort.addAll(kampf.überMittelZiel(Integer.valueOf(parameter)));
+                    antwort.addAll(kampf.ueberMittelZiel(Integer.valueOf(parameter)));
                     if (!kampf.isKampfImGange()) {
-                        team.getInventar().fügeGemischteGegenständeHinzu(((kampf.getVerloreneGegenstände())));
-                        team.getInventar().geldHinzufügen(kampf.errechneZufälligVerlorenesGeld());
+                        team.getInventar().fuegeGemischteGegenstaendeHinzu(((kampf.getVerloreneGegenstaende())));
+                        team.getInventar().geldHinzufuegen(kampf.errechneZufaelligVerlorenesGeld());
                         status = Status.EXISTIEREN;
                         antwort.add("Endlich kannst du dich umschauen.\n"+karte.gibMomentaneZelle().getZellentyp().getBeschreibung());
                     }
@@ -142,7 +142,7 @@ public class Spiel {
                 if(befehl == Befehl.KAUFEN){
                     Map<Gegenstand, Integer> auswahl;
                     try {
-                        auswahl = karte.gibMomentaneZelle().getDorf().übersetzeNameZuGegenstand(parameterAufteilen(parameter));
+                        auswahl = karte.gibMomentaneZelle().getDorf().uebersetzeNameZuGegenstand(parameterAufteilen(parameter));
                         int preis = Dorf.gesamtpreisBerechnen(auswahl);
                         einkauf = new Einkauf(auswahl, preis);
                         antwort.add(Dorf.preisVisualisierung(preis));
@@ -157,10 +157,10 @@ public class Spiel {
                 if(befehl == Befehl.JA){
                     try {
                         team.getInventar().geldEntfernen(einkauf.getGesamtpreis());
-                        team.getInventar().fügeGemischteGegenständeHinzu(einkauf.getAuswahl());
-                        antwort.add("Vielen Dank für deinen Einkauf! Die Gegenstände wurden in deinem Inventar hinzugefügt.");
+                        team.getInventar().fuegeGemischteGegenstaendeHinzu(einkauf.getAuswahl());
+                        antwort.add("Vielen Dank fuer deinen Einkauf! Die Gegenstaende wurden in deinem Inventar hinzugefuegt.");
                     } catch (NichtGenugErsparrtes e) {
-                        antwort.add(e.getMessage() +  "\nDein Einkauf wurde zurückgelegt. Mit dem Befehl KAUFEN kannst du erneut einkaufen");
+                        antwort.add(e.getMessage() +  "\nDein Einkauf wurde zurueckgelegt. Mit dem Befehl KAUFEN kannst du erneut einkaufen");
                     }
                 }
                 einkauf = null;
@@ -174,7 +174,7 @@ public class Spiel {
                         status = Status.EXISTIEREN;
                     }
                 }
-                else if(befehl == Befehl.ZURÜCK){
+                else if(befehl == Befehl.ZURUeCK){
                     status = Status.EXISTIEREN;
                 }
                 else if (befehl == Befehl.REKRUTIEREN){
@@ -208,11 +208,11 @@ public class Spiel {
             if (!aufgeteilteParameter.isEmpty()){
                 status = Status.CAMPEN;
                 try { 
-                    Map<Zutat, Integer> übersetzteEingabe = kochsystem.übersetzteZutatenNameZuZutatObjekt(aufgeteilteParameter, team.getInventar());
+                    Map<Zutat, Integer> uebersetzteEingabe = kochsystem.uebersetzteZutatenNameZuZutatObjekt(aufgeteilteParameter, team.getInventar());
                     int heilung = 0;
-                    team.getInventar().checkGenugZutatenImImventar(übersetzteEingabe);
-                    team.getInventar().entferneZutaten(übersetzteEingabe);
-                    heilung = kochsystem.errechneGesundheit(übersetzteEingabe);
+                    team.getInventar().checkGenugZutatenImImventar(uebersetzteEingabe);
+                    team.getInventar().entferneZutaten(uebersetzteEingabe);
+                    heilung = kochsystem.errechneGesundheit(uebersetzteEingabe);
                     return team.heile(heilung);
                 } catch (FalscheZutatenEingabe e) {
                     return("Bitte gib Valide Zutaten ein!");
@@ -222,13 +222,13 @@ public class Spiel {
                 
             }
 
-        } else if (befehl == Befehl.ZURÜCK) {
+        } else if (befehl == Befehl.ZURUeCK) {
             status = Status.CAMPEN;
         } 
         return "nothing to state here";
     }
 
-    //heir müssen wir evtl mit dependency injection arbeiten. Wieso? Weil wir diesen Code auch testen sollten und das Random dann gezielt im test überschreiben
+    //heir muessen wir evtl mit dependency injection arbeiten. Wieso? Weil wir diesen Code auch testen sollten und das Random dann gezielt im test ueberschreiben
     public ArrayList<String> potentiellerKampf(Random random){
         ArrayList<String> antwort = new ArrayList<String>();
         if(karte.gibMomentaneZelle().getGegnerWahrscheinlichkeit() > random.nextFloat()){
@@ -236,8 +236,8 @@ public class Spiel {
             ArrayList<Gegner> alleGegner = karte.gibMomentaneZelle().getZellentyp().getGegnerAuswahl();
 
 
-            alleWesen.addAll(team.holeKampffähigeWesen());
-            alleWesen.addAll(alleGegner.stream().filter(Wesen::kampfFähig).toList());
+            alleWesen.addAll(team.holeKampffaehigeWesen());
+            alleWesen.addAll(alleGegner.stream().filter(Wesen::kampfFaehig).toList());
 
             kampf = new Kampf(alleWesen);
             String grund = kampf.rechneKampfImGange();
@@ -305,27 +305,27 @@ public class Spiel {
         this.einkauf = einkauf;
     }
 
-    private ArrayList<String> zeigeAusrüstungsmenü() {
+    private ArrayList<String> zeigeAusruestungsmenue() {
         ArrayList<String> antwort = new ArrayList<>();
-        antwort.add("\n=== AUSRÜSTUNGSMENÜ ===");
+        antwort.add("\n=== AUSRUeSTUNGSMENUe ===");
         antwort.add("\nDein Team:");
         for (int i = 0; i < team.getWesenInTeam().size(); i++) {
             TeamWesen wesen = team.getWesenInTeam().get(i);
-            antwort.add(i + ": " + wesen.getAusrüstungsStatus());
+            antwort.add(i + ": " + wesen.getAusruestungsStatus());
         }
         
-        antwort.add("\nVerfügbare Ausrüstung im Inventar:");
-        List<Gegenstand> ausrüstung = team.getInventar().getAusrüstung();
-        if (ausrüstung.isEmpty()) {
-            antwort.add("  Keine Ausrüstung verfügbar");
+        antwort.add("\nVerfuegbare Ausruestung im Inventar:");
+        List<Gegenstand> ausruestung = team.getInventar().getAusruestung();
+        if (ausruestung.isEmpty()) {
+            antwort.add("  Keine Ausruestung verfuegbar");
         } else {
-            for (int i = 0; i < ausrüstung.size(); i++) {
-                antwort.add(i + ": " + ausrüstung.get(i).getName() + " - " + ausrüstung.get(i).getBeschreibung());
+            for (int i = 0; i < ausruestung.size(); i++) {
+                antwort.add(i + ": " + ausruestung.get(i).getName() + " - " + ausruestung.get(i).getBeschreibung());
             }
         }
         
-        antwort.add("\nFormat: AUSRÜSTEN <Wesen-Index> <Ausrüstungs-Index>");
-        antwort.add("Beispiel: AUSRÜSTEN 0 0");
+        antwort.add("\nFormat: AUSRUeSTEN <Wesen-Index> <Ausruestungs-Index>");
+        antwort.add("Beispiel: AUSRUeSTEN 0 0");
         return antwort;
     }
 
@@ -335,11 +335,11 @@ public class Spiel {
         antwort.add("\n=== NIEDERLAGE ===");
         antwort.add("Dein Team wurde besiegt...");
         
-        ArrayList<Gegenstand> verloreneGegenstände = team.getInventar().verliereZufälligeGegenstände(3);
+        ArrayList<Gegenstand> verloreneGegenstaende = team.getInventar().verliereZufaelligeGegenstaende(3);
         
-        if (!verloreneGegenstände.isEmpty()) {
-            antwort.add("\nIn der Panik habt ihr folgende Gegenstände verloren:");
-            for (Gegenstand g : verloreneGegenstände) {
+        if (!verloreneGegenstaende.isEmpty()) {
+            antwort.add("\nIn der Panik habt ihr folgende Gegenstaende verloren:");
+            for (Gegenstand g : verloreneGegenstaende) {
                 antwort.add("  - " + g.getName());
             }
         }
@@ -348,69 +348,69 @@ public class Spiel {
         karte.setMomentanePosition(new flo.jasmin.projekt.domain.Values.Position(3, 7));
         status = Status.EXISTIEREN;
         
-        antwort.add("\nIhr wacht im Dorf Farore auf, vollständig geheilt.");
-        antwort.add("Die freundlichen Dorfbewohner haben sich um euch gekümmert.");
+        antwort.add("\nIhr wacht im Dorf Farore auf, vollstaendig geheilt.");
+        antwort.add("Die freundlichen Dorfbewohner haben sich um euch gekuemmert.");
         antwort.add("\n" + karte.gibMomentaneZelle().getBeschreibung());
         
         return antwort;
     }
 
-    private ArrayList<String> ausrüstungsbefehl(String parameter) {
+    private ArrayList<String> ausruestungsbefehl(String parameter) {
         ArrayList<String> antwort = new ArrayList<>();
         
         try {
             String[] parts = parameter.trim().split("\\s+");
             if (parts.length != 2) {
-                antwort.add("Bitte gib genau zwei Zahlen an: <Wesen-Index> <Ausrüstungs-Index>");
-                antwort.addAll(zeigeAusrüstungsmenü());
+                antwort.add("Bitte gib genau zwei Zahlen an: <Wesen-Index> <Ausruestungs-Index>");
+                antwort.addAll(zeigeAusruestungsmenue());
                 return antwort;
             }
             
             int wesenIndex = Integer.parseInt(parts[0]);
-            int ausrüstungsIndex = Integer.parseInt(parts[1]);
+            int ausruestungsIndex = Integer.parseInt(parts[1]);
             
             if (wesenIndex < 0 || wesenIndex >= team.getWesenInTeam().size()) {
-                antwort.add("Ungültiger Wesen-Index!");
-                antwort.addAll(zeigeAusrüstungsmenü());
+                antwort.add("Ungueltiger Wesen-Index!");
+                antwort.addAll(zeigeAusruestungsmenue());
                 return antwort;
             }
             
-            List<Gegenstand> verfügbareAusrüstung = team.getInventar().getAusrüstung();
-            if (ausrüstungsIndex < 0 || ausrüstungsIndex >= verfügbareAusrüstung.size()) {
-                antwort.add("Ungültiger Ausrüstungs-Index!");
-                antwort.addAll(zeigeAusrüstungsmenü());
+            List<Gegenstand> verfuegbareAusruestung = team.getInventar().getAusruestung();
+            if (ausruestungsIndex < 0 || ausruestungsIndex >= verfuegbareAusruestung.size()) {
+                antwort.add("Ungueltiger Ausruestungs-Index!");
+                antwort.addAll(zeigeAusruestungsmenue());
                 return antwort;
             }
             
             TeamWesen wesen = team.getWesenInTeam().get(wesenIndex);
-            flo.jasmin.projekt.domain.Gegenstaende.Ausstattung ausrüstung = 
-                (flo.jasmin.projekt.domain.Gegenstaende.Ausstattung) verfügbareAusrüstung.get(ausrüstungsIndex);
+            flo.jasmin.projekt.domain.Gegenstaende.Ausstattung ausruestung = 
+                (flo.jasmin.projekt.domain.Gegenstaende.Ausstattung) verfuegbareAusruestung.get(ausruestungsIndex);
             
-            flo.jasmin.projekt.domain.Gegenstaende.Ausstattung alteAusrüstung = null;
-            if (ausrüstung.getBeinflussterWert() == flo.jasmin.projekt.domain.Gegenstaende.Ausstattung.BeinflussterWert.ANGRIFF) {
-                alteAusrüstung = wesen.entferneWaffe();
+            flo.jasmin.projekt.domain.Gegenstaende.Ausstattung alteAusruestung = null;
+            if (ausruestung.getBeinflussterWert() == flo.jasmin.projekt.domain.Gegenstaende.Ausstattung.BeinflussterWert.ANGRIFF) {
+                alteAusruestung = wesen.entferneWaffe();
             } else {
-                alteAusrüstung = wesen.entferneRüstung();
+                alteAusruestung = wesen.entferneRuestung();
             }
             
-            wesen.rüsteAus(ausrüstung);
-            team.getInventar().entferneAusrüstung(ausrüstung);
+            wesen.ruesteAus(ausruestung);
+            team.getInventar().entferneAusruestung(ausruestung);
             
-            if (alteAusrüstung != null) {
-                team.getInventar().fügeAusrüstungHinzu(alteAusrüstung);
-                antwort.add(wesen.getName() + " hat " + alteAusrüstung.getName() + " abgelegt und " + 
-                           ausrüstung.getName() + " ausgerüstet!");
+            if (alteAusruestung != null) {
+                team.getInventar().fuegeAusruestungHinzu(alteAusruestung);
+                antwort.add(wesen.getName() + " hat " + alteAusruestung.getName() + " abgelegt und " + 
+                           ausruestung.getName() + " ausgeruestet!");
             } else {
-                antwort.add(wesen.getName() + " hat " + ausrüstung.getName() + " ausgerüstet!");
+                antwort.add(wesen.getName() + " hat " + ausruestung.getName() + " ausgeruestet!");
             }
             
             antwort.add("\nNeuer Status:");
-            antwort.add(wesen.getAusrüstungsStatus());
+            antwort.add(wesen.getAusruestungsStatus());
             antwort.add("\nAngriff: " + wesen.getAngriff() + " | Verteidigung: " + wesen.getVerteidigung());
             
         } catch (NumberFormatException e) {
-            antwort.add("Bitte gib gültige Zahlen ein!");
-            antwort.addAll(zeigeAusrüstungsmenü());
+            antwort.add("Bitte gib gueltige Zahlen ein!");
+            antwort.addAll(zeigeAusruestungsmenue());
         }
         
         return antwort;

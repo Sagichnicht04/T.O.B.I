@@ -24,8 +24,8 @@ public class Wesen {
     }
 
 
-    public boolean kampfFähig(){
-        return gesundheit.istKampfFähig();
+    public boolean kampfFaehig(){
+        return gesundheit.istKampfFaehig();
     }
 
     public void nehmeSchaden(Schaden schaden){
@@ -33,12 +33,12 @@ public class Wesen {
         this.gesundheit = gesundheit.nehmeSchaden(reduzierterSchaden);
     }
 
-    public int getAngriffsStärke() {
+    public int getAngriffsStaerke() {
         return stats.getAngriff() * stufe.getMultiplikator();
     }
 
     public Schaden berechneSchaden() {
-        return Schaden.von(getAngriffsStärke());
+        return Schaden.von(getAngriffsStaerke());
     }
 
     public void heile(int heilung){
@@ -160,7 +160,7 @@ public class Wesen {
     @Override
     public boolean equals(Object o){
         if (this == o) return true;
-        //dadurch kann man sich das Prüfen in den Subklassen sparren
+        //dadurch kann man sich das Pruefen in den Subklassen sparren
         if(o.getClass() == this.getClass()){
             Wesen other = (Wesen) o;
             if (this.getName().equals(other.getName())

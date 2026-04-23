@@ -23,7 +23,7 @@ public class ZutatenInventarTest {
     public Inventar testInventar = new Inventar();
     
     @BeforeEach
-    void füllInventar(){
+    void fuellInventar(){
         Map<Zutat, Integer> zutaten = new HashMap();
         zutaten.put(new Karotte(), 5);
         zutaten.put(new Banane(), 2);
@@ -82,7 +82,7 @@ public class ZutatenInventarTest {
         try{
             testInventar.entferneZutaten(auswahl);
         } catch (NichtGenugZutatenImInventar n){
-            //ist so vorgesehen. Wir wollen Fehler um sicherzugegen, dass bei dem fehler keine Zutaten hinzugefügt wurden
+            //ist so vorgesehen. Wir wollen Fehler um sicherzugegen, dass bei dem fehler keine Zutaten hinzugefuegt wurden
         }
 
         assertEquals(zutaten, testInventar.getZutaten());

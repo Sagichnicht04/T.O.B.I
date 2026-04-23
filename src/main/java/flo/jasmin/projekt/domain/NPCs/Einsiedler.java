@@ -12,9 +12,9 @@ public class Einsiedler extends NPC {
         super("Der Einsiedler",
               new ArrayList<>(List.of(
                   "Ah... Besucher. Selten kommen welche bis hier herauf.",
-                  "Ihr sucht Macht? Dann müsst ihr die Drachen besiegen.",
-                  "Drachen sind intelligent und wählen ihre Ziele strategisch.",
-                  "Die Lederrüstung im Dorf bietet guten Schutz ohne zu verlangsamen.",
+                  "Ihr sucht Macht? Dann muesst ihr die Drachen besiegen.",
+                  "Drachen sind intelligent und waehlen ihre Ziele strategisch.",
+                  "Die Lederruestung im Dorf bietet guten Schutz ohne zu verlangsamen.",
                   "Gerne leiste ich euch Gesellschaft, wenn ihr erlaubt."
               )),
               new EinsiedlerVisualisierung(),

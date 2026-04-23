@@ -3,66 +3,66 @@ package flo.jasmin.projekt.domain.Akteure;
 import flo.jasmin.projekt.domain.Gegenstaende.Ausstattung;
 
 public class TeamWesen extends Wesen{
-    private Ausstattung ausgerüsteteWaffe;
-    private Ausstattung ausgerüsteteRüstung;
+    private Ausstattung ausgeruesteteWaffe;
+    private Ausstattung ausgeruesteteRuestung;
 
     @Override
     public int getAngriff(){
-        int bonus = ausgerüsteteWaffe != null ? ausgerüsteteWaffe.getWert() : 0;
+        int bonus = ausgeruesteteWaffe != null ? ausgeruesteteWaffe.getWert() : 0;
         return super.getAngriff() + bonus;
     }
 
     @Override
     public int getVerteidigung(){
-        int bonus = ausgerüsteteRüstung != null ? ausgerüsteteRüstung.getWert() : 0;
+        int bonus = ausgeruesteteRuestung != null ? ausgeruesteteRuestung.getWert() : 0;
         return super.getVerteidigung() + bonus;
     }
 
     public TeamWesen(int gesundheit, int verteidigung, int angriff, int initiative, int erfahrung, String name) {
         super(gesundheit, verteidigung, angriff, initiative, erfahrung, name);
-        this.ausgerüsteteWaffe = null;
-        this.ausgerüsteteRüstung = null;
+        this.ausgeruesteteWaffe = null;
+        this.ausgeruesteteRuestung = null;
     }
 
-    public void rüsteAus(Ausstattung ausstattung) {
+    public void ruesteAus(Ausstattung ausstattung) {
         if (ausstattung == null) {
             return;
         }
         
         if (ausstattung.getBeinflussterWert() == Ausstattung.BeinflussterWert.ANGRIFF) {
-            ausgerüsteteWaffe = ausstattung;
+            ausgeruesteteWaffe = ausstattung;
         } else if (ausstattung.getBeinflussterWert() == Ausstattung.BeinflussterWert.VERTEIDIGUNG) {
-            ausgerüsteteRüstung = ausstattung;
+            ausgeruesteteRuestung = ausstattung;
         }
     }
 
     public Ausstattung entferneWaffe() {
-        Ausstattung alte = ausgerüsteteWaffe;
-        ausgerüsteteWaffe = null;
+        Ausstattung alte = ausgeruesteteWaffe;
+        ausgeruesteteWaffe = null;
         return alte;
     }
 
-    public Ausstattung entferneRüstung() {
-        Ausstattung alte = ausgerüsteteRüstung;
-        ausgerüsteteRüstung = null;
+    public Ausstattung entferneRuestung() {
+        Ausstattung alte = ausgeruesteteRuestung;
+        ausgeruesteteRuestung = null;
         return alte;
     }
 
-    public Ausstattung getAusgerüsteteWaffe() {
-        return ausgerüsteteWaffe;
+    public Ausstattung getAusgeruesteteWaffe() {
+        return ausgeruesteteWaffe;
     }
 
-    public Ausstattung getAusgerüsteteRüstung() {
-        return ausgerüsteteRüstung;
+    public Ausstattung getAusgeruesteteRuestung() {
+        return ausgeruesteteRuestung;
     }
 
-    public String getAusrüstungsStatus() {
+    public String getAusruestungsStatus() {
         StringBuilder sb = new StringBuilder();
         sb.append(getName()).append(": ");
         sb.append("⚔️  ");
-        sb.append(ausgerüsteteWaffe != null ? ausgerüsteteWaffe.getName() + " (+" + ausgerüsteteWaffe.getWert() + ")" : "Keine Waffe");
+        sb.append(ausgeruesteteWaffe != null ? ausgeruesteteWaffe.getName() + " (+" + ausgeruesteteWaffe.getWert() + ")" : "Keine Waffe");
         sb.append(" | 🛡️  ");
-        sb.append(ausgerüsteteRüstung != null ? ausgerüsteteRüstung.getName() + " (+" + ausgerüsteteRüstung.getWert() + ")" : "Keine Rüstung");
+        sb.append(ausgeruesteteRuestung != null ? ausgeruesteteRuestung.getName() + " (+" + ausgeruesteteRuestung.getWert() + ")" : "Keine Ruestung");
         return sb.toString();
     }
 }

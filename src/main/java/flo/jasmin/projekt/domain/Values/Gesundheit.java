@@ -8,7 +8,7 @@ public class Gesundheit {
 
     private Gesundheit(int aktuelleGesundheit, int maxGesundheit) {
         if (maxGesundheit <= 0) {
-            throw new IllegalArgumentException("Maximale Gesundheit muss größer als 0 sein");
+            throw new IllegalArgumentException("Maximale Gesundheit muss groesser als 0 sein");
         }
         if (aktuelleGesundheit < 0) {
             throw new IllegalArgumentException("Gesundheit kann nicht negativ sein");
@@ -38,22 +38,22 @@ public class Gesundheit {
         return new Gesundheit(neueGesundheit, this.maxGesundheit);
     }
 
-    public Gesundheit vollständigHeilen() {
+    public Gesundheit vollstaendigHeilen() {
         return new Gesundheit(this.maxGesundheit, this.maxGesundheit);
     }
 
     public Gesundheit mitNeuerMaxGesundheit(int neueMaxGesundheit) {
         if (neueMaxGesundheit <= 0) {
-            throw new IllegalArgumentException("Maximale Gesundheit muss größer als 0 sein");
+            throw new IllegalArgumentException("Maximale Gesundheit muss groesser als 0 sein");
         }
         return new Gesundheit(this.aktuelleGesundheit, neueMaxGesundheit);
     }
 
-    public boolean istKampfFähig() {
+    public boolean istKampfFaehig() {
         return aktuelleGesundheit > 0;
     }
 
-    public boolean istVollständigGeheilt() {
+    public boolean istVollstaendigGeheilt() {
         return aktuelleGesundheit == maxGesundheit;
     }
 

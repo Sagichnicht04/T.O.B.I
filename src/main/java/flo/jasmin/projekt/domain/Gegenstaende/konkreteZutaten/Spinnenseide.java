@@ -7,7 +7,7 @@ public class Spinnenseide extends Zutat {
     public Spinnenseide() {
         super("Spinnenseide",
               12,
-              "Feine, klebrige Fäden einer Riesenspinne. Kann zu Verbänden verarbeitet werden.",
+              "Feine, klebrige Faeden einer Riesenspinne. Kann zu Verbaenden verarbeitet werden.",
               18); 
     }
 }

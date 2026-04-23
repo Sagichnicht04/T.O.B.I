@@ -22,7 +22,7 @@ public class Erfahrung {
 
     public Erfahrung addiere(int punkte) {
         if (punkte < 0) {
-            throw new IllegalArgumentException("Erfahrungspunkte können nicht negativ sein");
+            throw new IllegalArgumentException("Erfahrungspunkte koennen nicht negativ sein");
         }
         return new Erfahrung(this.erfahrungsPunkte + punkte);
     }

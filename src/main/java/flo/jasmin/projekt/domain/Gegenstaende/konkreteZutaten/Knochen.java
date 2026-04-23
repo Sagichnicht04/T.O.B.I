@@ -7,7 +7,7 @@ public class Knochen extends Zutat {
     public Knochen() {
         super("Knochen",
               8,
-              "Knochen von besiegten Gegnern. Gut für kräftige Brühe.",
+              "Knochen von besiegten Gegnern. Gut fuer kraeftige Bruehe.",
               15); 
     }
 }

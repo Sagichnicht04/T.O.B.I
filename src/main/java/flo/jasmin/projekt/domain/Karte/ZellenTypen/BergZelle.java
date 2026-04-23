@@ -11,7 +11,7 @@ import java.util.Set;
 public class BergZelle extends Zellentyp {
     
     public BergZelle() {
-        super("Du stehst in einem felsigen Berggebiet. Der Wind pfeift durch die Schluchten und Geröll liegt überall.",
+        super("Du stehst in einem felsigen Berggebiet. Der Wind pfeift durch die Schluchten und Geroell liegt ueberall.",
               erstelleErlaubteBefehle(),
               erstelleGegnerAuswahl());
     }

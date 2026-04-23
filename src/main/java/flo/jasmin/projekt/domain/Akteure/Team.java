@@ -1,8 +1,5 @@
 package flo.jasmin.projekt.domain.Akteure;
 
-import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
-import flo.jasmin.projekt.domain.Gegenstaende.konkreteZutaten.Karotte;
-import flo.jasmin.projekt.domain.Gegenstaende.konkreteZutaten.Tomate;
 import flo.jasmin.projekt.domain.Inventar;
 
 import java.util.ArrayList;
@@ -33,12 +30,12 @@ public class Team {
         wesenInTeam.add(teamWesen);
     }
 
-    public List<TeamWesen> holeKampffähigeWesen(){
-        return wesenInTeam.stream().filter(wesen -> wesen.kampfFähig()).toList();
+    public List<TeamWesen> holeKampffaehigeWesen(){
+        return wesenInTeam.stream().filter(wesen -> wesen.kampfFaehig()).toList();
     }
 
     public boolean istBesiegt(){
-        return holeKampffähigeWesen().isEmpty();
+        return holeKampffaehigeWesen().isEmpty();
     }
 
     public void heileKomplett(){

@@ -1,6 +1,5 @@
 package flo.jasmin.projekt.domain.Akteure;
 
-import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
 import flo.jasmin.projekt.domain.Gegenstaende.konkreteZutaten.Banane;
 import flo.jasmin.projekt.domain.Visualisierung.GoblinVisualisierung;
 
@@ -13,9 +12,9 @@ public class Goblin extends Gegner {
         super.getInventar().add(new Banane());
     }
 
-    //Goblin greift standardmäßig schwächstes Wesen an
+    //Goblin greift standardmaessig schwaechstes Wesen an
     @Override
-    public Wesen ausgewähltesZiel(ArrayList<Wesen> wesen) {
+    public Wesen ausgewaehltesZiel(ArrayList<Wesen> wesen) {
         wesen.sort(Comparator.comparingInt(Wesen::getGesundheit));
         return wesen.get(0);
     }

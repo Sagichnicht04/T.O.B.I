@@ -12,7 +12,7 @@ import java.util.List;
 public class WasserZelle extends Zellentyp{
     public WasserZelle(){
         super(
-    "Ganz schön nass",
+    "Ganz schoen nass",
                 new HashSet<>(List.of()),
                 new ArrayList<>(List.of(new Garnele()))
         );

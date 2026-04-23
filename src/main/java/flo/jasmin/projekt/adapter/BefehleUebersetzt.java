@@ -4,30 +4,29 @@ import flo.jasmin.projekt.domain.Befehl;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-public class BefehleÜbersetzt {
+public class BefehleUebersetzt {
 
     private static final Map<String, Befehl> stringBefehl = new HashMap<>();
     private static final Map<Befehl, String> befehlString = new HashMap<>();
 
-    public static void fülleAuf(){
+    public static void fuelleAuf(){
         stringBefehl.put("norden", Befehl.HOCH);
         befehlString.put(Befehl.HOCH, "norden");
         stringBefehl.put("westen", Befehl.LINKS);
         befehlString.put(Befehl.LINKS, "westen");
         stringBefehl.put("sueden", Befehl.RUNTER);
-        stringBefehl.put("süden", Befehl.RUNTER);
-        befehlString.put(Befehl.RUNTER, "süden");
+        stringBefehl.put("sueden", Befehl.RUNTER);
+        befehlString.put(Befehl.RUNTER, "sueden");
         stringBefehl.put("osten", Befehl.RECHTS);
         befehlString.put(Befehl.RECHTS, "osten");
         stringBefehl.put("campen", Befehl.CAMPEN);
         befehlString.put(Befehl.CAMPEN, "campen");
         stringBefehl.put("kochen", Befehl.KOCHEN);
         befehlString.put(Befehl.KOCHEN, "kochen");
-        stringBefehl.put("zurueck", Befehl.ZURÜCK);
-        stringBefehl.put("zurück", Befehl.ZURÜCK);
-        befehlString.put(Befehl.ZURÜCK, "zurück");
+        stringBefehl.put("zurueck", Befehl.ZURUeCK);
+        stringBefehl.put("zurueck", Befehl.ZURUeCK);
+        befehlString.put(Befehl.ZURUeCK, "zurueck");
         stringBefehl.put("speichern", Befehl.SPEICHERN);
         befehlString.put(Befehl.SPEICHERN, "speichern");
         stringBefehl.put("angriff", Befehl.ANGRIFF);
@@ -36,9 +35,9 @@ public class BefehleÜbersetzt {
         befehlString.put(Befehl.ZUTATEN, "zutaten");
         stringBefehl.put("ausstatten", Befehl.KREATURAUSSTATTEN);
         befehlString.put(Befehl.KREATURAUSSTATTEN, "ausstatten");
-        stringBefehl.put("ausrüsten", Befehl.AUSRÜSTEN);
-        stringBefehl.put("ausruesten", Befehl.AUSRÜSTEN);
-        befehlString.put(Befehl.AUSRÜSTEN, "ausrüsten");
+        stringBefehl.put("ausruesten", Befehl.AUSRUeSTEN);
+        stringBefehl.put("ausruesten", Befehl.AUSRUeSTEN);
+        befehlString.put(Befehl.AUSRUeSTEN, "ausruesten");
         stringBefehl.put("kaufen", Befehl.KAUFEN);
         befehlString.put(Befehl.KAUFEN, "kaufen");
         stringBefehl.put("ja", Befehl.JA);
@@ -53,15 +52,15 @@ public class BefehleÜbersetzt {
         befehlString.put(Befehl.REKRUTIEREN, "rekrutieren");
     }
 
-    public static Befehl übersetze(String befehl){
+    public static Befehl uebersetze(String befehl){
         if(stringBefehl.isEmpty()){
-            fülleAuf();
+            fuelleAuf();
         }
         return stringBefehl.get(befehl.toLowerCase());
     }
-    public static String übersetze(Befehl befehl){
+    public static String uebersetze(Befehl befehl){
         if(befehlString.isEmpty()){
-            fülleAuf();
+            fuelleAuf();
         }
         return befehlString.get(befehl).toUpperCase();
     }

@@ -21,14 +21,14 @@ public class Drache extends Gegner {
     }
     
     @Override
-    public Wesen ausgewähltesZiel(ArrayList<Wesen> wesen) {
-        Wesen gefährlichstesZiel = wesen.get(0);
+    public Wesen ausgewaehltesZiel(ArrayList<Wesen> wesen) {
+        Wesen gefaehrlichstesZiel = wesen.get(0);
         for (Wesen w : wesen) {
-            if (w.getStats().getAngriff() > gefährlichstesZiel.getStats().getAngriff()) {
-                gefährlichstesZiel = w;
+            if (w.getStats().getAngriff() > gefaehrlichstesZiel.getStats().getAngriff()) {
+                gefaehrlichstesZiel = w;
             }
         }
-        return gefährlichstesZiel;
+        return gefaehrlichstesZiel;
     }
     
     private static class DrachenVisualisierung implements AsciiVisualisierung {

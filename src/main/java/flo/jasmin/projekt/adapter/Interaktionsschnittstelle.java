@@ -35,11 +35,11 @@ public class Interaktionsschnittstelle {
             }
 
             try {
-                Befehl befehl = eingabeÜbersetzenInBefehl(befehlTeil);
+                Befehl befehl = eingabeUebersetzenInBefehl(befehlTeil);
                 gebAlleInfosAus(spiel.spieleBefehl(befehl, paramTeil));
                 
             } catch (FalscheBefehlEingabe e) {
-                System.out.println("Hä?");;
+                System.out.println("Hae?");;
             }
         }
     }
@@ -58,7 +58,7 @@ public class Interaktionsschnittstelle {
     }
 
 
-    public Befehl eingabeÜbersetzenInBefehl(String eingabe) throws FalscheBefehlEingabe {
+    public Befehl eingabeUebersetzenInBefehl(String eingabe) throws FalscheBefehlEingabe {
         //Kognitive engagement
         if(Objects.equals(eingabe, "norden")){
             return Befehl.HOCH;
@@ -66,7 +66,7 @@ public class Interaktionsschnittstelle {
         else if(Objects.equals(eingabe, "westen")){
             return Befehl.LINKS;
         }
-        else if(Objects.equals(eingabe, "süden")){
+        else if(Objects.equals(eingabe, "sueden")){
             return Befehl.RUNTER;
         }
         else if(Objects.equals(eingabe, "osten")){
@@ -79,7 +79,7 @@ public class Interaktionsschnittstelle {
             return Befehl.KOCHEN;
         }
         else if(Objects.equals(eingabe, "zurueck")){
-            return Befehl.ZURÜCK;
+            return Befehl.ZURUeCK;
         }
         else if(Objects.equals(eingabe, "speichern")){
             return Befehl.SPEICHERN;
@@ -108,7 +108,7 @@ public class Interaktionsschnittstelle {
 /*         else if (status == Status.CAMPEN){
             System.out.println("Ihr sitzt am Lagerfeuer und singt das Lagerfeuerlied.");
             System.out.println("Inventar:");
-            for(Gegenstand gegenstand : spiel.getTeam().getInventar().getGegenstände()){
+            for(Gegenstand gegenstand : spiel.getTeam().getInventar().getGegenstaende()){
                 System.out.println(gegenstand.getName());
             }
             System.out.println();
@@ -119,7 +119,7 @@ public class Interaktionsschnittstelle {
         } else if (status == Status.KOCHEN) {
             System.out.println("Jetzt wird gekocht");
             System.out.println("Inventar:");
-            for(Gegenstand gegenstand : spiel.getTeam().getInventar().getGegenstände()){
+            for(Gegenstand gegenstand : spiel.getTeam().getInventar().getGegenstaende()){
                 System.out.println(gegenstand.getName());
             }
         } */

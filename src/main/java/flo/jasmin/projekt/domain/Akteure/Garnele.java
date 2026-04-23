@@ -1,10 +1,7 @@
 package flo.jasmin.projekt.domain.Akteure;
 
-import flo.jasmin.projekt.domain.Gegenstaende.Ausstattung;
-import flo.jasmin.projekt.domain.Gegenstaende.Zutat;
 import flo.jasmin.projekt.domain.Gegenstaende.konkreteAusstattung.Schale;
 import flo.jasmin.projekt.domain.Visualisierung.GarneleVisualisierung;
-import flo.jasmin.projekt.domain.Visualisierung.GoblinVisualisierung;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -15,9 +12,9 @@ public class Garnele extends Gegner {
         super.getInventar().add(new Schale());
     }
 
-    //Goblin greift standardmäßig schwächstes Wesen an
+    //Goblin greift standardmaessig schwaechstes Wesen an
     @Override
-    public Wesen ausgewähltesZiel(ArrayList<Wesen> wesen) {
+    public Wesen ausgewaehltesZiel(ArrayList<Wesen> wesen) {
         wesen.sort(Comparator.comparingInt(Wesen::getGesundheit));
         return wesen.get(0);
     }

@@ -5,9 +5,9 @@ import flo.jasmin.projekt.domain.Gegenstaende.Ausstattung;
 public class Lederruestung extends Ausstattung {
     
     public Lederruestung() {
-        super("Lederrüstung",
+        super("Lederruestung",
               20,
-              "Eine flexible Rüstung aus gehärtetem Leder. Schützt ohne zu verlangsamen.",
+              "Eine flexible Ruestung aus gehaertetem Leder. Schuetzt ohne zu verlangsamen.",
               5,  
               BeinflussterWert.VERTEIDIGUNG);
     }

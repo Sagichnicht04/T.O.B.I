@@ -24,7 +24,7 @@ public class InteraktionsschnittstelleNeu {
         while (true) {
             String eingabe = leseEingabe();
             if (eingabe.equalsIgnoreCase("ENDE")) {
-                zeigeTschüssNachricht();
+                zeigeTschuessNachricht();
                 break;
             }
             System.out.println("\n".repeat(30));
@@ -42,9 +42,9 @@ public class InteraktionsschnittstelleNeu {
         System.out.println("Dein Abenteuer beginnt jetzt...\n");
     }
 
-    private void zeigeTschüssNachricht() {
+    private void zeigeTschuessNachricht() {
         System.out.println("\n╔══════════════════════════════════════════════╗");
-        System.out.println("║        Danke fürs Spielen! Bis bald!         ║");
+        System.out.println("║        Danke fuers Spielen! Bis bald!         ║");
         System.out.println("╚══════════════════════════════════════════════╝\n");
     }
 
@@ -76,10 +76,10 @@ public class InteraktionsschnittstelleNeu {
     }
 
     private void zeigeErlaubteBefehle() {
-        System.out.println("\nVERFÜGBARE BEFEHLE:");
+        System.out.println("\nVERFUeGBARE BEFEHLE:");
         System.out.print("  ");
         for (Befehl befehl : spiel.gibErlaubteBefehle()) {
-            System.out.print(BefehleÜbersetzt.übersetze(befehl) + " │ ");
+            System.out.print(BefehleUebersetzt.uebersetze(befehl) + " │ ");
         }
         System.out.println("\nOder: ENDE (zum Beenden)");
     }
@@ -87,7 +87,7 @@ public class InteraktionsschnittstelleNeu {
     private void zeigePosition() {
         System.out.println("\nPOSITION:");
         System.out.println("  " + spiel.getKarte().getMomentanePosition());
-        System.out.println("  Ersparnisse: " + spiel.getTeam().getInventar().getErspartes() + " Münzen");
+        System.out.println("  Ersparnisse: " + spiel.getTeam().getInventar().getErspartes() + " Muenzen");
     }
 
     private String createHealthBar(int current, int max) {
@@ -116,7 +116,7 @@ public class InteraktionsschnittstelleNeu {
         String parameter = teile.length > 1 ? teile[1] : "";
 
         try {
-            Befehl befehl = BefehleÜbersetzt.übersetze(befehlString);
+            Befehl befehl = BefehleUebersetzt.uebersetze(befehlString);
 
             if (!spiel.gibErlaubteBefehle().contains(befehl)) {
                 System.out.println("\nDieser Befehl ist hier nicht erlaubt!");
@@ -137,7 +137,7 @@ public class InteraktionsschnittstelleNeu {
 
         } catch (NullPointerException e) {
             System.out.println("\nUnbekannter Befehl: " + befehlString);
-            System.out.println("Nutze einen der verfügbaren Befehle oder ENDE zum Beenden.");
+            System.out.println("Nutze einen der verfuegbaren Befehle oder ENDE zum Beenden.");
         }
     }
 

@@ -14,16 +14,16 @@ import flo.jasmin.projekt.domain.Values.Geld;
 
 public class Inventar {
     private Geld erspartes;
-    private ArrayList<Gegenstand> gegenstände;
+    private ArrayList<Gegenstand> gegenstaende;
     private Map<Zutat, Integer> zutaten;
-    private int zeltkapazität;
+    private int zeltkapazitaet;
     private float kochtopfMultiplikator;
 
     public Inventar(){
         erspartes = Geld.von(5);
-        gegenstände = new ArrayList<>();
+        gegenstaende = new ArrayList<>();
         zutaten = new HashMap<>();
-        zeltkapazität = 1;
+        zeltkapazitaet = 1;
         kochtopfMultiplikator = 1;
     }
 
@@ -43,38 +43,38 @@ public class Inventar {
         this.erspartes = geld;
     }
 
-    public ArrayList<Gegenstand> getGegenstände() {
-        return gegenstände;
+    public ArrayList<Gegenstand> getGegenstaende() {
+        return gegenstaende;
     }
 
-    public void setGegenstände(ArrayList<Gegenstand> gegenstände) {
-        this.gegenstände = gegenstände;
+    public void setGegenstaende(ArrayList<Gegenstand> gegenstaende) {
+        this.gegenstaende = gegenstaende;
     }
 
-    public int getZeltkapazität() {
-        return zeltkapazität;
+    public int getZeltkapazitaet() {
+        return zeltkapazitaet;
     }
 
-    public void setZeltkapazität(int zeltkapazität) {
-        this.zeltkapazität = zeltkapazität;
+    public void setZeltkapazitaet(int zeltkapazitaet) {
+        this.zeltkapazitaet = zeltkapazitaet;
     }
 
     public float getKochtopfMultiplikator() {
         return kochtopfMultiplikator;
     }
 
-    public void entferneGegenstände(ArrayList<Gegenstand> gegenstände){
-        this.gegenstände.removeAll(gegenstände);
+    public void entferneGegenstaende(ArrayList<Gegenstand> gegenstaende){
+        this.gegenstaende.removeAll(gegenstaende);
     }
 
     public void setKochtopfMultiplikator(float kochtopfMultiplikator) {
         this.kochtopfMultiplikator = kochtopfMultiplikator;
     }
-    public void fügeGegenstandHinzu(Gegenstand gegenstand){
-        gegenstände.add(gegenstand);
+    public void fuegeGegenstandHinzu(Gegenstand gegenstand){
+        gegenstaende.add(gegenstand);
     }
-    public void fügeGegenständeHinzu(ArrayList<Gegenstand> gegenstände){
-        this.gegenstände.addAll(gegenstände);
+    public void fuegeGegenstaendeHinzu(ArrayList<Gegenstand> gegenstaende){
+        this.gegenstaende.addAll(gegenstaende);
     }
     public Map<Zutat, Integer> getZutaten() {
         return zutaten;
@@ -83,7 +83,7 @@ public class Inventar {
         this.zutaten = zutaten;
     }    
 
-    public void fügeZutatenHinzu(Map<Zutat, Integer> zutaten){
+    public void fuegeZutatenHinzu(Map<Zutat, Integer> zutaten){
         for(Zutat z : zutaten.keySet()){
             if(this.zutaten.containsKey(z)){
                 this.zutaten.put(z, this.zutaten.get(z) + zutaten.get(z));
@@ -124,12 +124,12 @@ public class Inventar {
         erspartes = erspartes.subtrahiere(Geld.von(betrag));
     }
 
-    public void geldHinzufügen(Geld betrag) {
+    public void geldHinzufuegen(Geld betrag) {
         erspartes = erspartes.addiere(betrag);
     }
 
 
-    public void fügeGemischteGegenständeHinzu(Map<Gegenstand, Integer> einkauf){
+    public void fuegeGemischteGegenstaendeHinzu(Map<Gegenstand, Integer> einkauf){
         Map<Zutat, Integer> zutaten = new HashMap<>();
         ArrayList<Gegenstand> anderes = new ArrayList<>();
 
@@ -142,12 +142,12 @@ public class Inventar {
                 }
             }
         }
-        fügeZutatenHinzu(zutaten);
-        fügeGegenständeHinzu(anderes);
+        fuegeZutatenHinzu(zutaten);
+        fuegeGegenstaendeHinzu(anderes);
     }
 
 
-    public void fügeGemischteGegenständeHinzu(ArrayList<Gegenstand> belohnung){
+    public void fuegeGemischteGegenstaendeHinzu(ArrayList<Gegenstand> belohnung){
         Map<Zutat, Integer> zutaten = new HashMap<>();
         ArrayList<Gegenstand> anderes = new ArrayList<>();
 
@@ -162,35 +162,35 @@ public class Inventar {
                 anderes.add((Gegenstand)g);
             }
         }
-        fügeZutatenHinzu(zutaten);
-        fügeGegenständeHinzu(anderes);
+        fuegeZutatenHinzu(zutaten);
+        fuegeGegenstaendeHinzu(anderes);
     }
 
-    public ArrayList<Gegenstand> getAusrüstung() {
-        return gegenstände.stream()
+    public ArrayList<Gegenstand> getAusruestung() {
+        return gegenstaende.stream()
             .filter(g -> g instanceof Ausstattung)
             .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public void entferneAusrüstung(Ausstattung ausstattung) {
-        gegenstände.remove(ausstattung);
+    public void entferneAusruestung(Ausstattung ausstattung) {
+        gegenstaende.remove(ausstattung);
     }
 
-    public void fügeAusrüstungHinzu(Ausstattung ausstattung) {
-        gegenstände.add(ausstattung);
+    public void fuegeAusruestungHinzu(Ausstattung ausstattung) {
+        gegenstaende.add(ausstattung);
     }
 
-    public ArrayList<Gegenstand> verliereZufälligeGegenstände(int anzahl) {
-        ArrayList<Gegenstand> verloreneGegenstände = new ArrayList<>();
-        int zuVerlieren = Math.min(anzahl, gegenstände.size());
+    public ArrayList<Gegenstand> verliereZufaelligeGegenstaende(int anzahl) {
+        ArrayList<Gegenstand> verloreneGegenstaende = new ArrayList<>();
+        int zuVerlieren = Math.min(anzahl, gegenstaende.size());
         
         for (int i = 0; i < zuVerlieren; i++) {
-            if (!gegenstände.isEmpty()) {
-                int randomIndex = (int) (Math.random() * gegenstände.size());
-                verloreneGegenstände.add(gegenstände.remove(randomIndex));
+            if (!gegenstaende.isEmpty()) {
+                int randomIndex = (int) (Math.random() * gegenstaende.size());
+                verloreneGegenstaende.add(gegenstaende.remove(randomIndex));
             }
         }
         
-        return verloreneGegenstände;
+        return verloreneGegenstaende;
     }
 }

@@ -9,7 +9,7 @@ public class Stats {
 
     private Stats(int angriff, int verteidigung, int initiative) {
         if (angriff < 0 || verteidigung < 0 || initiative < 0) {
-            throw new IllegalArgumentException("Stats können nicht negativ sein");
+            throw new IllegalArgumentException("Stats koennen nicht negativ sein");
         }
         this.angriff = angriff;
         this.verteidigung = verteidigung;

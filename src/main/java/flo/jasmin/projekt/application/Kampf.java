@@ -16,7 +16,7 @@ public class Kampf {
     private ArrayList<Wesen> alleWesen;
     private int momentanesWesenIndex;
     private boolean kampfImGange;
-    private ArrayList<Gegenstand> verloreneGegenstände;
+    private ArrayList<Gegenstand> verloreneGegenstaende;
 
     public boolean isKampfImGange() {
         return kampfImGange;
@@ -31,25 +31,25 @@ public class Kampf {
         alleWesen.sort(Comparator.comparingInt(Wesen::getInitiative).reversed());
         momentanesWesenIndex = 0;
         kampfImGange = true;
-        verloreneGegenstände = new ArrayList<>();
+        verloreneGegenstaende = new ArrayList<>();
     }
 
-    public ArrayList<Gegenstand> getVerloreneGegenstände() {
-        return verloreneGegenstände;
+    public ArrayList<Gegenstand> getVerloreneGegenstaende() {
+        return verloreneGegenstaende;
     }
 
-    public void setVerloreneGegenstände(ArrayList<Gegenstand> verloreneGegenstände) {
-        this.verloreneGegenstände = verloreneGegenstände;
+    public void setVerloreneGegenstaende(ArrayList<Gegenstand> verloreneGegenstaende) {
+        this.verloreneGegenstaende = verloreneGegenstaende;
     }
 
-    private void fügeVerlorenenGegenstandHinzu(Gegenstand gegenstand){
-        this.verloreneGegenstände.add(gegenstand);
+    private void fuegeVerlorenenGegenstandHinzu(Gegenstand gegenstand){
+        this.verloreneGegenstaende.add(gegenstand);
     }
-    private void fügeVerlorenenGegenständeHinzu(ArrayList<Gegenstand> gegenstände){
-        this.verloreneGegenstände.addAll(gegenstände);
+    private void fuegeVerlorenenGegenstaendeHinzu(ArrayList<Gegenstand> gegenstaende){
+        this.verloreneGegenstaende.addAll(gegenstaende);
     }
 
-    public Geld errechneZufälligVerlorenesGeld(){
+    public Geld errechneZufaelligVerlorenesGeld(){
         return Geld.von((int) (Math.random()*5) + 1);
     }
 
@@ -69,7 +69,7 @@ public class Kampf {
         this.momentanesWesenIndex = momentanesWesenIndex;
     }
 
-    //Kapmfschritt wird benötigt weil wir keine While Loop haben können
+    //Kapmfschritt wird benoetigt weil wir keine While Loop haben koennen
    /*  public void kampfSchritt(){
         if (getMomentanesWesen().getClass() == Gegner.class){
             gegnerGreiftAn();
@@ -79,7 +79,7 @@ public class Kampf {
         }
     } */
 
-    public void erhöheMomentanesWesenIndex(){
+    public void erhoeheMomentanesWesenIndex(){
         momentanesWesenIndex = (momentanesWesenIndex + 1) % alleWesen.size();
     }
     
@@ -95,22 +95,22 @@ public class Kampf {
         ziel.nehmeSchaden(schaden);
 
         ArrayList<String> antwort = new ArrayList<String>();
-        antwort.add(ziel.getName() + " nimmt " + schaden.getWert() + " Schaden. HP übrig: "+ziel.getGesundheit());
+        antwort.add(ziel.getName() + " nimmt " + schaden.getWert() + " Schaden. HP uebrig: "+ziel.getGesundheit());
 
-        if(!ziel.kampfFähig()){
-            antwort.add(ziel.getName() + " fällt zu Boden.");
-            // Es fühlt sich so an, als hätte ich diesen Cast schon oft gemacht. Refactoren?
+        if(!ziel.kampfFaehig()){
+            antwort.add(ziel.getName() + " faellt zu Boden.");
+            // Es fuehlt sich so an, als haette ich diesen Cast schon oft gemacht. Refactoren?
             if(ziel instanceof Gegner){
-                ArrayList<Gegenstand> gegenstände = ((Gegner) ziel).getInventar();
-                for(Gegenstand gegenstand: gegenstände){
-                    antwort.add(ziel.getName() + " lässt " + gegenstand.getName() + " fallen.");
-                    fügeVerlorenenGegenstandHinzu(gegenstand);
+                ArrayList<Gegenstand> gegenstaende = ((Gegner) ziel).getInventar();
+                for(Gegenstand gegenstand: gegenstaende){
+                    antwort.add(ziel.getName() + " laesst " + gegenstand.getName() + " fallen.");
+                    fuegeVerlorenenGegenstandHinzu(gegenstand);
                 }
             }
             entferneWesenAusListe(ziel);
         }
 
-        erhöheMomentanesWesenIndex();
+        erhoeheMomentanesWesenIndex();
         String kampfImGangeAntwort = rechneKampfImGange();
         if(kampfImGangeAntwort == null){
             antwort.addAll(gegnerGreiftAn());
@@ -129,8 +129,8 @@ public class Kampf {
     }
 
 
-    //müsste Fehler schmeißen, wenn es kein passendens Wesen gibt
-    public ArrayList<String> überMittelZiel(int ziel) throws IndexOutOfBoundsException, ZielIstSpielerWesen{
+    //muesste Fehler schmeissen, wenn es kein passendens Wesen gibt
+    public ArrayList<String> ueberMittelZiel(int ziel) throws IndexOutOfBoundsException, ZielIstSpielerWesen{
         return teamGreiftAn(alleWesen.get(ziel));
     }
 
@@ -138,20 +138,20 @@ public class Kampf {
         ArrayList<String> antwort = new ArrayList<String>();
         while(getMomentanesWesen() instanceof Gegner && !alleWesen.stream().filter(wesen -> wesen instanceof TeamWesen).toList().isEmpty()) {
             Gegner angreifer = (Gegner) getMomentanesWesen();
-            Wesen ziel = angreifer.ausgewähltesZiel(new ArrayList<>(alleWesen.stream().filter(wesen -> wesen instanceof TeamWesen).toList()));
+            Wesen ziel = angreifer.ausgewaehltesZiel(new ArrayList<>(alleWesen.stream().filter(wesen -> wesen instanceof TeamWesen).toList()));
             Schaden schaden = angreifer.berechneSchaden();
             ziel.nehmeSchaden(schaden);
             antwort.add(getMomentanesWesen().getName() + " greift an.");
-            antwort.add(ziel.getName() + " nimmt " + schaden.reduziereDurch(ziel.getVerteidigung()).getWert() + " Schaden. HP übrig: "+ziel.getGesundheit());
-            if(!ziel.kampfFähig()){
+            antwort.add(ziel.getName() + " nimmt " + schaden.reduziereDurch(ziel.getVerteidigung()).getWert() + " Schaden. HP uebrig: "+ziel.getGesundheit());
+            if(!ziel.kampfFaehig()){
                 entferneWesenAusListe(ziel);
             }
-            erhöheMomentanesWesenIndex();
+            erhoeheMomentanesWesenIndex();
         }
 
         String kampfImGangeAntwort = rechneKampfImGange();
         if(kampfImGangeAntwort == null){
-            antwort.addAll(gibSpielerInfoÜberKampf());
+            antwort.addAll(gibSpielerInfoUeberKampf());
         }
         else{
             antwort.add(kampfImGangeAntwort);
@@ -173,7 +173,7 @@ public class Kampf {
         return grund;
     }
 
-    public ArrayList<String> gibSpielerInfoÜberKampf(){
+    public ArrayList<String> gibSpielerInfoUeberKampf(){
         ArrayList<String> antwort = new ArrayList<>();
         for (Wesen w: alleWesen){
             antwort.add(w.getName() +" : " + alleWesen.indexOf(w));

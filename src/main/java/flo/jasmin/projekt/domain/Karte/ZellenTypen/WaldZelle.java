@@ -12,7 +12,7 @@ import java.util.Set;
 public class WaldZelle extends Zellentyp {
     
     public WaldZelle() {
-        super("Du befindest dich in einem dichten Wald. Die Bäume stehen dicht beieinander und es riecht nach Moos.",
+        super("Du befindest dich in einem dichten Wald. Die Baeume stehen dicht beieinander und es riecht nach Moos.",
               erstelleErlaubteBefehle(),
               erstelleGegnerAuswahl());
     }

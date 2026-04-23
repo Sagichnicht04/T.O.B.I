@@ -1,7 +1,7 @@
 package flo.jasmin.projekt.application;
 
 import flo.jasmin.projekt.domain.NPCs.NPC;
-import flo.jasmin.projekt.domain.Dörfer.Farore;
+import flo.jasmin.projekt.domain.Doerfer.Farore;
 import flo.jasmin.projekt.domain.Befehl;
 import flo.jasmin.projekt.domain.Dorf;
 import flo.jasmin.projekt.domain.Exceptions.LaufGegenBarriereException;
@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Karte {
-    private final static int KARTEN_GRÖSSE = 10;
+    private final static int KARTEN_GROeSSE = 10;
     Position momentanePosition;
     Map<Position, Zelle> positionen;
 
@@ -39,9 +39,9 @@ public class Karte {
         int vertikale = momentanePosition.getVertikal();
 
         if(vertikale <= 0 && befehl == Befehl.HOCH
-                || vertikale >= KARTEN_GRÖSSE-1 && befehl == Befehl.RUNTER
+                || vertikale >= KARTEN_GROeSSE-1 && befehl == Befehl.RUNTER
                 || horizontale <= 0 && befehl == Befehl.LINKS
-                || horizontale >= KARTEN_GRÖSSE-1 && befehl == Befehl.RECHTS){
+                || horizontale >= KARTEN_GROeSSE-1 && befehl == Befehl.RECHTS){
             throw new LaufGegenBarriereException();
         }
         else {
@@ -61,8 +61,8 @@ public class Karte {
     }
 
     public void generiereKarte() {
-        for (int i = 0; i<KARTEN_GRÖSSE; i++) {
-            for (int j = 0; j<KARTEN_GRÖSSE; j ++){
+        for (int i = 0; i<KARTEN_GROeSSE; i++) {
+            for (int j = 0; j<KARTEN_GROeSSE; j ++){
                 positionen.put(new Position(i,j), erstelleNeueZelle(new Position(i,j)));
             }
         }
@@ -111,11 +111,11 @@ public class Karte {
     }
 
     private NPC gibNPC(Position position) {
-        // Tobi im Süden
+        // Tobi im Sueden
         if (position.getVertikal() == 9 && position.getHorizontal() == 3){
             return new Tobi();
         }
-        // Händler im Westen
+        // Haendler im Westen
         if (position.getVertikal() == 5 && position.getHorizontal() == 1){
             return new Haendler();
         }
@@ -131,7 +131,7 @@ public class Karte {
         if(sollWasserZelleSein(position)){
             return new WasserZelle();
         }
-        // Berg-Zellen (Norden, obere Hälfte)
+        // Berg-Zellen (Norden, obere Haelfte)
         if(position.getVertikal() <= 2){
             return new BergZelle();
         }

@@ -18,14 +18,14 @@ public class Ork extends Gegner {
     
 
     @Override
-    public Wesen ausgewähltesZiel(java.util.ArrayList<Wesen> wesen) {
-        Wesen stärkstes = wesen.get(0);
+    public Wesen ausgewaehltesZiel(java.util.ArrayList<Wesen> wesen) {
+        Wesen staerkstes = wesen.get(0);
         for (Wesen w : wesen) {
-            if (w.getGesundheit() > stärkstes.getGesundheit()) {
-                stärkstes = w;
+            if (w.getGesundheit() > staerkstes.getGesundheit()) {
+                staerkstes = w;
             }
         }
-        return stärkstes;
+        return staerkstes;
     }
     
     private static class OrkVisualisierung implements AsciiVisualisierung {

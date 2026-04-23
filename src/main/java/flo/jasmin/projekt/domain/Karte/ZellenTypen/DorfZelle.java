@@ -12,6 +12,6 @@ import flo.jasmin.projekt.domain.Karte.Zellentyp;
 public class DorfZelle extends Zellentyp{
 
     public DorfZelle() {
-        super("hier ist ein Kaff ääääh Dorf.", Set.of(Befehl.KAUFEN), null);
+        super("hier ist ein Kaff aeaeaeaeh Dorf.", Set.of(Befehl.KAUFEN), null);
     }
 }

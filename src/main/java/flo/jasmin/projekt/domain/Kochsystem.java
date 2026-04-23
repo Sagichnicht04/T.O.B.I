@@ -13,10 +13,10 @@ import java.util.Set;
 public class Kochsystem{
 
 
-    //TODO: Heilwert zurückgeben
-/*     public Map<Zutat, Integer> errechneMöglicheZutaten(Inventar inventar){
+    //TODO: Heilwert zurueckgeben
+/*     public Map<Zutat, Integer> errechneMoeglicheZutaten(Inventar inventar){
         Map<Zutat, Integer> ergebnis = new HashMap<>();
-        for (Gegenstand gegenstand: inventar.getGegenstände()){
+        for (Gegenstand gegenstand: inventar.getGegenstaende()){
             if(gegenstand.getClass().getSuperclass() == Zutat.class){
                 if(ergebnis.containsKey(gegenstand)){
                     ergebnis.put((Zutat)gegenstand, ergebnis.get(gegenstand) + 1);
@@ -29,20 +29,20 @@ public class Kochsystem{
         return ergebnis;
     } */
 
-    public String stringRepräsentationVonZutaten(Map<Zutat, Integer> möglicheZutaten){
-        Map<Zutat, Integer> zutaten = möglicheZutaten;
-        String rückgabeWert = "";
+    public String stringRepraesentationVonZutaten(Map<Zutat, Integer> moeglicheZutaten){
+        Map<Zutat, Integer> zutaten = moeglicheZutaten;
+        String rueckgabeWert = "";
         for(Map.Entry<Zutat, Integer> paar : zutaten.entrySet()){
-            rückgabeWert += "\n" + paar.getKey().getName() + " : " +paar.getValue();
+            rueckgabeWert += "\n" + paar.getKey().getName() + " : " +paar.getValue();
         }
-        if (möglicheZutaten.isEmpty()){
-            return "Du hast noch keine Zutaten! Besgiege Gegner oder kaufe welche in Dörfern!";
+        if (moeglicheZutaten.isEmpty()){
+            return "Du hast noch keine Zutaten! Besgiege Gegner oder kaufe welche in Doerfern!";
         }
-        return rückgabeWert;
+        return rueckgabeWert;
     }
 
 
-//warum in mehrere Methoden unterteilt? Kochsystem sollte nicht die Items aus dem Inventar entfernen können
+//warum in mehrere Methoden unterteilt? Kochsystem sollte nicht die Items aus dem Inventar entfernen koennen
     public int errechneGesundheit(Map<Zutat, Integer> zutaten) throws FalscheZutatenEingabe {
         int ergebnis = 0;
         for (Zutat z : zutaten.keySet()){
@@ -51,16 +51,16 @@ public class Kochsystem{
         return ergebnis;
     }
 
-    public Map<Zutat, Integer> übersetzteZutatenNameZuZutatObjekt(Map<String, Integer> zutaten, Inventar inventar) throws FalscheZutatenEingabe{
-        Map<Zutat, Integer> übersetzung = new HashMap<Zutat, Integer>();
+    public Map<Zutat, Integer> uebersetzteZutatenNameZuZutatObjekt(Map<String, Integer> zutaten, Inventar inventar) throws FalscheZutatenEingabe{
+        Map<Zutat, Integer> uebersetzung = new HashMap<Zutat, Integer>();
         for(String z : zutaten.keySet()){
-            übersetzung.put(gibZutat(z, inventar.getZutaten().keySet()), zutaten.get(z));
+            uebersetzung.put(gibZutat(z, inventar.getZutaten().keySet()), zutaten.get(z));
         }
-        return übersetzung;
+        return uebersetzung;
     }
 
-    private Zutat gibZutat(String zutatName, Set<Zutat> möglicheZutaten) throws FalscheZutatenEingabe{
-        for (Zutat z : möglicheZutaten){
+    private Zutat gibZutat(String zutatName, Set<Zutat> moeglicheZutaten) throws FalscheZutatenEingabe{
+        for (Zutat z : moeglicheZutaten){
             if (z.getName().toLowerCase().equals(zutatName.toLowerCase())){
                 return z;
             }
