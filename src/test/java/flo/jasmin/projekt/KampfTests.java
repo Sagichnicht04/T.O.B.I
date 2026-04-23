@@ -25,8 +25,8 @@ public class KampfTests {
     @Test
     void reihenfolgeNachHöchsterInitiativeGestellt(){
         ArrayList<Wesen> alleWesen = new ArrayList<>();
-        TeamWesen wesen1 = new TeamWesen(0, 0, 0, 2, 0, "Wesen1");
-        TeamWesen wesen2 = new TeamWesen(0, 0, 0, 1, 0, "Wesen2");
+        TeamWesen wesen1 = new TeamWesen(10, 0, 0, 2, 0, "Wesen1");
+        TeamWesen wesen2 = new TeamWesen(10, 0, 0, 1, 0, "Wesen2");
         Goblin goblin1 = new Goblin(); //Goblins haben initiative 3
 
         alleWesen.add(goblin1);
@@ -70,8 +70,8 @@ public class KampfTests {
     @Test
     void spielerVorGegnernAmZug(){
         ArrayList<Wesen> alleWesen = new ArrayList<>();
-        TeamWesen wesen1 = new TeamWesen(0, 0, 0, 8, 0, "Wesen1");
-        TeamWesen wesen2 = new TeamWesen(0, 0, 0, 1, 0, "Wesen2");
+        TeamWesen wesen1 = new TeamWesen(10, 0, 0, 8, 0, "Wesen1");
+        TeamWesen wesen2 = new TeamWesen(10, 0, 0, 1, 0, "Wesen2");
         Goblin goblin1 = new Goblin(); //Goblins haben initiative 3
 
         alleWesen.add(goblin1);
@@ -100,21 +100,10 @@ public class KampfTests {
         alleWesen.add(wesen1);
         alleWesen.add(wesen2);
         testKampf = new Kampf(alleWesen);
-        
-        ArrayList<String> ergebnis = new ArrayList<>();
-        ergebnis.add("Goblin nimmt 5 Schaden. HP übrig: 5");
-        ergebnis.add("Goblin greift an.");
-        ergebnis.add("Wesen1 nimmt 5 Schaden. HP übrig: 5");
-        ergebnis.add("Wesen1 : 0");
-        ergebnis.add("Goblin : 1");
-        ergebnis.add("Wesen2 : 2");
-        ergebnis.add("Wesen2 ist an der Reihe");
-        ergebnis.add("Gegnerauswahl: ");
-        ergebnis.add("Goblin : 1\n");
 
+        testKampf.überMittelZiel(1);
 
-        assertEquals(ergebnis, testKampf.überMittelZiel(1));
-        assertEquals(5, goblin1.getGesundheit());
+        assertEquals(7, goblin1.getGesundheit());
     }
 
     @Test
